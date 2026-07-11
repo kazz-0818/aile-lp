@@ -7,7 +7,7 @@ const orbitCompanies = [
   {
     id: "iwill",
     name: "IWiLL",
-    nameJP: "株式会社 IWiLL",
+    nameJP: "株式会社I WiLL",
     sub: "営業代行・人材教育",
     logo: "/logos/iwill-logo.png",
     color: "#f97316",
@@ -16,7 +16,7 @@ const orbitCompanies = [
   {
     id: "nlg",
     name: "NLG",
-    nameJP: "株式会社 NLG",
+    nameJP: "株式会社NLG",
     sub: "ラクシス\n業務効率化SaaS",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
@@ -25,7 +25,7 @@ const orbitCompanies = [
   {
     id: "bravo",
     name: "BRAVO",
-    nameJP: "株式会社 BRAVO",
+    nameJP: "株式会社BRAVO",
     sub: "BRANDVOX\nソーシャルショッピング",
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
@@ -34,7 +34,7 @@ const orbitCompanies = [
   {
     id: "lien",
     name: "LiEN",
-    nameJP: "株式会社 LiEN",
+    nameJP: "株式会社LiEN",
     sub: "Shisha Bar BLUE\nShisha Cafe GREEN",
     logo: "/logos/lien-logo.png",
     color: "#c084fc",
@@ -43,7 +43,7 @@ const orbitCompanies = [
   {
     id: "titan",
     name: "TiTAN",
-    nameJP: "株式会社 TiTAN",
+    nameJP: "株式会社TiTAN",
     sub: "オンライン金融教育\nFiNEDGE",
     logo: "/logos/titan-logo.png",
     color: "#b0b8c8",
@@ -286,7 +286,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const isRight  = angleMod > 45 && angleMod <= 135;
         const isLeft   = angleMod >= 225 && angleMod < 315;
 
-        const labelOffset = 52;
+        const labelOffset = 58;
         const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
@@ -346,17 +346,18 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               }}
             >
               <div style={{
-                fontSize: 10,
-                fontFamily: "Orbitron, monospace",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                color: isHov ? c.color : "rgba(255,255,255,0.45)",
-                marginBottom: 2,
+                fontSize: 13,
+                fontFamily: '"Noto Sans JP", sans-serif',
+                fontWeight: 600,
+                letterSpacing: "0.04em",
+                color: isHov ? c.color : "rgba(255,255,255,0.55)",
+                marginBottom: 4,
                 transition: "color 0.2s",
+                whiteSpace: "nowrap",
               }}>
-                {c.name}
+                {c.nameJP}
               </div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.28)", lineHeight: 1.6, whiteSpace: "pre-line" }}>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.32)", lineHeight: 1.6, whiteSpace: "pre-line" }}>
                 {c.sub}
               </div>
             </div>

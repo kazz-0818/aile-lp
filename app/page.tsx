@@ -109,7 +109,7 @@ const companies = [
     name: "BRAVO",
     nameJP: "株式会社 BRAVO",
     role: "BRANDVOX / ポイ活アプリ",
-    logo: "/logos/brandvox-logo.png",
+    logo: "/logos/bravo-logo.png",
     color: "#fb7185",
     desc: "BRAVOです。BRANDVOX で、消費を楽しく・賢く・お得に変えます。",
     longDesc:

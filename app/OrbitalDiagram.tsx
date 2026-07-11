@@ -27,7 +27,7 @@ const orbitCompanies = [
     name: "BRAVO",
     nameJP: "株式会社 BRAVO",
     sub: "ポイ活×SNS×\nショッピングアプリ",
-    logo: "/logos/brandvox-logo.png",
+    logo: "/logos/bravo-logo.png",
     color: "#fb7185",
     angle: 136,     // lower right
   },

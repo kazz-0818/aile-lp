@@ -540,19 +540,19 @@ export default function Home() {
 
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: isMobile ? "72px 16px 40px" : "100px 24px 60px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 32 : 56 }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 40 }}>
 
           {/* Text */}
-          <div style={{ textAlign: "center", width: "100%", marginBottom: 24 }}>
+          <div style={{ textAlign: "center", width: "100%" }}>
             <h1
               className="font-orbitron glow-text"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 8, letterSpacing: "0.05em", color: "#e2e8f0" }}
+              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.05em", color: "#e2e8f0" }}
             >
               AiLE GROUP
             </h1>
             <p
               className="font-orbitron"
-              style={{ fontSize: "clamp(11px, 1.6vw, 16px)", color: "rgba(0,210,239,0.75)", letterSpacing: "0.22em", fontWeight: 400, marginBottom: 32, marginTop: -2 }}
+              style={{ fontSize: "clamp(11px, 1.6vw, 16px)", color: "rgba(0,210,239,0.75)", letterSpacing: "0.22em", fontWeight: 400, marginTop: 0 }}
             >
               すべてを、翼にして。
             </p>

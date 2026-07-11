@@ -226,40 +226,29 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
-        {/* ── Company nodes on outer ring ── */}
+        {/* ── Company nodes: glow circles only (logos are HTML overlay) ── */}
         {orbitCompanies.map((c) => {
           const pos = toXY(CX, CY, R_OUTER, c.angle);
           const isHov = hovered === c.id;
           return (
             <g key={c.id}>
-              {/* Hovered glow */}
               {isHov && (
-                <circle
-                  cx={pos.x} cy={pos.y} r={32}
-                  fill={`${c.color}18`}
-                />
+                <circle cx={pos.x} cy={pos.y} r={44} fill={`${c.color}12`} />
               )}
-              {/* Outer ring dot */}
               <circle
-                cx={pos.x} cy={pos.y} r={isHov ? 10 : 7}
-                fill={isHov ? c.color : `${c.color}40`}
+                cx={pos.x} cy={pos.y} r={isHov ? 40 : 36}
+                fill={isHov ? `${c.color}18` : "rgba(5,5,8,0.7)"}
                 stroke={c.color}
-                strokeWidth={isHov ? 2 : 1.5}
+                strokeWidth={isHov ? 1.5 : 1}
+                strokeOpacity={isHov ? 0.7 : 0.35}
                 filter={isHov ? "url(#glow-soft)" : undefined}
                 style={{ transition: "all 0.2s", cursor: "pointer" }}
                 onClick={() => { onSelect?.(c.id); }}
                 onMouseEnter={() => setHovered(c.id)}
                 onMouseLeave={() => setHovered(null)}
               />
-              {/* Pulse ring on hover */}
               {isHov && (
-                <circle
-                  cx={pos.x} cy={pos.y} r={16}
-                  fill="none"
-                  stroke={c.color}
-                  strokeWidth="1"
-                  opacity={0.3}
-                />
+                <circle cx={pos.x} cy={pos.y} r={48} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />
               )}
             </g>
           );
@@ -285,69 +274,91 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         />
       </svg>
 
-      {/* ── Company labels (HTML overlay) ── */}
+      {/* ── Company logos ON the ring (HTML overlay) ── */}
       {orbitCompanies.map((c) => {
-        const pos = toXY(CX, CY, R_OUTER + 52, c.angle);
+        const pos = toXY(CX, CY, R_OUTER, c.angle);
         const isHov = hovered === c.id;
-        // Determine text anchor based on position
-        const angleMod = ((c.angle % 360) + 360) % 360;
-        const isRight = angleMod > 30 && angleMod < 170;
-        const isLeft  = angleMod > 190 && angleMod < 330;
-        const isTop   = angleMod <= 30 || angleMod >= 330;
-        const isBottom = angleMod > 130 && angleMod < 230;
 
-        let transform = "translate(-50%, -50%)";
-        if (isRight)  transform = "translate(0%, -50%)";
-        if (isLeft)   transform = "translate(-100%, -50%)";
-        if (isTop)    transform = "translate(-50%, -100%)";
-        if (isBottom) transform = "translate(-50%, 0%)";
+        // Label offset direction (push text away from center)
+        const angleMod = ((c.angle % 360) + 360) % 360;
+        const isTop    = angleMod <= 45 || angleMod >= 315;
+        const isBottom = angleMod > 135 && angleMod < 225;
+        const isRight  = angleMod > 45 && angleMod <= 135;
+        const isLeft   = angleMod >= 225 && angleMod < 315;
+
+        const labelOffset = 52;
+        const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
-          <div
-            key={c.id}
-            onMouseEnter={() => setHovered(c.id)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => { onSelect?.(c.id); window.document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-            style={{
-              position: "absolute",
-              left: `${(pos.x / SIZE) * 100}%`,
-              top: `${(pos.y / SIZE) * 100}%`,
-              transform,
-              textAlign: isRight ? "left" : isLeft ? "right" : "center",
-              cursor: "pointer",
-              transition: "opacity 0.2s",
-              padding: "4px",
-            }}
-          >
-            {/* Logo */}
-            <div style={{ display: "flex", justifyContent: isRight ? "flex-start" : isLeft ? "flex-end" : "center", marginBottom: 4 }}>
-              <div
-                style={{
-                  background: isHov ? `${c.color}18` : "rgba(255,255,255,0.05)",
-                  border: `1px solid ${isHov ? c.color + "50" : "rgba(255,255,255,0.1)"}`,
-                  borderRadius: 12,
-                  padding: "6px 8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.2s",
-                }}
-              >
-                <Image
-                  src={c.logo}
-                  alt={c.name}
-                  width={52}
-                  height={26}
-                  style={{ objectFit: "contain", maxHeight: 26, width: "auto" }}
-                />
+          <div key={c.id}>
+            {/* Logo box — centered on the ring dot position */}
+            <div
+              onMouseEnter={() => setHovered(c.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+              style={{
+                position: "absolute",
+                left: `${(pos.x / SIZE) * 100}%`,
+                top: `${(pos.y / SIZE) * 100}%`,
+                transform: "translate(-50%, -50%)",
+                width: 70,
+                height: 70,
+                borderRadius: 16,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isHov ? `${c.color}18` : "rgba(5,5,8,0.8)",
+                border: `1.5px solid ${isHov ? c.color + "80" : c.color + "30"}`,
+                cursor: "pointer",
+                transition: "all 0.25s",
+                boxShadow: isHov ? `0 0 20px ${c.color}40` : "none",
+                zIndex: 10,
+              }}
+            >
+              <Image
+                src={c.logo}
+                alt={c.name}
+                width={52}
+                height={52}
+                style={{ objectFit: "contain", maxWidth: 52, maxHeight: 44, width: "auto", height: "auto" }}
+              />
+            </div>
+
+            {/* Label — offset outward from the ring */}
+            <div
+              onMouseEnter={() => setHovered(c.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+              style={{
+                position: "absolute",
+                left: `${(labelPos.x / SIZE) * 100}%`,
+                top: `${(labelPos.y / SIZE) * 100}%`,
+                transform: isTop
+                  ? "translate(-50%, -100%)"
+                  : isBottom
+                  ? "translate(-50%, 0%)"
+                  : isRight
+                  ? "translate(0%, -50%)"
+                  : "translate(-100%, -50%)",
+                textAlign: isRight ? "left" : isLeft ? "right" : "center",
+                cursor: "pointer",
+                pointerEvents: "none",
+              }}
+            >
+              <div style={{
+                fontSize: 10,
+                fontFamily: "Orbitron, monospace",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                color: isHov ? c.color : "rgba(255,255,255,0.45)",
+                marginBottom: 2,
+                transition: "color 0.2s",
+              }}>
+                {c.name}
               </div>
-            </div>
-            {/* Name */}
-            <div style={{ fontSize: 9, color: isHov ? c.color : "rgba(255,255,255,0.35)", fontFamily: "Orbitron, monospace", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 2, transition: "color 0.2s" }}>
-              {c.name}
-            </div>
-            <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", lineHeight: 1.5, whiteSpace: "pre-line" }}>
-              {c.sub}
+              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.28)", lineHeight: 1.6, whiteSpace: "pre-line" }}>
+                {c.sub}
+              </div>
             </div>
           </div>
         );

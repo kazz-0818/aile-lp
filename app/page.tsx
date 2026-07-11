@@ -83,7 +83,7 @@ const companies = [
     id: "lien",
     name: "LiEN",
     nameJP: "株式会社 LiEN",
-    role: "シーシャ・サロン事業",
+    role: "飲食店事業",
     logo: "/logos/lien-logo.png",
     color: "#c084fc",
     desc: "LiENです。大阪に、くつろぎと洗練の時間を届けます。",

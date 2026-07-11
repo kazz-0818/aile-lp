@@ -4,8 +4,23 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import OrbitalDiagram from "./OrbitalDiagram";
 
+type Company = {
+  id: string;
+  name: string;
+  nameJP: string;
+  role: string;
+  logo: string;
+  color: string;
+  desc: string;
+  longDesc: string;
+  capabilities: { name: string; status: string; since?: string }[];
+  evolutions: { date: string; title: string; desc: string }[];
+  subLogo?: string;
+  roleLogo?: string;
+};
+
 /* ─── Data ─── */
-const companies = [
+const companies: Company[] = [
   {
     id: "iwill",
     name: "IWiLL",
@@ -155,7 +170,7 @@ function Badge({ status }: { status: string }) {
 }
 
 /* ─── Component: Company Section ─── */
-function CompanySection({ company }: { company: typeof companies[0] }) {
+function CompanySection({ company }: { company: Company }) {
   return (
     <div id={company.id} className="section-anchor" style={{ marginBottom: 80 }}>
       {/* Header */}
@@ -174,7 +189,7 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
             className="object-contain"
             style={{ maxHeight: 80, width: "auto", opacity: 0.95 }}
           />
-          {"subLogo" in company && company.subLogo && (
+          {company.subLogo && (
             <Image
               src={company.subLogo}
               alt="sub"
@@ -207,7 +222,7 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
               minHeight: 20,
             }}
           >
-            {"roleLogo" in company && company.roleLogo ? (
+            {company.roleLogo ? (
               <>
                 <span>{company.role}</span>
                 <span style={{ opacity: 0.35, fontSize: 12 }}>/</span>

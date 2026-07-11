@@ -34,9 +34,9 @@ const companies = [
     id: "titan",
     name: "TiTAN",
     nameJP: "株式会社 TiTAN",
-    role: "金融教育 / FiNEDGE",
+    role: "金融教育",
+    roleLogo: "/logos/finedge-logo.png",
     logo: "/logos/titan-logo.png",
-    subLogo: "/logos/finedge-logo.png",
     color: "#b0b8c8",
     desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
     longDesc:
@@ -174,7 +174,7 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
             className="object-contain"
             style={{ maxHeight: 80, width: "auto", opacity: 0.95 }}
           />
-          {company.subLogo && (
+          {"subLogo" in company && company.subLogo && (
             <Image
               src={company.subLogo}
               alt="sub"
@@ -193,8 +193,38 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
           >
             {company.nameJP}
           </h2>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 300, letterSpacing: "0.05em" }}>
-            {company.role}
+          <p
+            style={{
+              color: "rgba(255,255,255,0.4)",
+              fontSize: 13,
+              fontWeight: 300,
+              letterSpacing: "0.05em",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              flexWrap: "wrap",
+              lineHeight: 1,
+              minHeight: 20,
+            }}
+          >
+            {"roleLogo" in company && company.roleLogo ? (
+              <>
+                <span>{company.role}</span>
+                <span style={{ opacity: 0.35, fontSize: 12 }}>/</span>
+                <span style={{ display: "inline-flex", alignItems: "center", height: 18 }}>
+                  <Image
+                    src={company.roleLogo}
+                    alt="FiNEDGE"
+                    width={72}
+                    height={18}
+                    className="object-contain"
+                    style={{ height: 18, width: "auto", maxWidth: 90, opacity: 0.85, display: "block" }}
+                  />
+                </span>
+              </>
+            ) : (
+              company.role
+            )}
           </p>
         </div>
       </div>

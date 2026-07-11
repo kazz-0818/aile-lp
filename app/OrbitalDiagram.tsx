@@ -364,59 +364,49 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         );
       })}
 
-      {/* ── Center logo (HTML overlay) ── */}
-      {/* 外側: translate(-50%,-50%) でセンタリング専用（animationなし） */}
+      {/* ── Center logo: SIZE全体をflexboxでセンタリング ── */}
       <div
         style={{
           position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           pointerEvents: "none",
         }}
       >
-        {/* 内側: float アニメーション専用（translateY のみ変化） */}
-        <div
-          style={{
-            width: 160,
-            height: 160,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            animation: "centerFloat 5s ease-in-out infinite",
-          }}
-        >
+        {/* アニメーションはこの内側divのみ（translateYだけ動く） */}
+        <div style={{ position: "relative", width: 160, height: 160, animation: "centerFloat 5s ease-in-out infinite" }}>
           {/* 背面: 翼イラスト（透過） */}
           <Image
             src="/logos/aile-illust.png"
             alt=""
-            width={150}
-            height={150}
+            width={160}
+            height={160}
             style={{
               position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              inset: 0,
               objectFit: "contain",
               opacity: 0.22,
               filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))",
-              width: 150,
-              height: 150,
+              width: "100%",
+              height: "100%",
             }}
           />
           {/* 前面: AiLE GROUP フルロゴ */}
           <Image
             src="/logos/aile-logo.png"
             alt="AiLE GROUP"
-            width={120}
-            height={120}
+            width={130}
+            height={130}
             style={{
-              position: "relative",
+              position: "absolute",
+              inset: 0,
+              margin: "auto",
               objectFit: "contain",
               filter: "drop-shadow(0 0 14px rgba(0,210,239,0.45))",
-              width: 120,
-              height: "auto",
+              width: 130,
+              height: 130,
             }}
           />
         </div>

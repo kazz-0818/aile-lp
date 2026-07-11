@@ -17,7 +17,7 @@ const orbitCompanies = [
     id: "nlg",
     name: "NLG",
     nameJP: "株式会社NLG",
-    sub: "ラクシス\n業務効率化SaaS",
+    sub: "システム開発事業",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
     angle: 68,      // upper right
@@ -26,7 +26,7 @@ const orbitCompanies = [
     id: "bravo",
     name: "BRAVO",
     nameJP: "株式会社BRAVO",
-    sub: "アパレルブランド事業\nBRANDVOX（ファッション×ポイ活）",
+    sub: "アパレルブランド事業 · BRANDVOX",
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
     angle: 136,     // lower right
@@ -44,7 +44,7 @@ const orbitCompanies = [
     id: "titan",
     name: "TiTAN",
     nameJP: "株式会社TiTAN",
-    sub: "オンライン金融教育\nFiNEDGE",
+    sub: "オンライン金融教育 · FiNEDGE",
     logo: "/logos/titan-logo.png",
     color: "#b0b8c8",
     angle: 292,     // upper left
@@ -286,7 +286,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const isRight  = angleMod > 45 && angleMod <= 135;
         const isLeft   = angleMod >= 225 && angleMod < 315;
 
-        const labelOffset = 58;
+        const labelOffset = 62;
         const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
@@ -343,6 +343,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 textAlign: isRight ? "left" : isLeft ? "right" : "center",
                 cursor: "pointer",
                 pointerEvents: "none",
+                minWidth: isTop || isBottom ? 160 : 130,
+                maxWidth: isTop || isBottom ? 220 : 180,
               }}
             >
               <div style={{
@@ -357,7 +359,13 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               }}>
                 {c.nameJP}
               </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.32)", lineHeight: 1.6, whiteSpace: "pre-line" }}>
+              <div style={{
+                fontSize: 10,
+                color: "rgba(255,255,255,0.32)",
+                lineHeight: 1.5,
+                whiteSpace: "nowrap",
+                wordBreak: "keep-all",
+              }}>
                 {c.sub}
               </div>
             </div>

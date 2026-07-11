@@ -76,12 +76,12 @@ const companies: Company[] = [
     id: "nlg",
     name: "NLG",
     nameJP: "株式会社 NLG",
-    role: "ラクシス（業務効率化SaaS）",
+    role: "システム開発事業",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
-    desc: "NLGです。業務効率化SaaS「ラクシス」で、御社のDXを支援します。",
+    desc: "NLGです。システム開発事業を軸に、業務効率化SaaS「ラクシス」で御社のDXを支援します。",
     longDesc:
-      "中小企業の業務効率化を支えるSaaS「ラクシス」を提供。DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で支援します。",
+      "システム開発事業として企業のDXを支援。自社サービス「ラクシス」をはじめ、DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で提供します。",
     capabilities: [
       { name: "ラクシス", status: "active", since: "2022-06" },
       { name: "DX コンサルティング", status: "active", since: "2022-09" },

@@ -371,33 +371,44 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          textAlign: "center",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: 160,
+          height: 160,
           pointerEvents: "none",
+          animation: "float 5s ease-in-out infinite",
         }}
       >
+        {/* 背面: イラストロゴ（透過） */}
         <Image
           src="/logos/aile-illust.png"
-          alt="AiLE GROUP"
-          width={64}
-          height={64}
+          alt=""
+          width={140}
+          height={140}
           style={{
+            position: "absolute",
             objectFit: "contain",
-            filter: "drop-shadow(0 0 16px rgba(0,210,239,0.6))",
-            animation: "float 5s ease-in-out infinite",
+            opacity: 0.18,
+            filter: "drop-shadow(0 0 20px rgba(0,210,239,0.5))",
+            width: 140,
+            height: 140,
           }}
         />
-        <div
+        {/* 前面: AiLE GROUP フルロゴ */}
+        <Image
+          src="/logos/aile-logo.png"
+          alt="AiLE GROUP"
+          width={120}
+          height={120}
           style={{
-            fontFamily: "Orbitron, monospace",
-            fontSize: 9,
-            fontWeight: 700,
-            color: "rgba(0,210,239,0.8)",
-            letterSpacing: "0.2em",
-            marginTop: 4,
+            position: "relative",
+            objectFit: "contain",
+            filter: "drop-shadow(0 0 12px rgba(0,210,239,0.4))",
+            width: 120,
+            height: "auto",
           }}
-        >
-          AiLE GROUP
-        </div>
+        />
       </div>
     </div>
   );

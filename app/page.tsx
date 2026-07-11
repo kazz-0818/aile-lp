@@ -444,22 +444,22 @@ export default function Home() {
           left: 0,
           right: 0,
           zIndex: 100,
-          background: scrolled ? "rgba(5,5,8,0.92)" : "transparent",
-          backdropFilter: scrolled ? "blur(16px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
-          transition: "all 0.3s",
+          background: (scrolled || isMobile) ? "rgba(5,5,8,0.95)" : "transparent",
+          backdropFilter: (scrolled || isMobile) ? "blur(20px)" : "none",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          transition: "background 0.3s, backdrop-filter 0.3s",
         }}
       >
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 16px" : "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
           <div
-            style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+            style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <Image src="/logos/aile-illust.png" alt="AiLE" width={32} height={32} style={{ objectFit: "contain" }} />
+            <Image src="/logos/aile-illust.png" alt="AiLE" width={28} height={28} style={{ objectFit: "contain" }} />
             <span
               className="font-orbitron"
-              style={{ fontSize: 16, fontWeight: 700, color: "#00d2ef", letterSpacing: "0.1em" }}
+              style={{ fontSize: isMobile ? 13 : 16, fontWeight: 700, color: "#00d2ef", letterSpacing: isMobile ? "0.06em" : "0.1em" }}
             >
               AiLE GROUP
             </span>
@@ -495,26 +495,43 @@ export default function Home() {
           <button
             className="md:hidden"
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
-            style={{ color: "rgba(255,255,255,0.6)", padding: "8px" }}
+            style={{ color: "rgba(255,255,255,0.7)", padding: "10px", background: "none", border: "none", cursor: "pointer" }}
           >
-            <div style={{ width: 22, display: "flex", flexDirection: "column", gap: 5 }}>
-              <span style={{ height: 1, background: "currentColor", display: "block", transform: mobileNavOpen ? "rotate(45deg) translate(4px,4px)" : "none", transition: "all 0.2s" }} />
-              <span style={{ height: 1, background: "currentColor", display: "block", opacity: mobileNavOpen ? 0 : 1, transition: "all 0.2s" }} />
-              <span style={{ height: 1, background: "currentColor", display: "block", transform: mobileNavOpen ? "rotate(-45deg) translate(4px,-4px)" : "none", transition: "all 0.2s" }} />
+            <div style={{ width: 20, display: "flex", flexDirection: "column", gap: 5 }}>
+              <span style={{ height: 1.5, background: "currentColor", display: "block", borderRadius: 1, transform: mobileNavOpen ? "rotate(45deg) translate(4.5px, 4.5px)" : "none", transition: "all 0.25s" }} />
+              <span style={{ height: 1.5, background: "currentColor", display: "block", borderRadius: 1, opacity: mobileNavOpen ? 0 : 1, transition: "all 0.25s" }} />
+              <span style={{ height: 1.5, background: "currentColor", display: "block", borderRadius: 1, transform: mobileNavOpen ? "rotate(-45deg) translate(4.5px, -4.5px)" : "none", transition: "all 0.25s" }} />
             </div>
           </button>
         </div>
 
         {/* Mobile dropdown */}
         {mobileNavOpen && (
-          <div style={{ background: "rgba(5,5,8,0.98)", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "16px 24px" }}>
-            {companies.map((c) => (
+          <div style={{ background: "rgba(5,5,8,0.98)", borderTop: "1px solid rgba(255,255,255,0.07)", padding: "8px 16px 16px" }}>
+            {companies.map((c, i) => (
               <button
                 key={c.id}
                 onClick={() => scrollTo(c.id)}
-                style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 0", color: active === c.id ? c.color : "rgba(255,255,255,0.5)", fontFamily: "Orbitron, monospace", fontSize: 13, background: "none", border: "none", cursor: "pointer" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  width: "100%",
+                  padding: "11px 0",
+                  background: "none",
+                  border: "none",
+                  borderBottom: i < companies.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                  cursor: "pointer",
+                  textAlign: "left",
+                }}
               >
-                {c.name} <span style={{ opacity: 0.4, fontSize: 11 }}>— {c.role}</span>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: c.color, flexShrink: 0, boxShadow: active === c.id ? `0 0 8px ${c.color}` : "none" }} />
+                <span style={{ fontFamily: "Orbitron, monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: active === c.id ? c.color : "rgba(255,255,255,0.75)" }}>
+                  {c.name}
+                </span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: '"Noto Sans JP", sans-serif', fontWeight: 300 }}>
+                  {c.role}
+                </span>
               </button>
             ))}
           </div>
@@ -522,7 +539,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: isMobile ? "80px 16px 40px" : "100px 24px 60px" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: isMobile ? "72px 16px 40px" : "100px 24px 60px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 32 : 56 }}>
 
           {/* Text */}

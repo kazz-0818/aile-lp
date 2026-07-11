@@ -502,10 +502,6 @@ export default function Home() {
             </button>
           ))}
 
-          {/* AiLE tag at bottom */}
-          <div style={{ marginTop: 24, padding: "12px 14px", borderRadius: 12, border: "1px solid rgba(0,210,239,0.15)", background: "rgba(0,210,239,0.04)" }}>
-            <Image src="/logos/aile-logo.png" alt="AiLE" width={90} height={36} style={{ objectFit: "contain" }} />
-          </div>
         </aside>
 
         {/* ─── Sections ─── */}

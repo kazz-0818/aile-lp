@@ -17,7 +17,7 @@ const companies = [
     longDesc:
       "高品質な営業代行サービスと、次世代を担う人材の教育・育成を通じて、企業の成長エンジンとして機能します。",
     capabilities: [
-      { name: "法人向け営業代行", status: "active", since: "2023-04" },
+      { name: "営業代行", status: "active", since: "2023-04" },
       { name: "人材研修プログラム", status: "active", since: "2023-06" },
       { name: "組織コンサルティング", status: "active", since: "2024-01" },
       { name: "採用支援サービス", status: "active", since: "2024-03" },

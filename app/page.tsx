@@ -383,6 +383,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
@@ -409,6 +410,20 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const handleOutside = (e: MouseEvent | TouchEvent) => {
+      if (mobileNavOpen && headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileNavOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+    };
+  }, [mobileNavOpen]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -438,6 +453,7 @@ export default function Home() {
 
       {/* ─── Header ─── */}
       <header
+        ref={headerRef}
         style={{
           position: "fixed",
           top: 0,

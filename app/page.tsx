@@ -509,13 +509,13 @@ export default function Home() {
           <div style={{ textAlign: "center", width: "100%", marginBottom: 24 }}>
             <h1
               className="font-orbitron glow-text"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 16, letterSpacing: "0.05em", color: "#e2e8f0" }}
+              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 8, letterSpacing: "0.05em", color: "#e2e8f0" }}
             >
               AiLE GROUP
             </h1>
             <p
               className="font-orbitron"
-              style={{ fontSize: "clamp(13px, 2vw, 20px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.25em", fontWeight: 400, marginBottom: 32 }}
+              style={{ fontSize: "clamp(11px, 1.6vw, 16px)", color: "rgba(0,210,239,0.75)", letterSpacing: "0.22em", fontWeight: 400, marginBottom: 32, marginTop: -2 }}
             >
               すべてを、翼にして。
             </p>

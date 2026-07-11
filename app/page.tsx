@@ -158,78 +158,94 @@ function Badge({ status }: { status: string }) {
 /* ─── Component: Company Section ─── */
 function CompanySection({ company }: { company: typeof companies[0] }) {
   return (
-    <div id={company.id} className="section-anchor mb-20">
+    <div id={company.id} className="section-anchor" style={{ marginBottom: 80 }}>
       {/* Header */}
-      <div className="flex items-start gap-5 mb-8">
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 40, paddingBottom: 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
         <div
-          className="w-1 rounded-full self-stretch flex-shrink-0"
-          style={{ background: company.color, minHeight: "48px" }}
+          style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: 56 }}
         />
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-1 flex-wrap">
+        <div style={{ flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6, flexWrap: "wrap" }}>
             <h2
-              className="font-orbitron text-2xl font-bold tracking-wider"
-              style={{ color: company.color }}
+              className="font-orbitron"
+              style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.06em", color: company.color }}
             >
               {company.name}
             </h2>
-            <span className="text-white/30 text-sm">|</span>
-            <span className="text-white/50 text-sm font-light tracking-wider">
-              -{company.name.split("").join("")}-
+            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 14 }}>|</span>
+            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, fontWeight: 300, letterSpacing: "0.1em" }}>
+              {company.nameJP}
             </span>
           </div>
-          <p className="text-white/40 text-xs tracking-widest uppercase mb-2">
-            {company.nameJP}
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 300, letterSpacing: "0.05em" }}>
+            {company.role}
           </p>
-          <p className="text-white/50 text-sm font-light">{company.role}</p>
         </div>
         {/* Logo */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <div className="h-10 flex items-center">
-            <Image
-              src={company.logo}
-              alt={company.name}
-              width={80}
-              height={40}
-              className="object-contain max-h-10 w-auto"
-            />
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, flexShrink: 0 }}>
+          <Image
+            src={company.logo}
+            alt={company.name}
+            width={100}
+            height={48}
+            className="object-contain"
+            style={{ maxHeight: 48, width: "auto", opacity: 0.9 }}
+          />
           {company.subLogo && (
             <Image
               src={company.subLogo}
               alt="sub"
-              width={70}
-              height={28}
-              className="object-contain max-h-8 w-auto opacity-70"
+              width={80}
+              height={36}
+              className="object-contain"
+              style={{ maxHeight: 36, width: "auto", opacity: 0.65 }}
             />
           )}
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2" style={{ gap: 24 }}>
         {/* Capabilities */}
-        <div className="glass-card p-6">
-          <h3 className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+        <div className="glass-card" style={{ padding: "32px" }}>
+          <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 24 }}>
             Capabilities
           </h3>
           <div>
             {company.capabilities.map((cap, i) => (
-              <div key={i} className="cap-row">
-                <div className="flex items-center gap-3">
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "14px 0",
+                  borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: company.color, opacity: cap.status === "planned" ? 0.3 : 1 }}
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      flexShrink: 0,
+                      backgroundColor: company.color,
+                      opacity: cap.status === "planned" ? 0.25 : 1,
+                    }}
                   />
                   <span
-                    className="text-sm"
-                    style={{ color: cap.status === "planned" ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.75)" }}
+                    style={{
+                      fontSize: 14,
+                      color: cap.status === "planned" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.72)",
+                      fontWeight: 300,
+                    }}
                   >
                     {cap.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+                <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0, marginLeft: 16 }}>
                   {cap.since && (
-                    <span className="text-white/25 text-[10px] hidden sm:block">
+                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.22)" }} className="hidden sm:block">
                       since {cap.since}
                     </span>
                   )}
@@ -241,44 +257,63 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
         </div>
 
         {/* Right: Chat bubble + Evolution */}
-        <div className="space-y-5">
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {/* Chat bubble */}
-          <div className="glass-card p-6">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="glass-card" style={{ padding: "28px 32px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold font-orbitron"
-                style={{ background: `${company.color}20`, color: company.color, border: `1px solid ${company.color}40` }}
+                className="font-orbitron"
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  flexShrink: 0,
+                  background: `${company.color}20`,
+                  color: company.color,
+                  border: `1px solid ${company.color}40`,
+                }}
               >
                 {company.name[0]}
               </div>
-              <span className="text-xs font-semibold" style={{ color: company.color }}>
-                {company.name}
-              </span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: company.color }}>{company.name}</span>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed font-light mb-4">
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.9, fontWeight: 300, marginBottom: 16 }}>
               {company.desc}
             </p>
-            <p className="text-white/35 text-xs leading-relaxed font-light">
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.32)", lineHeight: 1.9, fontWeight: 300 }}>
               {company.longDesc}
             </p>
           </div>
 
           {/* Evolution log */}
-          <div className="glass-card p-6">
-            <h3 className="text-xs text-white/40 tracking-[0.2em] uppercase mb-5">
+          <div className="glass-card" style={{ padding: "28px 32px" }}>
+            <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 28 }}>
               Evolution Log
             </h3>
-            <div className="space-y-5 relative pl-5">
+            <div style={{ position: "relative", paddingLeft: 20 }}>
               <div className="timeline-line" />
               {company.evolutions.map((ev, i) => (
-                <div key={i} className="relative">
+                <div key={i} style={{ position: "relative", marginBottom: i < company.evolutions.length - 1 ? 28 : 0 }}>
                   <div
-                    className="absolute -left-5 top-1 w-2 h-2 rounded-full"
-                    style={{ backgroundColor: i === 0 ? company.color : "rgba(255,255,255,0.2)", border: `2px solid ${i === 0 ? company.color : "rgba(255,255,255,0.15)"}` }}
+                    style={{
+                      position: "absolute",
+                      left: -20,
+                      top: 4,
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      backgroundColor: i === 0 ? company.color : "rgba(255,255,255,0.15)",
+                      border: `2px solid ${i === 0 ? company.color : "rgba(255,255,255,0.1)"}`,
+                    }}
                   />
-                  <div className="text-[10px] text-white/30 mb-1 font-mono">{ev.date}</div>
-                  <div className="text-sm font-medium text-white/80 mb-1">{ev.title}</div>
-                  <div className="text-xs text-white/35 font-light leading-relaxed">{ev.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", marginBottom: 4, fontFamily: "monospace" }}>{ev.date}</div>
+                  <div style={{ fontSize: 14, fontWeight: 500, color: "rgba(255,255,255,0.78)", marginBottom: 6 }}>{ev.title}</div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.33)", fontWeight: 300, lineHeight: 1.7 }}>{ev.desc}</div>
                 </div>
               ))}
             </div>
@@ -543,7 +578,7 @@ export default function Home() {
         </aside>
 
         {/* ─── Sections ─── */}
-        <main style={{ flex: 1, minWidth: 0, paddingBottom: 80, paddingTop: 40 }}>
+        <main style={{ flex: 1, minWidth: 0, paddingBottom: 120, paddingTop: 60 }}>
           {companies.map((c) => (
             <CompanySection key={c.id} company={c} />
           ))}

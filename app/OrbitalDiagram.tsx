@@ -11,7 +11,7 @@ const orbitCompanies = [
     sub: "営業代行・人材教育",
     logo: "/logos/iwill-logo.png",
     color: "#f97316",
-    angle: 0,       // top
+    angle: 0,
   },
   {
     id: "nlg",
@@ -20,7 +20,7 @@ const orbitCompanies = [
     sub: "システム開発事業",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
-    angle: 68,      // upper right
+    angle: 68,
   },
   {
     id: "bravo",
@@ -29,7 +29,7 @@ const orbitCompanies = [
     sub: "アパレルブランド事業 · BRANDVOX",
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
-    angle: 136,     // lower right
+    angle: 136,
   },
   {
     id: "lien",
@@ -38,7 +38,7 @@ const orbitCompanies = [
     sub: "飲食店事業",
     logo: "/logos/lien-logo.png",
     color: "#c084fc",
-    angle: 224,     // lower left
+    angle: 224,
   },
   {
     id: "titan",
@@ -47,7 +47,7 @@ const orbitCompanies = [
     sub: "オンライン金融教育 · FiNEDGE",
     logo: "/logos/titan-logo.png",
     color: "#b0b8c8",
-    angle: 292,     // upper left
+    angle: 292,
   },
 ];
 
@@ -62,6 +62,7 @@ function toXY(cx: number, cy: number, r: number, angleDeg: number) {
 export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
+  const [diagramSize, setDiagramSize] = useState(560);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef(Date.now());
 
@@ -74,27 +75,44 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
-  const SIZE = 560;
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 540) setDiagramSize(Math.max(w - 40, 300));
+      else if (w < 1024) setDiagramSize(Math.min(w - 80, 540));
+      else setDiagramSize(560);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const BASE = 560;
+  const SIZE = diagramSize;
+  const sc = SIZE / BASE;
   const CX = SIZE / 2;
   const CY = SIZE / 2;
-  const R_OUTER = 220;
-  const R_MID   = 160;
-  const R_INNER  = 95;
-  const LOGO_BOX = 108;
-  const LOGO_RADIUS = 24;
-  const LOGO_IMG = 82;
-  const LOGO_IMG_MAX_H = 70;
-  const NODE_R = 54;
-  const NODE_R_HOV = 58;
-  const NODE_GLOW_R = 62;
-  const NODE_PULSE_R = 66;
 
-  // Slow rotation for the dashed rings
-  const rot1 = (tick / 60000) * 360;      // very slow clockwise
-  const rot2 = -(tick / 45000) * 360;     // counter-clockwise
+  const R_OUTER = 220 * sc;
+  const R_MID   = 160 * sc;
+  const R_INNER  = 95 * sc;
+  const LOGO_BOX = Math.round(108 * sc);
+  const LOGO_RADIUS = Math.round(24 * sc);
+  const LOGO_IMG = Math.round(82 * sc);
+  const LOGO_IMG_MAX_H = Math.round(70 * sc);
+  const NODE_R = 54 * sc;
+  const NODE_R_HOV = 58 * sc;
+  const NODE_GLOW_R = 62 * sc;
+  const NODE_PULSE_R = 66 * sc;
+  const labelOffset = 84 * sc;
+  const showLabels = SIZE >= 500;
+
+  const centerSize = Math.round(176 * sc);
+  const aileLogoSize = Math.round(148 * sc);
+
+  const rot1 = (tick / 60000) * 360;
+  const rot2 = -(tick / 45000) * 360;
   const rot3 = (tick / 80000) * 360;
-
-  // Pulse scale for center
   const pulse = 1 + 0.04 * Math.sin(tick / 1200);
 
   return (
@@ -115,7 +133,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         style={{ position: "absolute", inset: 0, overflow: "visible" }}
       >
         <defs>
-          {/* Glow filter */}
           <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="6" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -124,12 +141,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          {/* Radial gradient for center */}
           <radialGradient id="center-grad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(0,210,239,0.15)" />
             <stop offset="100%" stopColor="rgba(0,210,239,0)" />
           </radialGradient>
-          {/* Ring gradient */}
           <radialGradient id="ring-glow" cx="50%" cy="50%" r="50%">
             <stop offset="60%" stopColor="rgba(0,210,239,0)" />
             <stop offset="100%" stopColor="rgba(0,210,239,0.06)" />
@@ -142,60 +157,25 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           ))}
         </defs>
 
-        {/* Outermost ambient glow */}
-        <circle cx={CX} cy={CY} r={R_OUTER + 30} fill="url(#ring-glow)" />
+        <circle cx={CX} cy={CY} r={R_OUTER + 30 * sc} fill="url(#ring-glow)" />
 
-        {/* ── Rotating ring 1: outer dashed ── */}
         <g transform={`rotate(${rot1}, ${CX}, ${CY})`}>
-          <circle
-            cx={CX} cy={CY} r={R_OUTER}
-            fill="none"
-            stroke="rgba(0,210,239,0.2)"
-            strokeWidth="1"
-            strokeDasharray="4 12"
-          />
+          <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.2)" strokeWidth="1" strokeDasharray="4 12" />
         </g>
+        <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.12)" strokeWidth="1" />
 
-        {/* ── Solid outer ring ── */}
-        <circle
-          cx={CX} cy={CY} r={R_OUTER}
-          fill="none"
-          stroke="rgba(0,210,239,0.12)"
-          strokeWidth="1"
-        />
-
-        {/* ── Mid ring rotating ── */}
         <g transform={`rotate(${rot2}, ${CX}, ${CY})`}>
-          <circle
-            cx={CX} cy={CY} r={R_MID}
-            fill="none"
-            stroke="rgba(0,210,239,0.1)"
-            strokeWidth="1"
-            strokeDasharray="2 8"
-          />
+          <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.1)" strokeWidth="1" strokeDasharray="2 8" />
         </g>
-        <circle
-          cx={CX} cy={CY} r={R_MID}
-          fill="none"
-          stroke="rgba(0,210,239,0.07)"
-          strokeWidth="1"
-        />
+        <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.07)" strokeWidth="1" />
 
-        {/* ── Inner ring ── */}
         <g transform={`rotate(${rot3}, ${CX}, ${CY})`}>
-          <circle
-            cx={CX} cy={CY} r={R_INNER}
-            fill="none"
-            stroke="rgba(0,210,239,0.15)"
-            strokeWidth="1"
-            strokeDasharray="3 10"
-          />
+          <circle cx={CX} cy={CY} r={R_INNER} fill="none" stroke="rgba(0,210,239,0.15)" strokeWidth="1" strokeDasharray="3 10" />
         </g>
 
-        {/* ── Spoke lines to each company ── */}
         {orbitCompanies.map((c) => {
           const outer = toXY(CX, CY, R_OUTER, c.angle);
-          const inner = toXY(CX, CY, R_INNER + 10, c.angle);
+          const inner = toXY(CX, CY, R_INNER + 10 * sc, c.angle);
           const isHov = hovered === c.id;
           return (
             <line
@@ -210,39 +190,23 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
-        {/* ── Orbit dot on mid ring (animated position) ── */}
         {[0, 72, 144, 216, 288].map((offset, i) => {
           const angle = (offset + rot1 * 3) % 360;
           const pos = toXY(CX, CY, R_MID, angle);
-          return (
-            <circle
-              key={i}
-              cx={pos.x} cy={pos.y} r={2}
-              fill="rgba(0,210,239,0.5)"
-            />
-          );
+          return <circle key={i} cx={pos.x} cy={pos.y} r={2 * sc} fill="rgba(0,210,239,0.5)" />;
         })}
         {[0, 60, 120, 180, 240, 300].map((offset, i) => {
           const angle = (offset + rot2 * 4) % 360;
           const pos = toXY(CX, CY, R_OUTER, angle);
-          return (
-            <circle
-              key={i}
-              cx={pos.x} cy={pos.y} r={1.5}
-              fill="rgba(0,210,239,0.35)"
-            />
-          );
+          return <circle key={i} cx={pos.x} cy={pos.y} r={1.5 * sc} fill="rgba(0,210,239,0.35)" />;
         })}
 
-        {/* ── Company nodes: glow circles only (logos are HTML overlay) ── */}
         {orbitCompanies.map((c) => {
           const pos = toXY(CX, CY, R_OUTER, c.angle);
           const isHov = hovered === c.id;
           return (
             <g key={c.id}>
-              {isHov && (
-                <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />
-              )}
+              {isHov && <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />}
               <circle
                 cx={pos.x} cy={pos.y} r={isHov ? NODE_R_HOV : NODE_R}
                 fill={isHov ? `${c.color}18` : "rgba(5,5,8,0.7)"}
@@ -255,51 +219,30 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 onMouseEnter={() => setHovered(c.id)}
                 onMouseLeave={() => setHovered(null)}
               />
-              {isHov && (
-                <circle cx={pos.x} cy={pos.y} r={NODE_PULSE_R} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />
-              )}
+              {isHov && <circle cx={pos.x} cy={pos.y} r={NODE_PULSE_R} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />}
             </g>
           );
         })}
 
-        {/* ── Center glow ── */}
-        <circle
-          cx={CX} cy={CY} r={R_INNER - 10}
-          fill="url(#center-grad)"
-          transform={`scale(${pulse})`}
-          style={{ transformOrigin: `${CX}px ${CY}px` }}
-        />
-        <circle
-          cx={CX} cy={CY} r={R_INNER}
-          fill="none"
-          stroke="rgba(0,210,239,0.25)"
-          strokeWidth="1"
-          filter="url(#glow-cyan)"
-        />
-        <circle
-          cx={CX} cy={CY} r={R_INNER - 5}
-          fill="rgba(5,5,8,0.85)"
-        />
+        <circle cx={CX} cy={CY} r={R_INNER - 10 * sc} fill="url(#center-grad)" transform={`scale(${pulse})`} style={{ transformOrigin: `${CX}px ${CY}px` }} />
+        <circle cx={CX} cy={CY} r={R_INNER} fill="none" stroke="rgba(0,210,239,0.25)" strokeWidth="1" filter="url(#glow-cyan)" />
+        <circle cx={CX} cy={CY} r={R_INNER - 5 * sc} fill="rgba(5,5,8,0.85)" />
       </svg>
 
-      {/* ── Company logos ON the ring (HTML overlay) ── */}
+      {/* ── Company logos ── */}
       {orbitCompanies.map((c) => {
         const pos = toXY(CX, CY, R_OUTER, c.angle);
         const isHov = hovered === c.id;
-
-        // Label offset direction (push text away from center)
         const angleMod = ((c.angle % 360) + 360) % 360;
         const isTop    = angleMod <= 45 || angleMod >= 315;
         const isBottom = angleMod > 135 && angleMod < 225;
         const isRight  = angleMod > 45 && angleMod <= 135;
         const isLeft   = angleMod >= 225 && angleMod < 315;
-
-        const labelOffset = 84;
         const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
           <div key={c.id}>
-            {/* Logo box — centered on the ring dot position */}
+            {/* Logo box */}
             <div
               onMouseEnter={() => setHovered(c.id)}
               onMouseLeave={() => setHovered(null)}
@@ -332,99 +275,73 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               />
             </div>
 
-            {/* Label — offset outward from the ring */}
-            <div
-              onMouseEnter={() => setHovered(c.id)}
-              onMouseLeave={() => setHovered(null)}
-              onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-              style={{
-                position: "absolute",
-                left: `${(labelPos.x / SIZE) * 100}%`,
-                top: `${(labelPos.y / SIZE) * 100}%`,
-                transform: isTop
-                  ? "translate(-50%, -100%)"
-                  : isBottom
-                  ? "translate(-50%, 0%)"
-                  : isRight
-                  ? "translate(0%, -50%)"
-                  : "translate(-100%, -50%)",
-                textAlign: isRight ? "left" : isLeft ? "right" : "center",
-                cursor: "pointer",
-                pointerEvents: "none",
-                minWidth: isTop || isBottom ? 180 : 150,
-                maxWidth: isTop || isBottom ? 260 : 210,
-              }}
-            >
-              <div style={{
-                fontSize: 16,
-                fontFamily: '"Noto Sans JP", sans-serif',
-                fontWeight: 700,
-                letterSpacing: "0.04em",
-                color: isHov ? c.color : "rgba(255,255,255,0.72)",
-                marginBottom: 5,
-                transition: "color 0.2s",
-                whiteSpace: "nowrap",
-              }}>
-                {c.nameJP}
+            {/* Label — only on larger screens */}
+            {showLabels && (
+              <div
+                onMouseEnter={() => setHovered(c.id)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                style={{
+                  position: "absolute",
+                  left: `${(labelPos.x / SIZE) * 100}%`,
+                  top: `${(labelPos.y / SIZE) * 100}%`,
+                  transform: isTop
+                    ? "translate(-50%, -100%)"
+                    : isBottom
+                    ? "translate(-50%, 0%)"
+                    : isRight
+                    ? "translate(0%, -50%)"
+                    : "translate(-100%, -50%)",
+                  textAlign: isRight ? "left" : isLeft ? "right" : "center",
+                  cursor: "pointer",
+                  pointerEvents: "none",
+                  minWidth: Math.round((isTop || isBottom ? 180 : 150) * sc),
+                  maxWidth: Math.round((isTop || isBottom ? 260 : 210) * sc),
+                }}
+              >
+                <div style={{
+                  fontSize: Math.max(Math.round(16 * sc), 12),
+                  fontFamily: '"Noto Sans JP", sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  color: isHov ? c.color : "rgba(255,255,255,0.72)",
+                  marginBottom: 5,
+                  transition: "color 0.2s",
+                  whiteSpace: "nowrap",
+                }}>
+                  {c.nameJP}
+                </div>
+                <div style={{
+                  fontSize: Math.max(Math.round(12 * sc), 10),
+                  color: "rgba(255,255,255,0.38)",
+                  lineHeight: 1.5,
+                  whiteSpace: "nowrap",
+                  wordBreak: "keep-all",
+                }}>
+                  {c.sub}
+                </div>
               </div>
-              <div style={{
-                fontSize: 12,
-                color: "rgba(255,255,255,0.38)",
-                lineHeight: 1.5,
-                whiteSpace: "nowrap",
-                wordBreak: "keep-all",
-              }}>
-                {c.sub}
-              </div>
-            </div>
+            )}
           </div>
         );
       })}
 
-      {/* ── Center logo: SIZE全体をflexboxでセンタリング ── */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          pointerEvents: "none",
-        }}
-      >
-        {/* アニメーションはこの内側divのみ（translateYだけ動く） */}
-        <div style={{ position: "relative", width: 176, height: 176, animation: "centerFloat 5s ease-in-out infinite" }}>
-          {/* 背面: 翼イラスト（透過） */}
+      {/* ── Center logo ── */}
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+        <div style={{ position: "relative", width: centerSize, height: centerSize, animation: "centerFloat 5s ease-in-out infinite" }}>
           <Image
             src="/logos/aile-illust.png"
             alt=""
-            width={176}
-            height={176}
-            style={{
-              position: "absolute",
-              inset: 0,
-              objectFit: "contain",
-              opacity: 0.22,
-              filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))",
-              width: "100%",
-              height: "100%",
-            }}
+            width={centerSize}
+            height={centerSize}
+            style={{ position: "absolute", inset: 0, objectFit: "contain", opacity: 0.22, filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))", width: "100%", height: "100%" }}
           />
-          {/* 前面: AiLE GROUP フルロゴ */}
           <Image
             src="/logos/aile-logo.png"
             alt="AiLE GROUP"
-            width={148}
-            height={148}
-            style={{
-              position: "absolute",
-              inset: 0,
-              margin: "auto",
-              objectFit: "contain",
-              filter: "drop-shadow(0 0 14px rgba(0,210,239,0.45))",
-              width: 148,
-              height: 148,
-            }}
+            width={aileLogoSize}
+            height={aileLogoSize}
+            style={{ position: "absolute", inset: 0, margin: "auto", objectFit: "contain", filter: "drop-shadow(0 0 14px rgba(0,210,239,0.45))", width: aileLogoSize, height: aileLogoSize }}
           />
         </div>
       </div>

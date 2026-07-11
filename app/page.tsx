@@ -180,107 +180,117 @@ function Badge({ status }: { status: string }) {
 }
 
 /* ─── Component: Company Section ─── */
-function CompanySection({ company }: { company: Company }) {
+function CompanySection({ company, isMobile }: { company: Company; isMobile: boolean }) {
+  const logoSize = isMobile ? 52 : 80;
+  const nameFontSize = isMobile ? 17 : 28;
+  const cardPadding = isMobile ? "16px" : "32px";
+  const evoPadding = isMobile ? "16px" : "28px 32px";
+
   return (
-    <div id={company.id} className="section-anchor" style={{ marginBottom: 80 }}>
+    <div id={company.id} className="section-anchor" style={{ marginBottom: isMobile ? 48 : 80 }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 40, paddingBottom: 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 12 : 24, marginBottom: isMobile ? 24 : 40, paddingBottom: isMobile ? 20 : 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
         {/* カラーバー */}
-        <div
-          style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: 64 }}
-        />
-        {/* ロゴ（左・大） */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, flexShrink: 0 }}>
+        <div style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: isMobile ? 44 : 64 }} />
+        {/* ロゴ */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
           <Image
             src={company.logo}
             alt={company.name}
-            width={80}
-            height={80}
+            width={logoSize}
+            height={logoSize}
             className="object-contain"
-            style={{ maxHeight: 80, width: "auto", opacity: 0.95 }}
+            style={{ maxHeight: logoSize, width: "auto", opacity: 0.95 }}
           />
           {company.subLogo && (
             <Image
               src={company.subLogo}
               alt="sub"
-              width={70}
-              height={70}
+              width={isMobile ? 44 : 70}
+              height={isMobile ? 44 : 70}
               className="object-contain"
-              style={{ maxHeight: 70, width: "auto", opacity: 0.8 }}
+              style={{ maxHeight: isMobile ? 44 : 70, width: "auto", opacity: 0.8 }}
             />
           )}
         </div>
         {/* テキスト */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <h2
             className="font-orbitron"
-            style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.06em", color: company.color, marginBottom: 6 }}
+            style={{ fontSize: nameFontSize, fontWeight: 800, letterSpacing: "0.05em", color: company.color, marginBottom: 4, lineHeight: 1.2 }}
           >
             {company.nameJP}
           </h2>
-          <p
-            style={{
-              color: "rgba(255,255,255,0.4)",
-              fontSize: 13,
-              fontWeight: 300,
-              letterSpacing: "0.05em",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              flexWrap: "wrap",
-              height: 20,
-              lineHeight: "20px",
-              minHeight: 20,
-              maxHeight: 20,
-              overflow: "visible",
-            }}
-          >
-            {company.roleLogo ? (
-              <>
-                <span style={{ lineHeight: "20px" }}>{company.role}</span>
-                <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
-                <span
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    width: company.roleLogoSlotWidth ?? 96,
-                    height: 20,
-                    flexShrink: 0,
-                    overflow: "visible",
-                  }}
-                >
-                  <Image
-                    src={company.roleLogo}
-                    alt={company.roleLogoAlt ?? company.name}
-                    width={120}
-                    height={120}
-                    className="object-contain"
+          {/* role行: モバイルはテキストのみ */}
+          {isMobile ? (
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
+              {company.role}{company.roleLogoAlt ? ` / ${company.roleLogoAlt}` : ""}
+            </p>
+          ) : (
+            <p
+              style={{
+                color: "rgba(255,255,255,0.4)",
+                fontSize: 13,
+                fontWeight: 300,
+                letterSpacing: "0.05em",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                flexWrap: "wrap",
+                height: 20,
+                lineHeight: "20px",
+                minHeight: 20,
+                maxHeight: 20,
+                overflow: "visible",
+              }}
+            >
+              {company.roleLogo ? (
+                <>
+                  <span style={{ lineHeight: "20px" }}>{company.role}</span>
+                  <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
+                  <span
                     style={{
-                      position: "absolute",
-                      left: 0,
-                      top: "50%",
-                      width: 40,
-                      height: 40,
-                      objectFit: "contain",
-                      opacity: 0.95,
-                      mixBlendMode: "lighten",
-                      transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
-                      transformOrigin: "left center",
+                      position: "relative",
+                      display: "inline-block",
+                      width: company.roleLogoSlotWidth ?? 96,
+                      height: 20,
+                      flexShrink: 0,
+                      overflow: "visible",
                     }}
-                  />
-                </span>
-              </>
-            ) : (
-              company.role
-            )}
-          </p>
+                  >
+                    <Image
+                      src={company.roleLogo}
+                      alt={company.roleLogoAlt ?? company.name}
+                      width={120}
+                      height={120}
+                      className="object-contain"
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: "50%",
+                        width: 40,
+                        height: 40,
+                        objectFit: "contain",
+                        opacity: 0.95,
+                        mixBlendMode: "lighten",
+                        transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
+                        transformOrigin: "left center",
+                      }}
+                    />
+                  </span>
+                </>
+              ) : (
+                company.role
+              )}
+            </p>
+          )}
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2" style={{ gap: 24 }}>
+      <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
         {/* Capabilities */}
-        <div className="glass-card" style={{ padding: "32px" }}>
-          <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 24 }}>
+        <div className="glass-card" style={{ padding: cardPadding }}>
+          <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
             Capabilities
           </h3>
           <div>
@@ -291,15 +301,16 @@ function CompanySection({ company }: { company: Company }) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "14px 0",
+                  padding: isMobile ? "10px 0" : "14px 0",
                   borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                  gap: 8,
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0, flex: 1 }}>
                   <div
                     style={{
-                      width: 6,
-                      height: 6,
+                      width: 5,
+                      height: 5,
                       borderRadius: "50%",
                       flexShrink: 0,
                       backgroundColor: company.color,
@@ -308,16 +319,18 @@ function CompanySection({ company }: { company: Company }) {
                   />
                   <span
                     style={{
-                      fontSize: 14,
+                      fontSize: isMobile ? 12 : 14,
                       color: cap.status === "planned" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.72)",
                       fontWeight: 300,
+                      wordBreak: "break-all",
+                      lineHeight: 1.5,
                     }}
                   >
                     {cap.name}
                   </span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0, marginLeft: 16 }}>
-                  {cap.since && (
+                <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                  {cap.since && !isMobile && (
                     <span style={{ fontSize: 10, color: "rgba(255,255,255,0.22)" }} className="hidden sm:block">
                       since {cap.since}
                     </span>
@@ -330,31 +343,30 @@ function CompanySection({ company }: { company: Company }) {
         </div>
 
         {/* Right: Evolution */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          {/* Evolution log */}
-          <div className="glass-card" style={{ padding: "28px 32px" }}>
-            <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 28 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="glass-card" style={{ padding: evoPadding }}>
+            <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
               Evolution Log
             </h3>
-            <div style={{ position: "relative", paddingLeft: 20 }}>
+            <div style={{ position: "relative", paddingLeft: 18 }}>
               <div className="timeline-line" />
               {company.evolutions.map((ev, i) => (
-                <div key={i} style={{ position: "relative", marginBottom: i < company.evolutions.length - 1 ? 28 : 0 }}>
+                <div key={i} style={{ position: "relative", marginBottom: i < company.evolutions.length - 1 ? (isMobile ? 20 : 28) : 0 }}>
                   <div
                     style={{
                       position: "absolute",
-                      left: -20,
+                      left: -18,
                       top: 4,
-                      width: 8,
-                      height: 8,
+                      width: 7,
+                      height: 7,
                       borderRadius: "50%",
                       backgroundColor: i === 0 ? company.color : "rgba(255,255,255,0.15)",
                       border: `2px solid ${i === 0 ? company.color : "rgba(255,255,255,0.1)"}`,
                     }}
                   />
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", marginBottom: 4, fontFamily: "monospace" }}>{ev.date}</div>
-                  <div style={{ fontSize: 14, fontWeight: 500, color: "rgba(255,255,255,0.78)", marginBottom: 6 }}>{ev.title}</div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.33)", fontWeight: 300, lineHeight: 1.7 }}>{ev.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "rgba(255,255,255,0.78)", marginBottom: 4 }}>{ev.title}</div>
+                  <div style={{ fontSize: isMobile ? 11 : 12, color: "rgba(255,255,255,0.33)", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
                 </div>
               ))}
             </div>
@@ -370,6 +382,14 @@ export default function Home() {
   const [active, setActive] = useState("iwill");
   const [scrolled, setScrolled] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -502,8 +522,8 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 24px 60px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 56 }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: isMobile ? "80px 16px 40px" : "100px 24px 60px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 32 : 56 }}>
 
           {/* Text */}
           <div style={{ textAlign: "center", width: "100%", marginBottom: 24 }}>
@@ -535,7 +555,7 @@ export default function Home() {
       </section>
 
       {/* ─── Main Content ─── */}
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 32, alignItems: "flex-start" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 12px" : "0 24px", display: "flex", gap: 32, alignItems: "flex-start" }}>
 
         {/* ─── Sidebar ─── */}
         <aside
@@ -582,25 +602,27 @@ export default function Home() {
         </aside>
 
         {/* ─── Sections ─── */}
-        <main style={{ flex: 1, minWidth: 0, paddingBottom: 120, paddingTop: 60 }}>
+        <main style={{ flex: 1, minWidth: 0, paddingBottom: isMobile ? 60 : 120, paddingTop: isMobile ? 32 : 60 }}>
           {companies.map((c) => (
-            <CompanySection key={c.id} company={c} />
+            <CompanySection key={c.id} company={c} isMobile={isMobile} />
           ))}
 
           {/* ─── Phase Roadmap ─── */}
-          <div id="roadmap" className="section-anchor" style={{ marginTop: 40 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
+          <div id="roadmap" className="section-anchor" style={{ marginTop: isMobile ? 24 : 40 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: isMobile ? 20 : 32, flexWrap: "wrap" }}>
               <div style={{ width: 3, height: 24, borderRadius: 2, background: "#00d2ef" }} />
-              <h2 className="font-orbitron" style={{ fontSize: 18, fontWeight: 700, color: "#00d2ef", letterSpacing: "0.1em" }}>
+              <h2 className="font-orbitron" style={{ fontSize: isMobile ? 15 : 18, fontWeight: 700, color: "#00d2ef", letterSpacing: "0.1em" }}>
                 Group Roadmap
               </h2>
-              <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginLeft: 4 }}>
-                AiLE GROUPの拡張フェーズ
-              </span>
+              {!isMobile && (
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginLeft: 4 }}>
+                  AiLE GROUPの拡張フェーズ
+                </span>
+              )}
             </div>
 
-            <div className="glass-card" style={{ padding: "32px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+            <div className="glass-card" style={{ padding: isMobile ? "16px" : "32px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(280px, 1fr))", gap: isMobile ? 10 : 20 }}>
                 {[
                   { n: "01", title: "グループ基盤確立", desc: "5社の体制を整備し、グループ経営の基盤を構築", done: true },
                   { n: "02", title: "各社サービス拡充", desc: "IWiLL・TiTAN・NLG・LiEN・BRAVOの各サービスを深化", done: true },
@@ -649,7 +671,7 @@ export default function Home() {
           </div>
 
           {/* ─── Contact ─── */}
-          <div style={{ marginTop: 60, padding: "48px 40px", borderRadius: 24, border: "1px solid rgba(0,210,239,0.2)", background: "rgba(0,210,239,0.04)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+          <div style={{ marginTop: isMobile ? 32 : 60, padding: isMobile ? "28px 20px" : "48px 40px", borderRadius: isMobile ? 16 : 24, border: "1px solid rgba(0,210,239,0.2)", background: "rgba(0,210,239,0.04)", textAlign: "center", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
             <p className="font-orbitron" style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
             <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#e2e8f0" }}>

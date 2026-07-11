@@ -63,6 +63,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const [hovered, setHovered] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
   const [diagramSize, setDiagramSize] = useState(460);
+  const [showLabels, setShowLabels] = useState(true);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef(Date.now());
 
@@ -81,6 +82,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       if (w < 540) setDiagramSize(Math.max(w - 40, 300));
       else if (w < 1024) setDiagramSize(Math.min(w - 80, 540));
       else setDiagramSize(460);
+      setShowLabels(w >= 640);
     };
     update();
     window.addEventListener("resize", update);
@@ -105,7 +107,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const NODE_GLOW_R = 62 * sc;
   const NODE_PULSE_R = 66 * sc;
   const labelOffset = 84 * sc;
-  const showLabels = SIZE >= 500;
 
   const centerSize = Math.round(176 * sc);
   const aileLogoSize = Math.round(148 * sc);

@@ -365,51 +365,69 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       })}
 
       {/* ── Center logo (HTML overlay) ── */}
+      {/* 外側: translate(-50%,-50%) でセンタリング専用（animationなし） */}
       <div
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: 160,
-          height: 160,
           pointerEvents: "none",
-          animation: "float 5s ease-in-out infinite",
         }}
       >
-        {/* 背面: イラストロゴ（透過） */}
-        <Image
-          src="/logos/aile-illust.png"
-          alt=""
-          width={140}
-          height={140}
+        {/* 内側: float アニメーション専用（translateY のみ変化） */}
+        <div
           style={{
-            position: "absolute",
-            objectFit: "contain",
-            opacity: 0.18,
-            filter: "drop-shadow(0 0 20px rgba(0,210,239,0.5))",
-            width: 140,
-            height: 140,
-          }}
-        />
-        {/* 前面: AiLE GROUP フルロゴ */}
-        <Image
-          src="/logos/aile-logo.png"
-          alt="AiLE GROUP"
-          width={120}
-          height={120}
-          style={{
+            width: 160,
+            height: 160,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             position: "relative",
-            objectFit: "contain",
-            filter: "drop-shadow(0 0 12px rgba(0,210,239,0.4))",
-            width: 120,
-            height: "auto",
+            animation: "centerFloat 5s ease-in-out infinite",
           }}
-        />
+        >
+          {/* 背面: 翼イラスト（透過） */}
+          <Image
+            src="/logos/aile-illust.png"
+            alt=""
+            width={150}
+            height={150}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              objectFit: "contain",
+              opacity: 0.22,
+              filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))",
+              width: 150,
+              height: 150,
+            }}
+          />
+          {/* 前面: AiLE GROUP フルロゴ */}
+          <Image
+            src="/logos/aile-logo.png"
+            alt="AiLE GROUP"
+            width={120}
+            height={120}
+            style={{
+              position: "relative",
+              objectFit: "contain",
+              filter: "drop-shadow(0 0 14px rgba(0,210,239,0.45))",
+              width: 120,
+              height: "auto",
+            }}
+          />
+        </div>
       </div>
+
+      <style>{`
+        @keyframes centerFloat {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-8px); }
+        }
+      `}</style>
     </div>
   );
 }

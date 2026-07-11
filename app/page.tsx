@@ -160,43 +160,43 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
   return (
     <div id={company.id} className="section-anchor" style={{ marginBottom: 80 }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 40, paddingBottom: 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 40, paddingBottom: 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        {/* カラーバー */}
         <div
-          style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: 56 }}
+          style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: 64 }}
         />
-        <div style={{ flex: 1 }}>
-          <div style={{ marginBottom: 6 }}>
-            <h2
-              className="font-orbitron"
-              style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.06em", color: company.color }}
-            >
-              {company.nameJP}
-            </h2>
-          </div>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 300, letterSpacing: "0.05em" }}>
-            {company.role}
-          </p>
-        </div>
-        {/* Logo */}
+        {/* ロゴ（左・大） */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexShrink: 0 }}>
           <Image
             src={company.logo}
             alt={company.name}
-            width={100}
-            height={48}
+            width={80}
+            height={80}
             className="object-contain"
-            style={{ maxHeight: 48, width: "auto", opacity: 0.9 }}
+            style={{ maxHeight: 80, width: "auto", opacity: 0.95 }}
           />
           {company.subLogo && (
             <Image
               src={company.subLogo}
               alt="sub"
-              width={80}
-              height={36}
+              width={70}
+              height={70}
               className="object-contain"
-              style={{ maxHeight: 36, width: "auto", opacity: 0.65 }}
+              style={{ maxHeight: 70, width: "auto", opacity: 0.8 }}
             />
           )}
+        </div>
+        {/* テキスト */}
+        <div style={{ flex: 1 }}>
+          <h2
+            className="font-orbitron"
+            style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.06em", color: company.color, marginBottom: 6 }}
+          >
+            {company.nameJP}
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 300, letterSpacing: "0.05em" }}>
+            {company.role}
+          </p>
         </div>
       </div>
 

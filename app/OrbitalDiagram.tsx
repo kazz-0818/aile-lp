@@ -80,14 +80,14 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220;
   const R_MID   = 160;
   const R_INNER  = 95;
-  const LOGO_BOX = 92;
-  const LOGO_RADIUS = 20;
-  const LOGO_IMG = 68;
-  const LOGO_IMG_MAX_H = 58;
-  const NODE_R = 46;
-  const NODE_R_HOV = 50;
-  const NODE_GLOW_R = 54;
-  const NODE_PULSE_R = 58;
+  const LOGO_BOX = 108;
+  const LOGO_RADIUS = 24;
+  const LOGO_IMG = 82;
+  const LOGO_IMG_MAX_H = 70;
+  const NODE_R = 54;
+  const NODE_R_HOV = 58;
+  const NODE_GLOW_R = 62;
+  const NODE_PULSE_R = 66;
 
   // Slow rotation for the dashed rings
   const rot1 = (tick / 60000) * 360;      // very slow clockwise
@@ -294,7 +294,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const isRight  = angleMod > 45 && angleMod <= 135;
         const isLeft   = angleMod >= 225 && angleMod < 315;
 
-        const labelOffset = 74;
+        const labelOffset = 84;
         const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
@@ -351,25 +351,25 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 textAlign: isRight ? "left" : isLeft ? "right" : "center",
                 cursor: "pointer",
                 pointerEvents: "none",
-                minWidth: isTop || isBottom ? 160 : 130,
-                maxWidth: isTop || isBottom ? 220 : 180,
+                minWidth: isTop || isBottom ? 180 : 150,
+                maxWidth: isTop || isBottom ? 260 : 210,
               }}
             >
               <div style={{
-                fontSize: 13,
+                fontSize: 16,
                 fontFamily: '"Noto Sans JP", sans-serif',
-                fontWeight: 600,
+                fontWeight: 700,
                 letterSpacing: "0.04em",
-                color: isHov ? c.color : "rgba(255,255,255,0.55)",
-                marginBottom: 4,
+                color: isHov ? c.color : "rgba(255,255,255,0.72)",
+                marginBottom: 5,
                 transition: "color 0.2s",
                 whiteSpace: "nowrap",
               }}>
                 {c.nameJP}
               </div>
               <div style={{
-                fontSize: 10,
-                color: "rgba(255,255,255,0.32)",
+                fontSize: 12,
+                color: "rgba(255,255,255,0.38)",
                 lineHeight: 1.5,
                 whiteSpace: "nowrap",
                 wordBreak: "keep-all",
@@ -393,13 +393,13 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         }}
       >
         {/* アニメーションはこの内側divのみ（translateYだけ動く） */}
-        <div style={{ position: "relative", width: 160, height: 160, animation: "centerFloat 5s ease-in-out infinite" }}>
+        <div style={{ position: "relative", width: 176, height: 176, animation: "centerFloat 5s ease-in-out infinite" }}>
           {/* 背面: 翼イラスト（透過） */}
           <Image
             src="/logos/aile-illust.png"
             alt=""
-            width={160}
-            height={160}
+            width={176}
+            height={176}
             style={{
               position: "absolute",
               inset: 0,
@@ -414,16 +414,16 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           <Image
             src="/logos/aile-logo.png"
             alt="AiLE GROUP"
-            width={130}
-            height={130}
+            width={148}
+            height={148}
             style={{
               position: "absolute",
               inset: 0,
               margin: "auto",
               objectFit: "contain",
               filter: "drop-shadow(0 0 14px rgba(0,210,239,0.45))",
-              width: 130,
-              height: 130,
+              width: 148,
+              height: 148,
             }}
           />
         </div>

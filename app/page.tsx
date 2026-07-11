@@ -503,7 +503,7 @@ export default function Home() {
 
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 24px 60px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 48 }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 56 }}>
 
           {/* Text */}
           <div style={{ textAlign: "center", width: "100%", marginBottom: 24 }}>

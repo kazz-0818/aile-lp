@@ -18,6 +18,8 @@ type Company = {
   subLogo?: string;
   roleLogo?: string;
   roleLogoAlt?: string;
+  roleLogoScale?: number;
+  roleLogoSlotWidth?: number;
 };
 
 /* ─── Data ─── */
@@ -53,6 +55,8 @@ const companies: Company[] = [
     role: "金融教育",
     roleLogo: "/logos/finedge-logo.png",
     roleLogoAlt: "FiNEDGE",
+    roleLogoScale: 2.9,
+    roleLogoSlotWidth: 96,
     logo: "/logos/titan-logo.png",
     color: "#b0b8c8",
     desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
@@ -127,6 +131,8 @@ const companies: Company[] = [
     role: "アパレルブランド事業",
     roleLogo: "/logos/brandvox-logo.png",
     roleLogoAlt: "BRANDVOX",
+    roleLogoScale: 2.7,
+    roleLogoSlotWidth: 104,
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
     desc: "BRAVOです。アパレルブランド事業を軸に、ファッション×ポイ活アプリ「BRANDVOX」を展開しています。",
@@ -222,22 +228,44 @@ function CompanySection({ company }: { company: Company }) {
               alignItems: "center",
               gap: 8,
               flexWrap: "wrap",
-              lineHeight: 1,
+              height: 20,
+              lineHeight: "20px",
               minHeight: 20,
+              maxHeight: 20,
+              overflow: "visible",
             }}
           >
             {company.roleLogo ? (
               <>
-                <span>{company.role}</span>
-                <span style={{ opacity: 0.35, fontSize: 12 }}>/</span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: 18 }}>
+                <span style={{ lineHeight: "20px" }}>{company.role}</span>
+                <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
+                <span
+                  style={{
+                    position: "relative",
+                    display: "inline-block",
+                    width: company.roleLogoSlotWidth ?? 96,
+                    height: 20,
+                    flexShrink: 0,
+                    overflow: "visible",
+                  }}
+                >
                   <Image
                     src={company.roleLogo}
                     alt={company.roleLogoAlt ?? company.name}
-                    width={72}
-                    height={18}
+                    width={120}
+                    height={120}
                     className="object-contain"
-                    style={{ height: 18, width: "auto", maxWidth: 90, opacity: 0.85, display: "block" }}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: "50%",
+                      width: 40,
+                      height: 40,
+                      objectFit: "contain",
+                      opacity: 0.9,
+                      transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
+                      transformOrigin: "left center",
+                    }}
                   />
                 </span>
               </>

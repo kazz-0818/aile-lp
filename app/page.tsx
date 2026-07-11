@@ -555,7 +555,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 40px" : "100px 24px 60px" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 20px" : "100px 24px 60px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}

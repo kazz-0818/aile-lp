@@ -28,7 +28,7 @@ const orbitCompanies = [
     nameJP: "株式会社 BRAVO",
     sub: "ポイ活×SNS×\nショッピングアプリ",
     logo: "/logos/bravo-logo.png",
-    color: "#fb7185",
+    color: "#facc15",
     angle: 136,     // lower right
   },
   {
@@ -46,7 +46,7 @@ const orbitCompanies = [
     nameJP: "株式会社 TiTAN",
     sub: "オンライン金融教育\nFiNEDGE",
     logo: "/logos/titan-logo.png",
-    color: "#facc15",
+    color: "#b0b8c8",
     angle: 292,     // upper left
   },
 ];

@@ -37,7 +37,7 @@ const companies = [
     role: "金融教育 / FiNEDGE",
     logo: "/logos/titan-logo.png",
     subLogo: "/logos/finedge-logo.png",
-    color: "#facc15",
+    color: "#b0b8c8",
     desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
     longDesc:
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
@@ -110,7 +110,7 @@ const companies = [
     nameJP: "株式会社 BRAVO",
     role: "BRANDVOX / ポイ活アプリ",
     logo: "/logos/bravo-logo.png",
-    color: "#fb7185",
+    color: "#facc15",
     desc: "BRAVOです。BRANDVOX で、消費を楽しく・賢く・お得に変えます。",
     longDesc:
       "ポイ活・SNS・ショッピングを一つに融合したアプリ「BRANDVOX」で、消費者の新しいライフスタイルを創出します。",

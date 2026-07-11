@@ -555,7 +555,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 20px" : "100px 24px 60px" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 8px" : "100px 24px 60px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}
@@ -581,10 +581,12 @@ export default function Home() {
         </div>
 
         {/* Scroll cue */}
+        {!isMobile && (
         <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.25em" }}>SCROLL</span>
           <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
         </div>
+        )}
       </section>
 
       {/* ─── Main Content ─── */}
@@ -635,7 +637,7 @@ export default function Home() {
         </aside>
 
         {/* ─── Sections ─── */}
-        <main style={{ flex: 1, minWidth: 0, paddingBottom: isMobile ? 60 : 120, paddingTop: isMobile ? 32 : 60 }}>
+        <main style={{ flex: 1, minWidth: 0, paddingBottom: isMobile ? 60 : 120, paddingTop: isMobile ? 16 : 60 }}>
           {companies.map((c) => (
             <CompanySection key={c.id} company={c} isMobile={isMobile} />
           ))}

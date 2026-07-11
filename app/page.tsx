@@ -579,26 +579,9 @@ export default function Home() {
           <div style={{ marginTop: 60, padding: "48px 40px", borderRadius: 24, border: "1px solid rgba(0,210,239,0.2)", background: "rgba(0,210,239,0.04)", textAlign: "center", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
             <p className="font-orbitron" style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
-            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 12, color: "#e2e8f0" }}>
+            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#e2e8f0" }}>
               ともに、<span style={{ color: "#00d2ef" }}>飛躍しよう。</span>
             </h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.35)", lineHeight: 2, marginBottom: 36, fontWeight: 300 }}>
-              事業連携・採用・メディア取材など、お気軽にご連絡ください。
-            </p>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-              <a
-                href="mailto:info@aile-group.jp"
-                style={{ padding: "12px 32px", borderRadius: 99, background: "#00d2ef", color: "#050508", fontWeight: 700, fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", transition: "all 0.2s" }}
-              >
-                メールで問い合わせる
-              </a>
-              <a
-                href="#"
-                style={{ padding: "12px 32px", borderRadius: 99, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: 13, letterSpacing: "0.05em", textDecoration: "none" }}
-              >
-                採用情報を見る
-              </a>
-            </div>
           </div>
         </main>
       </div>

@@ -113,7 +113,7 @@ const companies: Company[] = [
       { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2023-02" },
       { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2023-07" },
       { name: "Salon de LILAC（東心斎橋）", status: "active", since: "2024-04" },
-      { name: "会員制プレミアムプラン", status: "new", since: "2025-08" },
+      { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", status: "new", since: "2025-08" },
       { name: "オリジナルフレーバー開発", status: "planned" },
       { name: "FC展開・多店舗化", status: "planned" },
     ],

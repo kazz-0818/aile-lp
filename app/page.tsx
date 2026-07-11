@@ -256,40 +256,8 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
           </div>
         </div>
 
-        {/* Right: Chat bubble + Evolution */}
+        {/* Right: Evolution */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          {/* Chat bubble */}
-          <div className="glass-card" style={{ padding: "28px 32px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div
-                className="font-orbitron"
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  flexShrink: 0,
-                  background: `${company.color}20`,
-                  color: company.color,
-                  border: `1px solid ${company.color}40`,
-                }}
-              >
-                {company.name[0]}
-              </div>
-              <span style={{ fontSize: 13, fontWeight: 600, color: company.color }}>{company.name}</span>
-            </div>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.9, fontWeight: 300, marginBottom: 16 }}>
-              {company.desc}
-            </p>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.32)", lineHeight: 1.9, fontWeight: 300 }}>
-              {company.longDesc}
-            </p>
-          </div>
-
           {/* Evolution log */}
           <div className="glass-card" style={{ padding: "28px 32px" }}>
             <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 28 }}>

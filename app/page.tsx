@@ -3,737 +3,692 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+/* ─── Data ─── */
 const companies = [
   {
     id: "iwill",
-    name: "株式会社 IWiLL",
+    name: "IWiLL",
+    nameJP: "株式会社 IWiLL",
+    role: "営業代行・人材教育",
     logo: "/logos/iwill-logo.png",
-    tagline: "営業代行 × 人材教育",
-    description:
-      "高品質な営業代行サービスと、次世代を担う人材の教育・育成を通じて、企業の成長を力強くサポートします。",
-    color: "#e07330",
-    accent: "rgba(224, 115, 48, 0.15)",
-    services: ["営業代行", "人材育成", "研修・コンサルティング"],
+    color: "#f97316",
+    desc: "IWiLLです。営業の最前線に立ち、御社の成長を力強く後押しします。",
+    longDesc:
+      "高品質な営業代行サービスと、次世代を担う人材の教育・育成を通じて、企業の成長エンジンとして機能します。",
+    capabilities: [
+      { name: "法人向け営業代行", status: "active", since: "2023-04" },
+      { name: "人材研修プログラム", status: "active", since: "2023-06" },
+      { name: "組織コンサルティング", status: "active", since: "2024-01" },
+      { name: "採用支援サービス", status: "active", since: "2024-03" },
+      { name: "オンライン研修プラットフォーム", status: "new", since: "2025-09" },
+      { name: "グローバル人材育成", status: "planned" },
+    ],
+    evolutions: [
+      { date: "2025-09", title: "オンライン研修開始", desc: "動画・テスト形式での研修コンテンツを本格展開" },
+      { date: "2024-03", title: "採用支援サービス拡充", desc: "採用戦略立案から面接同席まで一気通貫でサポート" },
+      { date: "2023-04", title: "サービス開始", desc: "営業代行を中核サービスとして立ち上げ" },
+    ],
   },
   {
     id: "titan",
-    name: "株式会社 TiTAN",
+    name: "TiTAN",
+    nameJP: "株式会社 TiTAN",
+    role: "金融教育 / FiNEDGE",
     logo: "/logos/titan-logo.png",
     subLogo: "/logos/finedge-logo.png",
-    subName: "FiNEDGE",
-    tagline: "オンライン金融教育スクール",
-    description:
-      "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォームを運営しています。",
-    color: "#d4a820",
-    accent: "rgba(212, 168, 32, 0.15)",
-    services: ["金融教育", "資産形成サポート", "オンライン講座"],
+    color: "#facc15",
+    desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
+    longDesc:
+      "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
+    capabilities: [
+      { name: "FiNEDGE 金融教育コース", status: "active", since: "2023-08" },
+      { name: "投資入門カリキュラム", status: "active", since: "2023-10" },
+      { name: "資産形成シミュレーター", status: "active", since: "2024-02" },
+      { name: "メンター制度", status: "active", since: "2024-05" },
+      { name: "FiNEDGE アプリ版", status: "new", since: "2025-10" },
+      { name: "法人向け金融研修", status: "planned" },
+    ],
+    evolutions: [
+      { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
+      { date: "2024-05", title: "メンター制度導入", desc: "現役FPによる1on1メンタリングプランを追加" },
+      { date: "2023-08", title: "FiNEDGE 開校", desc: "オンライン金融教育スクールとして本格ローンチ" },
+    ],
   },
   {
     id: "nlg",
-    name: "株式会社 NLG",
+    name: "NLG",
+    nameJP: "株式会社 NLG",
+    role: "フルオーダーメイドシステム開発",
     logo: "/logos/nlg-logo.png",
-    tagline: "フルオーダーメイド型システム開発",
-    description:
-      "企業の課題を深く理解し、一からカスタマイズするシステム開発で、業務効率化とDX推進を実現します。",
-    color: "#1a5fa8",
-    accent: "rgba(26, 95, 168, 0.15)",
-    services: ["システム開発", "DXコンサルティング", "ラクシズ"],
+    color: "#60a5fa",
+    desc: "NLGです。御社の課題を深く理解し、一からカスタムシステムを構築します。",
+    longDesc:
+      "企業の業務課題を深く理解し、フルスクラッチでカスタムするシステム開発で業務効率化・DX推進を実現。自社サービス「ラクシズ」も展開中。",
+    capabilities: [
+      { name: "フルオーダーシステム開発", status: "active", since: "2022-06" },
+      { name: "DX コンサルティング", status: "active", since: "2022-09" },
+      { name: "ラクシズ（業務効率化SaaS）", status: "active", since: "2024-01" },
+      { name: "API 連携・基盤構築", status: "active", since: "2023-03" },
+      { name: "AI 機能組み込み", status: "new", since: "2025-11" },
+      { name: "クラウドマイグレーション支援", status: "planned" },
+    ],
+    evolutions: [
+      { date: "2025-11", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
+      { date: "2024-01", title: "ラクシズ リリース", desc: "中小企業向け業務効率化SaaS「ラクシズ」の正式公開" },
+      { date: "2022-06", title: "開発事業スタート", desc: "フルオーダーメイドシステム開発として事業を立ち上げ" },
+    ],
   },
   {
     id: "lien",
-    name: "株式会社 LiEN",
+    name: "LiEN",
+    nameJP: "株式会社 LiEN",
+    role: "シーシャ・サロン事業",
     logo: "/logos/lien-logo.png",
-    tagline: "シーシャ・サロン事業",
-    description:
-      "大阪を中心に、くつろぎと洗練を融合したシーシャバー・カフェ・サロンを展開。都市に癒しの空間を提供します。",
-    color: "#7c5cbf",
-    accent: "rgba(124, 92, 191, 0.15)",
-    services: [
-      "Shisha Bar BLUE（梅田）",
-      "Shisha Cafe GREEN（アメ村）",
-      "Salon de LILAC（東心斎橋）",
+    color: "#c084fc",
+    desc: "LiENです。大阪に、くつろぎと洗練の時間を届けます。",
+    longDesc:
+      "大阪を中心に、シーシャバー・シーシャカフェ・ヘアサロンを展開。都市の中に心安らぐ特別な空間を創り続けます。",
+    capabilities: [
+      { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2023-02" },
+      { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2023-07" },
+      { name: "Salon de LILAC（東心斎橋）", status: "active", since: "2024-04" },
+      { name: "会員制プレミアムプラン", status: "new", since: "2025-08" },
+      { name: "オリジナルフレーバー開発", status: "new", since: "2025-09" },
+      { name: "FC展開・多店舗化", status: "planned" },
+    ],
+    evolutions: [
+      { date: "2025-09", title: "オリジナルフレーバー開発", desc: "LiEN独自ブレンドのシーシャフレーバーラインアップを展開" },
+      { date: "2024-04", title: "Salon de LILAC オープン", desc: "東心斎橋にヘアサロン複合型の新業態を出店" },
+      { date: "2023-07", title: "GREEN オープン", desc: "アメ村にシーシャカフェ2号店をオープン" },
+      { date: "2023-02", title: "BLUE オープン", desc: "梅田に1号店シーシャバーをオープン" },
     ],
   },
   {
     id: "bravo",
-    name: "株式会社 BRAVO",
+    name: "BRAVO",
+    nameJP: "株式会社 BRAVO",
+    role: "BRANDVOX / ポイ活アプリ",
     logo: "/logos/brandvox-logo.png",
-    tagline: "ポイ活 × SNS × ショッピングアプリ",
-    description:
+    color: "#fb7185",
+    desc: "BRAVOです。BRANDVOX で、消費を楽しく・賢く・お得に変えます。",
+    longDesc:
       "ポイ活・SNS・ショッピングを一つに融合したアプリ「BRANDVOX」で、消費者の新しいライフスタイルを創出します。",
-    color: "#c8991a",
-    accent: "rgba(200, 153, 26, 0.15)",
-    services: ["BRANDVOX アプリ", "ポイント還元", "SNSコマース"],
+    capabilities: [
+      { name: "BRANDVOX ショッピング機能", status: "active", since: "2024-06" },
+      { name: "ポイント還元システム", status: "active", since: "2024-06" },
+      { name: "SNS シェア機能", status: "active", since: "2024-09" },
+      { name: "インフルエンサー連携", status: "new", since: "2025-07" },
+      { name: "法人向け広告プラットフォーム", status: "new", since: "2025-11" },
+      { name: "海外展開", status: "planned" },
+    ],
+    evolutions: [
+      { date: "2025-11", title: "広告プラットフォーム β版", desc: "ブランドがユーザーへ直接アプローチできる広告機能を追加" },
+      { date: "2025-07", title: "インフルエンサー連携", desc: "インフルエンサーとユーザーをつなぐ紹介機能を実装" },
+      { date: "2024-06", title: "BRANDVOX ローンチ", desc: "ポイ活×SNS×ショッピングアプリとして正式リリース" },
+    ],
   },
 ];
 
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
+const statusMap = {
+  new:     { label: "NEW",  cls: "badge-new" },
+  active:  { label: "展開中", cls: "badge-active" },
+  planned: { label: "計画中", cls: "badge-planned" },
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
+/* ─── Blob background ─── */
+const blobs = [
+  { color: "#22d3ee", left: "8%",  top: "18%", size: 400 },
+  { color: "#a78bfa", left: "72%", top: "12%", size: 300 },
+  { color: "#f97316", left: "58%", top: "70%", size: 350 },
+  { color: "#f472b6", left: "12%", top: "62%", size: 250 },
+];
 
-  return { ref, inView };
+/* ─── Component: Status Badge ─── */
+function Badge({ status }: { status: string }) {
+  const s = statusMap[status as keyof typeof statusMap] ?? statusMap.active;
+  return (
+    <span className={`badge ${s.cls}`}>
+      {status === "new" && <span className="w-1.5 h-1.5 rounded-full bg-current" />}
+      {s.label}
+    </span>
+  );
 }
 
-function FadeIn({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const { ref, inView } = useInView();
+/* ─── Component: Company Section ─── */
+function CompanySection({ company }: { company: typeof companies[0] }) {
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(30px)",
-        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
-      }}
-    >
-      {children}
+    <div id={company.id} className="section-anchor mb-20">
+      {/* Header */}
+      <div className="flex items-start gap-5 mb-8">
+        <div
+          className="w-1 rounded-full self-stretch flex-shrink-0"
+          style={{ background: company.color, minHeight: "48px" }}
+        />
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-1 flex-wrap">
+            <h2
+              className="font-orbitron text-2xl font-bold tracking-wider"
+              style={{ color: company.color }}
+            >
+              {company.name}
+            </h2>
+            <span className="text-white/30 text-sm">|</span>
+            <span className="text-white/50 text-sm font-light tracking-wider">
+              -{company.name.split("").join("")}-
+            </span>
+          </div>
+          <p className="text-white/40 text-xs tracking-widest uppercase mb-2">
+            {company.nameJP}
+          </p>
+          <p className="text-white/50 text-sm font-light">{company.role}</p>
+        </div>
+        {/* Logo */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="h-10 flex items-center">
+            <Image
+              src={company.logo}
+              alt={company.name}
+              width={80}
+              height={40}
+              className="object-contain max-h-10 w-auto"
+            />
+          </div>
+          {company.subLogo && (
+            <Image
+              src={company.subLogo}
+              alt="sub"
+              width={70}
+              height={28}
+              className="object-contain max-h-8 w-auto opacity-70"
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Capabilities */}
+        <div className="glass-card p-6">
+          <h3 className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+            Capabilities
+          </h3>
+          <div>
+            {company.capabilities.map((cap, i) => (
+              <div key={i} className="cap-row">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: company.color, opacity: cap.status === "planned" ? 0.3 : 1 }}
+                  />
+                  <span
+                    className="text-sm"
+                    style={{ color: cap.status === "planned" ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.75)" }}
+                  >
+                    {cap.name}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+                  {cap.since && (
+                    <span className="text-white/25 text-[10px] hidden sm:block">
+                      since {cap.since}
+                    </span>
+                  )}
+                  <Badge status={cap.status} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Chat bubble + Evolution */}
+        <div className="space-y-5">
+          {/* Chat bubble */}
+          <div className="glass-card p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold font-orbitron"
+                style={{ background: `${company.color}20`, color: company.color, border: `1px solid ${company.color}40` }}
+              >
+                {company.name[0]}
+              </div>
+              <span className="text-xs font-semibold" style={{ color: company.color }}>
+                {company.name}
+              </span>
+            </div>
+            <p className="text-white/60 text-sm leading-relaxed font-light mb-4">
+              {company.desc}
+            </p>
+            <p className="text-white/35 text-xs leading-relaxed font-light">
+              {company.longDesc}
+            </p>
+          </div>
+
+          {/* Evolution log */}
+          <div className="glass-card p-6">
+            <h3 className="text-xs text-white/40 tracking-[0.2em] uppercase mb-5">
+              Evolution Log
+            </h3>
+            <div className="space-y-5 relative pl-5">
+              <div className="timeline-line" />
+              {company.evolutions.map((ev, i) => (
+                <div key={i} className="relative">
+                  <div
+                    className="absolute -left-5 top-1 w-2 h-2 rounded-full"
+                    style={{ backgroundColor: i === 0 ? company.color : "rgba(255,255,255,0.2)", border: `2px solid ${i === 0 ? company.color : "rgba(255,255,255,0.15)"}` }}
+                  />
+                  <div className="text-[10px] text-white/30 mb-1 font-mono">{ev.date}</div>
+                  <div className="text-sm font-medium text-white/80 mb-1">{ev.title}</div>
+                  <div className="text-xs text-white/35 font-light leading-relaxed">{ev.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
+/* ─── Main Page ─── */
 export default function Home() {
+  const [active, setActive] = useState("iwill");
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+
+      // Update active section based on scroll position
+      const sections = companies.map((c) => document.getElementById(c.id));
+      const offset = 120;
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = sections[i];
+        if (el && el.getBoundingClientRect().top <= offset) {
+          setActive(companies[i].id);
+          break;
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActive(id);
+    setMobileNavOpen(false);
+  };
+
+  const activeCompany = companies.find((c) => c.id === active) ?? companies[0];
+
   return (
-    <main className="min-h-screen">
-      {/* ─── Navigation ─── */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#07070f]/95 backdrop-blur-md border-b border-[rgba(93,184,212,0.1)]"
-            : "bg-transparent"
-        }`}
+    <div style={{ background: "#050508", minHeight: "100vh", position: "relative" }}>
+      {/* Background blobs */}
+      {blobs.map((b, i) => (
+        <div
+          key={i}
+          className="blob"
+          style={{
+            left: b.left,
+            top: b.top,
+            width: b.size,
+            height: b.size,
+            background: b.color,
+          }}
+        />
+      ))}
+
+      {/* ─── Header ─── */}
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          background: scrolled ? "rgba(5,5,8,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+          transition: "all 0.3s",
+        }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/logos/aile-logo.png"
-              alt="AiLE GROUP"
-              width={120}
-              height={48}
-              className="object-contain"
-            />
-          </div>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {["About", "Companies", "Vision", "Contact"].map((item, i) => (
-              <a
-                key={i}
-                href={`#${item.toLowerCase()}`}
-                className="text-sm text-white/60 hover:text-white transition-colors tracking-wider"
-              >
-                {item}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              className="text-sm px-5 py-2 border border-[rgba(93,184,212,0.4)] text-[#5db8d4] rounded-full hover:bg-[rgba(93,184,212,0.1)] transition-all"
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <Image src="/logos/aile-illust.png" alt="AiLE" width={32} height={32} style={{ objectFit: "contain" }} />
+            <span
+              className="font-orbitron"
+              style={{ fontSize: 16, fontWeight: 700, color: "#00d2ef", letterSpacing: "0.1em" }}
             >
-              お問い合わせ
-            </a>
+              AiLE GROUP
+            </span>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Desktop quick nav */}
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }} className="hidden md:flex">
+            {companies.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => scrollTo(c.id)}
+                style={{
+                  padding: "6px 14px",
+                  borderRadius: 8,
+                  fontSize: 12,
+                  fontFamily: "Orbitron, monospace",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  cursor: "pointer",
+                  border: "1px solid",
+                  transition: "all 0.2s",
+                  background: active === c.id ? `${c.color}18` : "transparent",
+                  borderColor: active === c.id ? `${c.color}50` : "transparent",
+                  color: active === c.id ? c.color : "rgba(255,255,255,0.4)",
+                }}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile menu btn */}
           <button
-            className="md:hidden text-white/70 hover:text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden"
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            style={{ color: "rgba(255,255,255,0.6)", padding: "8px" }}
           >
-            <div className="space-y-1.5">
-              <span
-                className={`block w-6 h-0.5 bg-current transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
-              />
-              <span
-                className={`block w-6 h-0.5 bg-current transition-all ${menuOpen ? "opacity-0" : ""}`}
-              />
-              <span
-                className={`block w-6 h-0.5 bg-current transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
-              />
+            <div style={{ width: 22, display: "flex", flexDirection: "column", gap: 5 }}>
+              <span style={{ height: 1, background: "currentColor", display: "block", transform: mobileNavOpen ? "rotate(45deg) translate(4px,4px)" : "none", transition: "all 0.2s" }} />
+              <span style={{ height: 1, background: "currentColor", display: "block", opacity: mobileNavOpen ? 0 : 1, transition: "all 0.2s" }} />
+              <span style={{ height: 1, background: "currentColor", display: "block", transform: mobileNavOpen ? "rotate(-45deg) translate(4px,-4px)" : "none", transition: "all 0.2s" }} />
             </div>
           </button>
         </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="md:hidden bg-[#07070f]/98 backdrop-blur-md border-t border-[rgba(93,184,212,0.1)] px-6 py-6 space-y-4">
-            {["About", "Companies", "Vision", "Contact"].map((item, i) => (
-              <a
-                key={i}
-                href={`#${item.toLowerCase()}`}
-                className="block text-white/70 hover:text-white py-2"
-                onClick={() => setMenuOpen(false)}
+        {/* Mobile dropdown */}
+        {mobileNavOpen && (
+          <div style={{ background: "rgba(5,5,8,0.98)", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "16px 24px" }}>
+            {companies.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => scrollTo(c.id)}
+                style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 0", color: active === c.id ? c.color : "rgba(255,255,255,0.5)", fontFamily: "Orbitron, monospace", fontSize: 13, background: "none", border: "none", cursor: "pointer" }}
               >
-                {item}
-              </a>
+                {c.name} <span style={{ opacity: 0.4, fontSize: 11 }}>— {c.role}</span>
+              </button>
             ))}
           </div>
         )}
-      </nav>
+      </header>
 
       {/* ─── Hero ─── */}
-      <section
-        id="about"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      >
-        {/* Background effects */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[rgba(93,184,212,0.04)] blur-[120px]" />
-          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[rgba(93,184,212,0.03)] blur-[80px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-[rgba(93,184,212,0.03)] blur-[60px]" />
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 24px 60px" }}>
+        <div style={{ maxWidth: 900, textAlign: "center" }}>
+          {/* Badge */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, border: "1px solid rgba(0,210,239,0.25)", background: "rgba(0,210,239,0.07)", marginBottom: 32 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00d2ef", display: "inline-block", animation: "pulse 2s infinite" }} />
+            <span style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.2em", fontFamily: "Orbitron, monospace", fontWeight: 600 }}>
+              AiLE GROUP OS
+            </span>
+          </div>
 
-          {/* Grid lines */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(93,184,212,1) 1px, transparent 1px), linear-gradient(90deg, rgba(93,184,212,1) 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            {/* Left: Text */}
-            <div className="flex-1 text-center lg:text-left">
-              <div
-                className="inline-flex items-center gap-2 text-xs text-[#5db8d4] tracking-[0.2em] uppercase mb-8 px-4 py-2 rounded-full border border-[rgba(93,184,212,0.2)] bg-[rgba(93,184,212,0.05)]"
-                style={{
-                  animation: "fadeIn 1s ease forwards",
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#5db8d4] animate-pulse" />
-                AiLE GROUP
-              </div>
-
-              <h1
-                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] mb-6"
-                style={{ animation: "fadeInUp 1s ease 0.2s both" }}
-              >
-                すべてを、
-                <br />
-                <span className="gradient-text">翼にして。</span>
-              </h1>
-
-              <p
-                className="text-white/50 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0"
-                style={{ animation: "fadeInUp 1s ease 0.4s both" }}
-              >
-                金融・教育・テクノロジー・エンターテインメント。
-                <br />
-                多彩な事業で、日本の未来を切り拓く。
-              </p>
-
-              <div
-                className="flex flex-col sm:flex-row items-center lg:items-start gap-4"
-                style={{ animation: "fadeInUp 1s ease 0.6s both" }}
-              >
-                <a
-                  href="#companies"
-                  className="w-full sm:w-auto px-8 py-4 bg-[#5db8d4] text-[#07070f] font-semibold rounded-full hover:bg-[#8dd4e8] transition-all text-center text-sm tracking-wider"
-                >
-                  グループ企業を見る
-                </a>
-                <a
-                  href="#contact"
-                  className="w-full sm:w-auto px-8 py-4 border border-white/20 text-white/70 rounded-full hover:border-white/40 hover:text-white transition-all text-center text-sm tracking-wider"
-                >
-                  お問い合わせ
-                </a>
-              </div>
-            </div>
-
-            {/* Right: Logo illustration */}
-            <div className="flex-1 flex items-center justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-[rgba(93,184,212,0.1)] blur-[60px] scale-150" />
-                <Image
-                  src="/logos/aile-illust.png"
-                  alt="AiLE GROUP"
-                  width={320}
-                  height={320}
-                  className="relative z-10 float-animation opacity-90"
-                  style={{ filter: "drop-shadow(0 0 40px rgba(93,184,212,0.4))" }}
-                />
-              </div>
+          {/* Main logo */}
+          <div style={{ marginBottom: 32, display: "flex", justifyContent: "center" }}>
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", inset: -20, borderRadius: "50%", background: "rgba(0,210,239,0.08)", filter: "blur(30px)" }} />
+              <Image
+                src="/logos/aile-illust.png"
+                alt="AiLE GROUP"
+                width={100}
+                height={100}
+                style={{ objectFit: "contain", position: "relative", zIndex: 1, animation: "float 5s ease-in-out infinite", filter: "drop-shadow(0 0 20px rgba(0,210,239,0.4))" }}
+              />
             </div>
           </div>
+
+          <h1
+            className="font-orbitron glow-text"
+            style={{ fontSize: "clamp(36px, 7vw, 72px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 16, letterSpacing: "0.05em", color: "#e2e8f0" }}
+          >
+            AiLE GROUP
+          </h1>
+          <p
+            className="font-orbitron"
+            style={{ fontSize: "clamp(14px, 2.5vw, 22px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.3em", marginBottom: 24, fontWeight: 400 }}
+          >
+            すべてを、翼にして。
+          </p>
+          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", lineHeight: 2, maxWidth: 560, margin: "0 auto 48px", fontWeight: 300 }}>
+            金融教育・営業代行・システム開発・飲食・アプリ——
+            <br />
+            多彩な翼を持つグループ企業が、日本を動かす。
+          </p>
 
           {/* Stats */}
-          <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 16, maxWidth: 600, margin: "0 auto 56px" }}>
             {[
-              { num: "5", label: "グループ会社" },
-              { num: "10+", label: "展開事業" },
-              { num: "3", label: "大阪拠点" },
-              { num: "∞", label: "可能性" },
-            ].map((stat, i) => (
+              { n: "5", l: "GROUP\nCOMPANIES" },
+              { n: "10+", l: "SERVICES" },
+              { n: "3", l: "OSAKA\nSTORES" },
+              { n: "∞", l: "POTENTIAL" },
+            ].map((s, i) => (
               <div
                 key={i}
-                className="text-center p-6 rounded-2xl border border-[rgba(93,184,212,0.1)] bg-[rgba(93,184,212,0.03)]"
-                style={{ animation: `fadeInUp 0.7s ease ${0.8 + i * 0.1}s both` }}
+                style={{ padding: "20px 16px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.03)", textAlign: "center" }}
               >
-                <div className="text-4xl font-bold gradient-text mb-1">{stat.num}</div>
-                <div className="text-white/40 text-xs tracking-wider">{stat.label}</div>
+                <div
+                  className="font-orbitron"
+                  style={{ fontSize: 28, fontWeight: 700, color: "#00d2ef", marginBottom: 6 }}
+                >
+                  {s.n}
+                </div>
+                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", whiteSpace: "pre-line" }}>
+                  {s.l}
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="text-white/30 text-xs tracking-[0.2em]">SCROLL</span>
-          <div className="w-px h-12 bg-gradient-to-b from-[rgba(93,184,212,0.5)] to-transparent" />
-        </div>
-      </section>
-
-      {/* ─── Marquee ─── */}
-      <section className="py-6 border-y border-[rgba(93,184,212,0.08)] overflow-hidden">
-        <div className="marquee-container">
-          <div className="marquee-track">
-            {[
-              "IWiLL",
-              "TiTAN",
-              "FiNEDGE",
-              "NLG",
-              "ラクシズ",
-              "LiEN",
-              "BLUE",
-              "GREEN",
-              "LILAC",
-              "BRAVO",
-              "BRANDVOX",
-              "AiLE GROUP",
-              "IWiLL",
-              "TiTAN",
-              "FiNEDGE",
-              "NLG",
-              "ラクシズ",
-              "LiEN",
-              "BLUE",
-              "GREEN",
-              "LILAC",
-              "BRAVO",
-              "BRANDVOX",
-              "AiLE GROUP",
-            ].map((text, i) => (
-              <span
-                key={i}
-                className="inline-flex items-center gap-6 px-6 text-white/20 text-sm tracking-[0.3em] uppercase font-light"
-              >
-                {text}
-                <span className="text-[#5db8d4]/30">✦</span>
-              </span>
-            ))}
+          {/* Scroll cue */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.25em" }}>SCROLL</span>
+            <div style={{ width: 1, height: 48, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
           </div>
         </div>
       </section>
 
-      {/* ─── About AiLE GROUP ─── */}
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <div className="flex items-center gap-4 mb-4">
-              <div className="section-line" />
-              <span className="text-[#5db8d4] text-xs tracking-[0.3em] uppercase">
-                About
+      {/* ─── Main Content ─── */}
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 32, alignItems: "flex-start" }}>
+
+        {/* ─── Sidebar ─── */}
+        <aside
+          className="hidden lg:block"
+          style={{ width: 200, flexShrink: 0, position: "sticky", top: 80, paddingBottom: 40 }}
+        >
+          <div style={{ marginBottom: 12, padding: "0 14px" }}>
+            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+              Group
+            </span>
+          </div>
+          {companies.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => scrollTo(c.id)}
+              className="nav-item"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                width: "100%",
+                marginBottom: 4,
+                background: active === c.id ? `${c.color}12` : "transparent",
+                borderColor: active === c.id ? `${c.color}30` : "transparent",
+                color: active === c.id ? c.color : "rgba(255,255,255,0.4)",
+                textAlign: "left",
+                fontFamily: "inherit",
+                cursor: "pointer",
+              }}
+            >
+              <div
+                className="nav-dot"
+                style={{ background: c.color, opacity: active === c.id ? 1 : 0.3 }}
+              />
+              <div>
+                <div className="font-orbitron" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>
+                  {c.name}
+                </div>
+                <div style={{ fontSize: 9, opacity: 0.5, marginTop: 1, lineHeight: 1.3 }}>{c.role.split("・")[0]}</div>
+              </div>
+            </button>
+          ))}
+
+          {/* AiLE tag at bottom */}
+          <div style={{ marginTop: 24, padding: "12px 14px", borderRadius: 12, border: "1px solid rgba(0,210,239,0.15)", background: "rgba(0,210,239,0.04)" }}>
+            <Image src="/logos/aile-logo.png" alt="AiLE" width={90} height={36} style={{ objectFit: "contain" }} />
+          </div>
+        </aside>
+
+        {/* ─── Sections ─── */}
+        <main style={{ flex: 1, minWidth: 0, paddingBottom: 80, paddingTop: 40 }}>
+          {companies.map((c) => (
+            <CompanySection key={c.id} company={c} />
+          ))}
+
+          {/* ─── Phase Roadmap ─── */}
+          <div id="roadmap" className="section-anchor" style={{ marginTop: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
+              <div style={{ width: 3, height: 24, borderRadius: 2, background: "#00d2ef" }} />
+              <h2 className="font-orbitron" style={{ fontSize: 18, fontWeight: 700, color: "#00d2ef", letterSpacing: "0.1em" }}>
+                Group Roadmap
+              </h2>
+              <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginLeft: 4 }}>
+                AiLE GROUPの拡張フェーズ
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 leading-tight">
-              多様な翼で、
-              <br />
-              <span className="gradient-text">社会を飛躍させる。</span>
-            </h2>
-          </FadeIn>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <FadeIn delay={0.1}>
-              <div className="space-y-6 text-white/60 text-base leading-relaxed font-light">
-                <p>
-                  AiLE GROUPは、「すべてを翼にして」というビジョンのもと、
-                  異なる分野の専門企業が連携し、シナジーを生み出すグループ経営体を構築しています。
-                </p>
-                <p>
-                  金融教育・営業代行・人材育成・フルオーダーメイドシステム開発・シーシャ飲食事業・SNSショッピングアプリ。
-                  それぞれが独自の強みを持ちながら、グループ全体として社会に新しい価値を提供します。
-                </p>
-                <p>
-                  大阪を拠点に、日本全国へ——そして世界へ向けて、AiLE GROUPの翼は広がり続けます。
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="glass-card" style={{ padding: "32px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
                 {[
-                  {
-                    title: "多角的事業",
-                    desc: "金融・IT・飲食・アプリなど幅広い分野で展開",
-                    icon: "◈",
-                  },
-                  {
-                    title: "グループシナジー",
-                    desc: "各社が連携し合い相乗効果を最大化",
-                    icon: "◉",
-                  },
-                  {
-                    title: "人材第一主義",
-                    desc: "人を育て、組織の力を高める経営哲学",
-                    icon: "◇",
-                  },
-                  {
-                    title: "革新への挑戦",
-                    desc: "常に新しい市場と価値を創出し続ける",
-                    icon: "◆",
-                  },
-                ].map((item, i) => (
+                  { n: "01", title: "グループ基盤確立", desc: "5社の体制を整備し、グループ経営の基盤を構築", done: true },
+                  { n: "02", title: "各社サービス拡充", desc: "IWiLL・TiTAN・NLG・LiEN・BRAVOの各サービスを深化", done: true },
+                  { n: "03", title: "デジタル化推進", desc: "FiNEDGEアプリ・BRANDVOXアプリの機能強化", done: true },
+                  { n: "04", title: "AI機能統合", desc: "NLGのAI開発を軸に、各社サービスへのAI実装", done: false },
+                  { n: "05", title: "グループシナジー最大化", desc: "5社のクロスセル・コラボレーション施策を本格展開", done: false },
+                  { n: "06", title: "全国展開・海外視野", desc: "大阪から全国へ、そして海外マーケットへの進出", done: false },
+                ].map((p, i) => (
                   <div
                     key={i}
-                    className="p-5 rounded-2xl border border-[rgba(93,184,212,0.1)] bg-[rgba(93,184,212,0.03)] hover:border-[rgba(93,184,212,0.25)] transition-all"
+                    style={{
+                      display: "flex",
+                      gap: 16,
+                      padding: "16px",
+                      borderRadius: 14,
+                      border: "1px solid",
+                      borderColor: p.done ? "rgba(34,197,94,0.2)" : "rgba(255,255,255,0.06)",
+                      background: p.done ? "rgba(34,197,94,0.05)" : "rgba(255,255,255,0.02)",
+                    }}
                   >
-                    <div className="text-[#5db8d4] text-xl mb-3">{item.icon}</div>
-                    <div className="text-white text-sm font-medium mb-2">{item.title}</div>
-                    <div className="text-white/40 text-xs leading-relaxed">{item.desc}</div>
+                    <div
+                      className="phase-dot font-orbitron"
+                      style={{
+                        background: p.done ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.05)",
+                        color: p.done ? "#4ade80" : "rgba(255,255,255,0.3)",
+                        border: `1px solid ${p.done ? "rgba(34,197,94,0.3)" : "rgba(255,255,255,0.08)"}`,
+                      }}
+                    >
+                      {p.n}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: p.done ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.45)" }}>
+                          {p.title}
+                        </span>
+                        {p.done && <Badge status="active" />}
+                      </div>
+                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.6, fontWeight: 300 }}>
+                        {p.desc}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
-            </FadeIn>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ─── Group Companies ─── */}
-      <section id="companies" className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <div className="flex items-center gap-4 mb-4">
-              <div className="section-line" />
-              <span className="text-[#5db8d4] text-xs tracking-[0.3em] uppercase">
-                Companies
-              </span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              グループ企業
+          {/* ─── Contact ─── */}
+          <div style={{ marginTop: 60, padding: "48px 40px", borderRadius: 24, border: "1px solid rgba(0,210,239,0.2)", background: "rgba(0,210,239,0.04)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
+            <p className="font-orbitron" style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
+            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 12, color: "#e2e8f0" }}>
+              ともに、<span style={{ color: "#00d2ef" }}>飛躍しよう。</span>
             </h2>
-            <p className="text-white/40 text-base mb-16 font-light">
-              それぞれの専門性が融合し、グループとしての力を生み出す。
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.35)", lineHeight: 2, marginBottom: 36, fontWeight: 300 }}>
+              事業連携・採用・メディア取材など、お気軽にご連絡ください。
             </p>
-          </FadeIn>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {companies.map((company, i) => (
-              <FadeIn key={company.id} delay={i * 0.1}>
-                <div
-                  className="card-hover group rounded-3xl border p-8 h-full flex flex-col"
-                  style={{
-                    borderColor: "rgba(255,255,255,0.07)",
-                    backgroundColor: company.accent,
-                    background: `linear-gradient(135deg, ${company.accent} 0%, rgba(13,13,26,0.8) 100%)`,
-                  }}
-                >
-                  {/* Logo */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="h-14 flex items-center">
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        width={100}
-                        height={50}
-                        className="object-contain max-h-14 w-auto"
-                      />
-                    </div>
-                    {company.subLogo && (
-                      <div className="flex items-center">
-                        <Image
-                          src={company.subLogo}
-                          alt={company.subName || ""}
-                          width={80}
-                          height={32}
-                          className="object-contain max-h-10 w-auto opacity-80"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Company name */}
-                  <div className="mb-3">
-                    <div className="text-xs text-white/40 mb-1 tracking-wider">
-                      {company.name}
-                    </div>
-                    <div
-                      className="text-sm font-semibold"
-                      style={{ color: company.color }}
-                    >
-                      {company.tagline}
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-white/50 text-sm leading-relaxed mb-6 flex-1 font-light">
-                    {company.description}
-                  </p>
-
-                  {/* Services */}
-                  <div className="space-y-2">
-                    {company.services.map((service, j) => (
-                      <div key={j} className="flex items-center gap-2">
-                        <div
-                          className="w-1 h-1 rounded-full flex-shrink-0"
-                          style={{ backgroundColor: company.color }}
-                        />
-                        <span className="text-xs text-white/40 font-light">
-                          {service}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Bottom accent */}
-                  <div
-                    className="mt-6 h-px w-full opacity-20 group-hover:opacity-50 transition-opacity"
-                    style={{
-                      background: `linear-gradient(90deg, ${company.color}, transparent)`,
-                    }}
-                  />
-                </div>
-              </FadeIn>
-            ))}
-
-            {/* AiLE GROUP center card */}
-            <FadeIn delay={0.5}>
-              <div className="card-hover md:col-span-2 lg:col-span-1 rounded-3xl border border-[rgba(93,184,212,0.2)] p-8 flex flex-col items-center justify-center text-center glow-pulse bg-[rgba(93,184,212,0.05)]">
-                <div className="mb-6">
-                  <Image
-                    src="/logos/aile-logo.png"
-                    alt="AiLE GROUP"
-                    width={140}
-                    height={60}
-                    className="object-contain"
-                  />
-                </div>
-                <div className="text-white/30 text-xs tracking-[0.3em] uppercase mb-4">
-                  Holding Company
-                </div>
-                <p className="text-white/50 text-sm font-light leading-relaxed">
-                  各グループ会社を統括し、
-                  <br />
-                  シナジーを最大化する
-                  <br />
-                  グループ持株会社
-                </p>
-              </div>
-            </FadeIn>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <a
+                href="mailto:info@aile-group.jp"
+                style={{ padding: "12px 32px", borderRadius: 99, background: "#00d2ef", color: "#050508", fontWeight: 700, fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", transition: "all 0.2s" }}
+              >
+                メールで問い合わせる
+              </a>
+              <a
+                href="#"
+                style={{ padding: "12px 32px", borderRadius: 99, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: 13, letterSpacing: "0.05em", textDecoration: "none" }}
+              >
+                採用情報を見る
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* ─── Vision ─── */}
-      <section id="vision" className="py-32 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[rgba(93,184,212,0.04)] blur-[100px]" />
-        </div>
-
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <FadeIn>
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="section-line" />
-              <span className="text-[#5db8d4] text-xs tracking-[0.3em] uppercase">
-                Vision
-              </span>
-              <div
-                className="section-line"
-                style={{ transform: "rotate(180deg)" }}
-              />
-            </div>
-
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-              事業の枠を超えて、
-              <br />
-              <span className="gradient-text">未来を共に創る。</span>
-            </h2>
-
-            <p className="text-white/40 text-lg font-light leading-relaxed max-w-2xl mx-auto mb-16">
-              AiLE GROUPは、単なるビジネスの集合体ではありません。
-              多様な才能と事業が交わる場所で、日本社会に新しいスタンダードを打ち立てることを目指しています。
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  num: "01",
-                  title: "Connect",
-                  desc: "異なる事業・人・才能をつなぎ、新しい価値を生み出す",
-                },
-                {
-                  num: "02",
-                  title: "Grow",
-                  desc: "グループ全体で成長し、各社の可能性を最大限に引き出す",
-                },
-                {
-                  num: "03",
-                  title: "Impact",
-                  desc: "社会に真の変化をもたらし、長期的な影響を残す",
-                },
-              ].map((v, i) => (
-                <div
-                  key={i}
-                  className="p-8 rounded-3xl border border-[rgba(93,184,212,0.1)] bg-[rgba(93,184,212,0.03)] text-left"
-                >
-                  <div className="text-[#5db8d4]/30 text-5xl font-bold mb-4 font-mono">
-                    {v.num}
-                  </div>
-                  <div className="text-white text-xl font-semibold mb-3">{v.title}</div>
-                  <div className="text-white/40 text-sm font-light leading-relaxed">
-                    {v.desc}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ─── Contact CTA ─── */}
-      <section id="contact" className="py-32 px-6">
-        <div className="max-w-4xl mx-auto">
-          <FadeIn>
-            <div className="rounded-3xl border border-[rgba(93,184,212,0.2)] bg-[rgba(93,184,212,0.04)] p-12 md:p-20 text-center relative overflow-hidden">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-[rgba(93,184,212,0.4)] to-transparent" />
-
-              <div className="text-[#5db8d4] text-xs tracking-[0.3em] uppercase mb-6">
-                Contact
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                ともに、
-                <span className="gradient-text">飛躍しよう。</span>
-              </h2>
-              <p className="text-white/40 text-base font-light mb-10 max-w-lg mx-auto leading-relaxed">
-                事業連携・採用・メディア取材など、
-                お気軽にお問い合わせください。
-                AiLE GROUPはあなたのビジョンを歓迎します。
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  href="mailto:info@aile-group.jp"
-                  className="w-full sm:w-auto px-10 py-4 bg-[#5db8d4] text-[#07070f] font-semibold rounded-full hover:bg-[#8dd4e8] transition-all text-sm tracking-wider"
-                >
-                  メールで問い合わせる
-                </a>
-                <a
-                  href="#"
-                  className="w-full sm:w-auto px-10 py-4 border border-white/15 text-white/60 rounded-full hover:border-white/30 hover:text-white transition-all text-sm tracking-wider"
-                >
-                  採用情報を見る
-                </a>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+        </main>
+      </div>
 
       {/* ─── Footer ─── */}
-      <footer className="border-t border-[rgba(93,184,212,0.08)] py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex flex-col items-center md:items-start gap-3">
-              <Image
-                src="/logos/aile-logo.png"
-                alt="AiLE GROUP"
-                width={100}
-                height={40}
-                className="object-contain opacity-70"
-              />
-              <p className="text-white/25 text-xs font-light tracking-wider">
-                すべてを、翼にして。
-              </p>
-            </div>
-
-            <div className="flex items-center gap-8">
-              {["Privacy Policy", "Terms", "Sitemap"].map((item, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="text-white/25 text-xs hover:text-white/50 transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-
-            <p className="text-white/20 text-xs font-light">
-              © 2025 AiLE GROUP. All rights reserved.
-            </p>
+      <footer
+        style={{
+          position: "relative",
+          zIndex: 1,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          marginTop: 80,
+          padding: "32px 24px",
+        }}
+      >
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <Image src="/logos/aile-illust.png" alt="AiLE" width={24} height={24} style={{ objectFit: "contain", opacity: 0.5 }} />
+            <span className="font-orbitron" style={{ fontSize: 12, color: "rgba(0,210,239,0.4)", letterSpacing: "0.15em" }}>
+              AiLE GROUP
+            </span>
           </div>
-
           {/* Group logos */}
-          <div className="mt-10 pt-8 border-t border-[rgba(255,255,255,0.05)]">
-            <p className="text-white/20 text-xs text-center mb-6 tracking-wider">
-              GROUP COMPANIES
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-30">
-              {[
-                { src: "/logos/iwill-logo.png", alt: "IWiLL" },
-                { src: "/logos/titan-logo.png", alt: "TiTAN" },
-                { src: "/logos/finedge-logo.png", alt: "FiNEDGE" },
-                { src: "/logos/nlg-logo.png", alt: "NLG" },
-                { src: "/logos/lien-logo.png", alt: "LiEN" },
-                { src: "/logos/brandvox-logo.png", alt: "BRANDVOX" },
-              ].map((logo, i) => (
-                <Image
-                  key={i}
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={60}
-                  height={30}
-                  className="object-contain max-h-8 w-auto"
-                />
-              ))}
-            </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, justifyContent: "center", opacity: 0.25 }}>
+            {[
+              { src: "/logos/iwill-logo.png", alt: "IWiLL" },
+              { src: "/logos/titan-logo.png", alt: "TiTAN" },
+              { src: "/logos/finedge-logo.png", alt: "FiNEDGE" },
+              { src: "/logos/nlg-logo.png", alt: "NLG" },
+              { src: "/logos/lien-logo.png", alt: "LiEN" },
+              { src: "/logos/brandvox-logo.png", alt: "BRANDVOX" },
+            ].map((l, i) => (
+              <Image key={i} src={l.src} alt={l.alt} width={50} height={24} style={{ objectFit: "contain", maxHeight: 24, width: "auto" }} />
+            ))}
           </div>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em" }}>
+            © 2025 AiLE GROUP. All rights reserved.
+          </p>
         </div>
       </footer>
 
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
         }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
         }
       `}</style>
-    </main>
+    </div>
   );
 }

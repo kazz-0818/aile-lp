@@ -80,6 +80,14 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220;
   const R_MID   = 160;
   const R_INNER  = 95;
+  const LOGO_BOX = 92;
+  const LOGO_RADIUS = 20;
+  const LOGO_IMG = 68;
+  const LOGO_IMG_MAX_H = 58;
+  const NODE_R = 46;
+  const NODE_R_HOV = 50;
+  const NODE_GLOW_R = 54;
+  const NODE_PULSE_R = 58;
 
   // Slow rotation for the dashed rings
   const rot1 = (tick / 60000) * 360;      // very slow clockwise
@@ -233,10 +241,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           return (
             <g key={c.id}>
               {isHov && (
-                <circle cx={pos.x} cy={pos.y} r={44} fill={`${c.color}12`} />
+                <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />
               )}
               <circle
-                cx={pos.x} cy={pos.y} r={isHov ? 40 : 36}
+                cx={pos.x} cy={pos.y} r={isHov ? NODE_R_HOV : NODE_R}
                 fill={isHov ? `${c.color}18` : "rgba(5,5,8,0.7)"}
                 stroke={c.color}
                 strokeWidth={isHov ? 1.5 : 1}
@@ -248,7 +256,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 onMouseLeave={() => setHovered(null)}
               />
               {isHov && (
-                <circle cx={pos.x} cy={pos.y} r={48} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />
+                <circle cx={pos.x} cy={pos.y} r={NODE_PULSE_R} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />
               )}
             </g>
           );
@@ -286,7 +294,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const isRight  = angleMod > 45 && angleMod <= 135;
         const isLeft   = angleMod >= 225 && angleMod < 315;
 
-        const labelOffset = 62;
+        const labelOffset = 74;
         const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
 
         return (
@@ -301,9 +309,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 left: `${(pos.x / SIZE) * 100}%`,
                 top: `${(pos.y / SIZE) * 100}%`,
                 transform: "translate(-50%, -50%)",
-                width: 70,
-                height: 70,
-                borderRadius: 16,
+                width: LOGO_BOX,
+                height: LOGO_BOX,
+                borderRadius: LOGO_RADIUS,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -318,9 +326,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               <Image
                 src={c.logo}
                 alt={c.name}
-                width={52}
-                height={52}
-                style={{ objectFit: "contain", maxWidth: 52, maxHeight: 44, width: "auto", height: "auto" }}
+                width={LOGO_IMG}
+                height={LOGO_IMG}
+                style={{ objectFit: "contain", maxWidth: LOGO_IMG, maxHeight: LOGO_IMG_MAX_H, width: "auto", height: "auto" }}
               />
             </div>
 

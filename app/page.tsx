@@ -476,23 +476,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* CTAs */}
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a
-                href="#iwill"
-                onClick={(e) => { e.preventDefault(); document.getElementById("iwill")?.scrollIntoView({ behavior: "smooth" }); }}
-                style={{ padding: "12px 28px", borderRadius: 99, background: "#00d2ef", color: "#050508", fontWeight: 700, fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", cursor: "pointer" }}
-              >
-                グループ企業を見る
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-                style={{ padding: "12px 28px", borderRadius: 99, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", cursor: "pointer" }}
-              >
-                お問い合わせ
-              </a>
-            </div>
           </div>
 
           {/* Right: Orbital Diagram */}

@@ -426,10 +426,10 @@ export default function Home() {
 
       {/* ─── Hero ─── */}
       <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 24px 60px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", width: "100%", display: "flex", flexDirection: "row", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 48 }}>
 
-          {/* Left: Text */}
-          <div style={{ flex: "1 1 340px", minWidth: 0 }}>
+          {/* Text */}
+          <div style={{ textAlign: "center", width: "100%" }}>
             <h1
               className="font-orbitron glow-text"
               style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 16, letterSpacing: "0.05em", color: "#e2e8f0" }}
@@ -444,8 +444,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right: Orbital Diagram */}
-          <div style={{ flex: "1 1 500px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: 0 }}>
+          {/* Orbital Diagram */}
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
             <OrbitalDiagram onSelect={(id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }} />
           </div>
         </div>

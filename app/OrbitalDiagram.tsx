@@ -17,7 +17,7 @@ const orbitCompanies = [
     id: "nlg",
     name: "NLG",
     nameJP: "株式会社 NLG",
-    sub: "フルオーダーメイド型\nシステム開発",
+    sub: "ラクシス\n業務効率化SaaS",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
     angle: 68,      // upper right

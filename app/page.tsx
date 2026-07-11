@@ -466,7 +466,7 @@ export default function Home() {
           </div>
 
           {/* Desktop quick nav */}
-          <div style={{ display: "flex", alignItems: "center", gap: 4 }} className="hidden md:flex">
+          <div className="hidden md:flex" style={{ alignItems: "center", gap: 4 }}>
             {companies.map((c) => (
               <button
                 key={c.id}
@@ -539,7 +539,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: isMobile ? "72px 16px 40px" : "100px 24px 60px" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 40px" : "100px 24px 60px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 40 }}>
 
           {/* Text */}

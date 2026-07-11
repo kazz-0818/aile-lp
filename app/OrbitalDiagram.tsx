@@ -26,7 +26,7 @@ const orbitCompanies = [
     id: "bravo",
     name: "BRAVO",
     nameJP: "株式会社BRAVO",
-    sub: "BRANDVOX\nソーシャルショッピング",
+    sub: "アパレルブランド事業\nBRANDVOX（ファッション×ポイ活）",
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
     angle: 136,     // lower right
@@ -35,7 +35,7 @@ const orbitCompanies = [
     id: "lien",
     name: "LiEN",
     nameJP: "株式会社LiEN",
-    sub: "Shisha Bar BLUE\nShisha Cafe GREEN",
+    sub: "飲食店事業",
     logo: "/logos/lien-logo.png",
     color: "#c084fc",
     angle: 224,     // lower left

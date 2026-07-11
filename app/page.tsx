@@ -17,6 +17,7 @@ type Company = {
   evolutions: { date: string; title: string; desc: string }[];
   subLogo?: string;
   roleLogo?: string;
+  roleLogoAlt?: string;
 };
 
 /* ─── Data ─── */
@@ -51,6 +52,7 @@ const companies: Company[] = [
     nameJP: "株式会社 TiTAN",
     role: "金融教育",
     roleLogo: "/logos/finedge-logo.png",
+    roleLogoAlt: "FiNEDGE",
     logo: "/logos/titan-logo.png",
     color: "#b0b8c8",
     desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
@@ -122,12 +124,14 @@ const companies: Company[] = [
     id: "bravo",
     name: "BRAVO",
     nameJP: "株式会社 BRAVO",
-    role: "BRANDVOX / ソーシャルショッピングアプリ",
+    role: "アパレルブランド事業",
+    roleLogo: "/logos/brandvox-logo.png",
+    roleLogoAlt: "BRANDVOX",
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
-    desc: "BRAVOです。世界中のブランド品を、着て・見せて・貯めて・買える。",
+    desc: "BRAVOです。アパレルブランド事業を軸に、ファッション×ポイ活アプリ「BRANDVOX」を展開しています。",
     longDesc:
-      "世界中のブランド品を日本から手軽に購入できるソーシャルショッピングアプリ「BRANDVOX」。日本未上陸ブランドの情報もいち早くチェックでき、スタイル投稿とポイント機能でSNSとショッピングが融合した新感覚アプリです。",
+      "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",
     capabilities: [
       { name: "世界中のブランド品ショッピング", status: "active", since: "2024-06" },
       { name: "日本未上陸ブランドの取扱い", status: "active", since: "2024-06" },
@@ -229,7 +233,7 @@ function CompanySection({ company }: { company: Company }) {
                 <span style={{ display: "inline-flex", alignItems: "center", height: 18 }}>
                   <Image
                     src={company.roleLogo}
-                    alt="FiNEDGE"
+                    alt={company.roleLogoAlt ?? company.name}
                     width={72}
                     height={18}
                     className="object-contain"

@@ -463,54 +463,18 @@ export default function Home() {
 
           {/* Left: Text */}
           <div style={{ flex: "1 1 340px", minWidth: 0 }}>
-            {/* Badge */}
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, border: "1px solid rgba(0,210,239,0.25)", background: "rgba(0,210,239,0.07)", marginBottom: 32 }}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00d2ef", display: "inline-block", animation: "pulse 2s infinite" }} />
-              <span style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.2em", fontFamily: "Orbitron, monospace", fontWeight: 600 }}>
-                AiLE GROUP
-              </span>
-            </div>
-
             <h1
               className="font-orbitron glow-text"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 12, letterSpacing: "0.05em", color: "#e2e8f0" }}
+              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 16, letterSpacing: "0.05em", color: "#e2e8f0" }}
             >
               AiLE GROUP
             </h1>
             <p
               className="font-orbitron"
-              style={{ fontSize: "clamp(13px, 2vw, 20px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.25em", marginBottom: 24, fontWeight: 400 }}
+              style={{ fontSize: "clamp(13px, 2vw, 20px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.25em", fontWeight: 400 }}
             >
               すべてを、翼にして。
             </p>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 2, marginBottom: 40, fontWeight: 300 }}>
-              金融教育・営業代行・システム開発・飲食・アプリ——
-              <br />
-              多彩な翼を持つグループ企業が、日本を動かす。
-            </p>
-
-            {/* Stats */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginBottom: 40, maxWidth: 360 }}>
-              {[
-                { n: "5",   l: "GROUP COMPANIES" },
-                { n: "10+", l: "SERVICES" },
-                { n: "3",   l: "OSAKA STORES" },
-                { n: "∞",   l: "POTENTIAL" },
-              ].map((s, i) => (
-                <div
-                  key={i}
-                  style={{ padding: "16px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.03)", textAlign: "center" }}
-                >
-                  <div className="font-orbitron" style={{ fontSize: 24, fontWeight: 700, color: "#00d2ef", marginBottom: 4 }}>
-                    {s.n}
-                  </div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>
-                    {s.l}
-                  </div>
-                </div>
-              ))}
-            </div>
-
           </div>
 
           {/* Right: Orbital Diagram */}

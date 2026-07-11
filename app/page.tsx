@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import OrbitalDiagram from "./OrbitalDiagram";
 
 /* ─── Data ─── */
 const companies = [
@@ -422,78 +423,88 @@ export default function Home() {
       </header>
 
       {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 24px 60px" }}>
-        <div style={{ maxWidth: 900, textAlign: "center" }}>
-          {/* Badge */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, border: "1px solid rgba(0,210,239,0.25)", background: "rgba(0,210,239,0.07)", marginBottom: 32 }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00d2ef", display: "inline-block", animation: "pulse 2s infinite" }} />
-            <span style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.2em", fontFamily: "Orbitron, monospace", fontWeight: 600 }}>
-              AiLE GROUP OS
-            </span>
-          </div>
+      <section style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 24px 60px" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", width: "100%", display: "flex", flexDirection: "row", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
 
-          {/* Main logo */}
-          <div style={{ marginBottom: 32, display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative" }}>
-              <div style={{ position: "absolute", inset: -20, borderRadius: "50%", background: "rgba(0,210,239,0.08)", filter: "blur(30px)" }} />
-              <Image
-                src="/logos/aile-illust.png"
-                alt="AiLE GROUP"
-                width={100}
-                height={100}
-                style={{ objectFit: "contain", position: "relative", zIndex: 1, animation: "float 5s ease-in-out infinite", filter: "drop-shadow(0 0 20px rgba(0,210,239,0.4))" }}
-              />
+          {/* Left: Text */}
+          <div style={{ flex: "1 1 340px", minWidth: 0 }}>
+            {/* Badge */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, border: "1px solid rgba(0,210,239,0.25)", background: "rgba(0,210,239,0.07)", marginBottom: 32 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00d2ef", display: "inline-block", animation: "pulse 2s infinite" }} />
+              <span style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.2em", fontFamily: "Orbitron, monospace", fontWeight: 600 }}>
+                AiLE GROUP
+              </span>
+            </div>
+
+            <h1
+              className="font-orbitron glow-text"
+              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 12, letterSpacing: "0.05em", color: "#e2e8f0" }}
+            >
+              AiLE GROUP
+            </h1>
+            <p
+              className="font-orbitron"
+              style={{ fontSize: "clamp(13px, 2vw, 20px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.25em", marginBottom: 24, fontWeight: 400 }}
+            >
+              すべてを、翼にして。
+            </p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 2, marginBottom: 40, fontWeight: 300 }}>
+              金融教育・営業代行・システム開発・飲食・アプリ——
+              <br />
+              多彩な翼を持つグループ企業が、日本を動かす。
+            </p>
+
+            {/* Stats */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginBottom: 40, maxWidth: 360 }}>
+              {[
+                { n: "5",   l: "GROUP COMPANIES" },
+                { n: "10+", l: "SERVICES" },
+                { n: "3",   l: "OSAKA STORES" },
+                { n: "∞",   l: "POTENTIAL" },
+              ].map((s, i) => (
+                <div
+                  key={i}
+                  style={{ padding: "16px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.03)", textAlign: "center" }}
+                >
+                  <div className="font-orbitron" style={{ fontSize: 24, fontWeight: 700, color: "#00d2ef", marginBottom: 4 }}>
+                    {s.n}
+                  </div>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>
+                    {s.l}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <a
+                href="#iwill"
+                onClick={(e) => { e.preventDefault(); document.getElementById("iwill")?.scrollIntoView({ behavior: "smooth" }); }}
+                style={{ padding: "12px 28px", borderRadius: 99, background: "#00d2ef", color: "#050508", fontWeight: 700, fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", cursor: "pointer" }}
+              >
+                グループ企業を見る
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                style={{ padding: "12px 28px", borderRadius: 99, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: 13, letterSpacing: "0.05em", textDecoration: "none", cursor: "pointer" }}
+              >
+                お問い合わせ
+              </a>
             </div>
           </div>
 
-          <h1
-            className="font-orbitron glow-text"
-            style={{ fontSize: "clamp(36px, 7vw, 72px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 16, letterSpacing: "0.05em", color: "#e2e8f0" }}
-          >
-            AiLE GROUP
-          </h1>
-          <p
-            className="font-orbitron"
-            style={{ fontSize: "clamp(14px, 2.5vw, 22px)", color: "rgba(0,210,239,0.8)", letterSpacing: "0.3em", marginBottom: 24, fontWeight: 400 }}
-          >
-            すべてを、翼にして。
-          </p>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", lineHeight: 2, maxWidth: 560, margin: "0 auto 48px", fontWeight: 300 }}>
-            金融教育・営業代行・システム開発・飲食・アプリ——
-            <br />
-            多彩な翼を持つグループ企業が、日本を動かす。
-          </p>
-
-          {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 16, maxWidth: 600, margin: "0 auto 56px" }}>
-            {[
-              { n: "5", l: "GROUP\nCOMPANIES" },
-              { n: "10+", l: "SERVICES" },
-              { n: "3", l: "OSAKA\nSTORES" },
-              { n: "∞", l: "POTENTIAL" },
-            ].map((s, i) => (
-              <div
-                key={i}
-                style={{ padding: "20px 16px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.03)", textAlign: "center" }}
-              >
-                <div
-                  className="font-orbitron"
-                  style={{ fontSize: 28, fontWeight: 700, color: "#00d2ef", marginBottom: 6 }}
-                >
-                  {s.n}
-                </div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", whiteSpace: "pre-line" }}>
-                  {s.l}
-                </div>
-              </div>
-            ))}
+          {/* Right: Orbital Diagram */}
+          <div style={{ flex: "1 1 500px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: 0 }}>
+            <OrbitalDiagram onSelect={(id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }} />
           </div>
+        </div>
 
-          {/* Scroll cue */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.25em" }}>SCROLL</span>
-            <div style={{ width: 1, height: 48, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
-          </div>
+        {/* Scroll cue */}
+        <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.25em" }}>SCROLL</span>
+          <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
         </div>
       </section>
 

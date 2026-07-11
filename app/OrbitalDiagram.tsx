@@ -1,0 +1,393 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+const orbitCompanies = [
+  {
+    id: "iwill",
+    name: "IWiLL",
+    nameJP: "株式会社 IWiLL",
+    sub: "営業代行・人材教育",
+    logo: "/logos/iwill-logo.png",
+    color: "#f97316",
+    angle: 0,       // top
+  },
+  {
+    id: "nlg",
+    name: "NLG",
+    nameJP: "株式会社 NLG",
+    sub: "フルオーダーメイド型\nシステム開発",
+    logo: "/logos/nlg-logo.png",
+    color: "#60a5fa",
+    angle: 68,      // upper right
+  },
+  {
+    id: "bravo",
+    name: "BRAVO",
+    nameJP: "株式会社 BRAVO",
+    sub: "ポイ活×SNS×\nショッピングアプリ",
+    logo: "/logos/brandvox-logo.png",
+    color: "#fb7185",
+    angle: 136,     // lower right
+  },
+  {
+    id: "lien",
+    name: "LiEN",
+    nameJP: "株式会社 LiEN",
+    sub: "Shisha Bar BLUE\nShisha Cafe GREEN",
+    logo: "/logos/lien-logo.png",
+    color: "#c084fc",
+    angle: 224,     // lower left
+  },
+  {
+    id: "titan",
+    name: "TiTAN",
+    nameJP: "株式会社 TiTAN",
+    sub: "オンライン金融教育\nFiNEDGE",
+    logo: "/logos/titan-logo.png",
+    color: "#facc15",
+    angle: 292,     // upper left
+  },
+];
+
+function toXY(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = ((angleDeg - 90) * Math.PI) / 180;
+  return {
+    x: cx + r * Math.cos(rad),
+    y: cy + r * Math.sin(rad),
+  };
+}
+
+export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [tick, setTick] = useState(0);
+  const rafRef = useRef<number | null>(null);
+  const startRef = useRef(Date.now());
+
+  useEffect(() => {
+    const loop = () => {
+      setTick(Date.now() - startRef.current);
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
+
+  const SIZE = 560;
+  const CX = SIZE / 2;
+  const CY = SIZE / 2;
+  const R_OUTER = 220;
+  const R_MID   = 160;
+  const R_INNER  = 95;
+
+  // Slow rotation for the dashed rings
+  const rot1 = (tick / 60000) * 360;      // very slow clockwise
+  const rot2 = -(tick / 45000) * 360;     // counter-clockwise
+  const rot3 = (tick / 80000) * 360;
+
+  // Pulse scale for center
+  const pulse = 1 + 0.04 * Math.sin(tick / 1200);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: SIZE,
+        height: SIZE,
+        maxWidth: "100%",
+        margin: "0 auto",
+        userSelect: "none",
+      }}
+    >
+      <svg
+        width={SIZE}
+        height={SIZE}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        style={{ position: "absolute", inset: 0, overflow: "visible" }}
+      >
+        <defs>
+          {/* Glow filter */}
+          <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-soft" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          {/* Radial gradient for center */}
+          <radialGradient id="center-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(0,210,239,0.15)" />
+            <stop offset="100%" stopColor="rgba(0,210,239,0)" />
+          </radialGradient>
+          {/* Ring gradient */}
+          <radialGradient id="ring-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="60%" stopColor="rgba(0,210,239,0)" />
+            <stop offset="100%" stopColor="rgba(0,210,239,0.06)" />
+          </radialGradient>
+          {orbitCompanies.map((c) => (
+            <radialGradient key={c.id} id={`grad-${c.id}`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={c.color} stopOpacity="0.25" />
+              <stop offset="100%" stopColor={c.color} stopOpacity="0"  />
+            </radialGradient>
+          ))}
+        </defs>
+
+        {/* Outermost ambient glow */}
+        <circle cx={CX} cy={CY} r={R_OUTER + 30} fill="url(#ring-glow)" />
+
+        {/* ── Rotating ring 1: outer dashed ── */}
+        <g transform={`rotate(${rot1}, ${CX}, ${CY})`}>
+          <circle
+            cx={CX} cy={CY} r={R_OUTER}
+            fill="none"
+            stroke="rgba(0,210,239,0.2)"
+            strokeWidth="1"
+            strokeDasharray="4 12"
+          />
+        </g>
+
+        {/* ── Solid outer ring ── */}
+        <circle
+          cx={CX} cy={CY} r={R_OUTER}
+          fill="none"
+          stroke="rgba(0,210,239,0.12)"
+          strokeWidth="1"
+        />
+
+        {/* ── Mid ring rotating ── */}
+        <g transform={`rotate(${rot2}, ${CX}, ${CY})`}>
+          <circle
+            cx={CX} cy={CY} r={R_MID}
+            fill="none"
+            stroke="rgba(0,210,239,0.1)"
+            strokeWidth="1"
+            strokeDasharray="2 8"
+          />
+        </g>
+        <circle
+          cx={CX} cy={CY} r={R_MID}
+          fill="none"
+          stroke="rgba(0,210,239,0.07)"
+          strokeWidth="1"
+        />
+
+        {/* ── Inner ring ── */}
+        <g transform={`rotate(${rot3}, ${CX}, ${CY})`}>
+          <circle
+            cx={CX} cy={CY} r={R_INNER}
+            fill="none"
+            stroke="rgba(0,210,239,0.15)"
+            strokeWidth="1"
+            strokeDasharray="3 10"
+          />
+        </g>
+
+        {/* ── Spoke lines to each company ── */}
+        {orbitCompanies.map((c) => {
+          const outer = toXY(CX, CY, R_OUTER, c.angle);
+          const inner = toXY(CX, CY, R_INNER + 10, c.angle);
+          const isHov = hovered === c.id;
+          return (
+            <line
+              key={c.id}
+              x1={inner.x} y1={inner.y}
+              x2={outer.x} y2={outer.y}
+              stroke={isHov ? c.color : "rgba(0,210,239,0.12)"}
+              strokeWidth={isHov ? 1.5 : 1}
+              strokeDasharray={isHov ? "none" : "3 6"}
+              style={{ transition: "stroke 0.3s, stroke-width 0.3s" }}
+            />
+          );
+        })}
+
+        {/* ── Orbit dot on mid ring (animated position) ── */}
+        {[0, 72, 144, 216, 288].map((offset, i) => {
+          const angle = (offset + rot1 * 3) % 360;
+          const pos = toXY(CX, CY, R_MID, angle);
+          return (
+            <circle
+              key={i}
+              cx={pos.x} cy={pos.y} r={2}
+              fill="rgba(0,210,239,0.5)"
+            />
+          );
+        })}
+        {[0, 60, 120, 180, 240, 300].map((offset, i) => {
+          const angle = (offset + rot2 * 4) % 360;
+          const pos = toXY(CX, CY, R_OUTER, angle);
+          return (
+            <circle
+              key={i}
+              cx={pos.x} cy={pos.y} r={1.5}
+              fill="rgba(0,210,239,0.35)"
+            />
+          );
+        })}
+
+        {/* ── Company nodes on outer ring ── */}
+        {orbitCompanies.map((c) => {
+          const pos = toXY(CX, CY, R_OUTER, c.angle);
+          const isHov = hovered === c.id;
+          return (
+            <g key={c.id}>
+              {/* Hovered glow */}
+              {isHov && (
+                <circle
+                  cx={pos.x} cy={pos.y} r={32}
+                  fill={`${c.color}18`}
+                />
+              )}
+              {/* Outer ring dot */}
+              <circle
+                cx={pos.x} cy={pos.y} r={isHov ? 10 : 7}
+                fill={isHov ? c.color : `${c.color}40`}
+                stroke={c.color}
+                strokeWidth={isHov ? 2 : 1.5}
+                filter={isHov ? "url(#glow-soft)" : undefined}
+                style={{ transition: "all 0.2s", cursor: "pointer" }}
+                onClick={() => { onSelect?.(c.id); }}
+                onMouseEnter={() => setHovered(c.id)}
+                onMouseLeave={() => setHovered(null)}
+              />
+              {/* Pulse ring on hover */}
+              {isHov && (
+                <circle
+                  cx={pos.x} cy={pos.y} r={16}
+                  fill="none"
+                  stroke={c.color}
+                  strokeWidth="1"
+                  opacity={0.3}
+                />
+              )}
+            </g>
+          );
+        })}
+
+        {/* ── Center glow ── */}
+        <circle
+          cx={CX} cy={CY} r={R_INNER - 10}
+          fill="url(#center-grad)"
+          transform={`scale(${pulse})`}
+          style={{ transformOrigin: `${CX}px ${CY}px` }}
+        />
+        <circle
+          cx={CX} cy={CY} r={R_INNER}
+          fill="none"
+          stroke="rgba(0,210,239,0.25)"
+          strokeWidth="1"
+          filter="url(#glow-cyan)"
+        />
+        <circle
+          cx={CX} cy={CY} r={R_INNER - 5}
+          fill="rgba(5,5,8,0.85)"
+        />
+      </svg>
+
+      {/* ── Company labels (HTML overlay) ── */}
+      {orbitCompanies.map((c) => {
+        const pos = toXY(CX, CY, R_OUTER + 52, c.angle);
+        const isHov = hovered === c.id;
+        // Determine text anchor based on position
+        const angleMod = ((c.angle % 360) + 360) % 360;
+        const isRight = angleMod > 30 && angleMod < 170;
+        const isLeft  = angleMod > 190 && angleMod < 330;
+        const isTop   = angleMod <= 30 || angleMod >= 330;
+        const isBottom = angleMod > 130 && angleMod < 230;
+
+        let transform = "translate(-50%, -50%)";
+        if (isRight)  transform = "translate(0%, -50%)";
+        if (isLeft)   transform = "translate(-100%, -50%)";
+        if (isTop)    transform = "translate(-50%, -100%)";
+        if (isBottom) transform = "translate(-50%, 0%)";
+
+        return (
+          <div
+            key={c.id}
+            onMouseEnter={() => setHovered(c.id)}
+            onMouseLeave={() => setHovered(null)}
+            onClick={() => { onSelect?.(c.id); window.document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+            style={{
+              position: "absolute",
+              left: `${(pos.x / SIZE) * 100}%`,
+              top: `${(pos.y / SIZE) * 100}%`,
+              transform,
+              textAlign: isRight ? "left" : isLeft ? "right" : "center",
+              cursor: "pointer",
+              transition: "opacity 0.2s",
+              padding: "4px",
+            }}
+          >
+            {/* Logo */}
+            <div style={{ display: "flex", justifyContent: isRight ? "flex-start" : isLeft ? "flex-end" : "center", marginBottom: 4 }}>
+              <div
+                style={{
+                  background: isHov ? `${c.color}18` : "rgba(255,255,255,0.05)",
+                  border: `1px solid ${isHov ? c.color + "50" : "rgba(255,255,255,0.1)"}`,
+                  borderRadius: 12,
+                  padding: "6px 8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                <Image
+                  src={c.logo}
+                  alt={c.name}
+                  width={52}
+                  height={26}
+                  style={{ objectFit: "contain", maxHeight: 26, width: "auto" }}
+                />
+              </div>
+            </div>
+            {/* Name */}
+            <div style={{ fontSize: 9, color: isHov ? c.color : "rgba(255,255,255,0.35)", fontFamily: "Orbitron, monospace", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 2, transition: "color 0.2s" }}>
+              {c.name}
+            </div>
+            <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", lineHeight: 1.5, whiteSpace: "pre-line" }}>
+              {c.sub}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* ── Center logo (HTML overlay) ── */}
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <Image
+          src="/logos/aile-illust.png"
+          alt="AiLE GROUP"
+          width={64}
+          height={64}
+          style={{
+            objectFit: "contain",
+            filter: "drop-shadow(0 0 16px rgba(0,210,239,0.6))",
+            animation: "float 5s ease-in-out infinite",
+          }}
+        />
+        <div
+          style={{
+            fontFamily: "Orbitron, monospace",
+            fontSize: 9,
+            fontWeight: 700,
+            color: "rgba(0,210,239,0.8)",
+            letterSpacing: "0.2em",
+            marginTop: 4,
+          }}
+        >
+          AiLE GROUP
+        </div>
+      </div>
+    </div>
+  );
+}

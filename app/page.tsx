@@ -165,17 +165,13 @@ function CompanySection({ company }: { company: typeof companies[0] }) {
           style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: 56 }}
         />
         <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6, flexWrap: "wrap" }}>
+          <div style={{ marginBottom: 6 }}>
             <h2
               className="font-orbitron"
               style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.06em", color: company.color }}
             >
-              {company.name}
-            </h2>
-            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 14 }}>|</span>
-            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, fontWeight: 300, letterSpacing: "0.1em" }}>
               {company.nameJP}
-            </span>
+            </h2>
           </div>
           <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 300, letterSpacing: "0.05em" }}>
             {company.role}

@@ -65,7 +65,7 @@ const companies: Company[] = [
     capabilities: [
       { name: "FiNEDGE 金融教育コース", status: "active", since: "2023-08" },
       { name: "投資入門カリキュラム", status: "active", since: "2023-10" },
-      { name: "資産形成シミュレーター", status: "active", since: "2024-02" },
+      { name: "資産形成シミュレーター", status: "planned" },
       { name: "メンター制度", status: "active", since: "2024-05" },
       { name: "FiNEDGE アプリ版", status: "new", since: "2025-10" },
       { name: "法人向け金融研修", status: "planned" },

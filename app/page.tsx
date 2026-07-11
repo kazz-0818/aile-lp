@@ -359,7 +359,10 @@ export default function Home() {
       >
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <Image src="/logos/aile-illust.png" alt="AiLE" width={32} height={32} style={{ objectFit: "contain" }} />
             <span
               className="font-orbitron"

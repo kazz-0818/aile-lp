@@ -87,7 +87,7 @@ const companies: Company[] = [
     longDesc:
       "システム開発事業として企業のDXを支援。自社サービス「ラクシス」をはじめ、DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で提供します。",
     capabilities: [
-      { name: "ラクシス", status: "active", since: "2022-06" },
+      { name: "業務効率化フルオーダーシステム展開(ラクシス)", status: "active", since: "2022-06" },
       { name: "DX コンサルティング", status: "active", since: "2022-09" },
       { name: "API 連携・基盤構築", status: "active", since: "2023-03" },
       { name: "AI 機能組み込み", status: "new", since: "2025-11" },

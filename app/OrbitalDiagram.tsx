@@ -99,13 +99,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_MID   = 160 * sc;
   const R_INNER  = 95 * sc;
   const LOGO_BOX = Math.round(108 * sc);
-  const LOGO_RADIUS = Math.round(24 * sc);
   const LOGO_IMG = Math.round(82 * sc);
   const LOGO_IMG_MAX_H = Math.round(70 * sc);
-  const NODE_R = 54 * sc;
-  const NODE_R_HOV = 58 * sc;
-  const NODE_GLOW_R = 62 * sc;
-  const NODE_PULSE_R = 66 * sc;
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);
@@ -202,29 +197,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           return <circle key={i} cx={pos.x} cy={pos.y} r={1.5 * sc} fill="rgba(0,210,239,0.35)" />;
         })}
 
-        {orbitCompanies.map((c) => {
-          const pos = toXY(CX, CY, R_OUTER, c.angle);
-          const isHov = hovered === c.id;
-          return (
-            <g key={c.id}>
-              {isHov && <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />}
-              <circle
-                cx={pos.x} cy={pos.y} r={isHov ? NODE_R_HOV : NODE_R}
-                fill={isHov ? `${c.color}18` : "rgba(5,5,8,0.7)"}
-                stroke={c.color}
-                strokeWidth={isHov ? 1.5 : 1}
-                strokeOpacity={isHov ? 0.7 : 0.35}
-                filter={isHov ? "url(#glow-soft)" : undefined}
-                style={{ transition: "all 0.2s", cursor: "pointer" }}
-                onClick={() => { onSelect?.(c.id); }}
-                onMouseEnter={() => setHovered(c.id)}
-                onMouseLeave={() => setHovered(null)}
-              />
-              {isHov && <circle cx={pos.x} cy={pos.y} r={NODE_PULSE_R} fill="none" stroke={c.color} strokeWidth="1" opacity={0.2} />}
-            </g>
-          );
-        })}
-
         <circle cx={CX} cy={CY} r={R_INNER - 10 * sc} fill="url(#center-grad)" transform={`scale(${pulse})`} style={{ transformOrigin: `${CX}px ${CY}px` }} />
         <circle cx={CX} cy={CY} r={R_INNER} fill="none" stroke="rgba(0,210,239,0.25)" strokeWidth="1" filter="url(#glow-cyan)" />
         <circle cx={CX} cy={CY} r={R_INNER - 5 * sc} fill="rgba(5,5,8,0.85)" />
@@ -255,15 +227,12 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 transform: "translate(-50%, -50%)",
                 width: LOGO_BOX,
                 height: LOGO_BOX,
-                borderRadius: LOGO_RADIUS,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: isHov ? `${c.color}18` : "rgba(5,5,8,0.8)",
-                border: `1.5px solid ${isHov ? c.color + "80" : c.color + "30"}`,
                 cursor: "pointer",
                 transition: "all 0.25s",
-                boxShadow: isHov ? `0 0 20px ${c.color}40` : "none",
+                filter: isHov ? `drop-shadow(0 0 14px ${c.color}90)` : "none",
                 zIndex: 10,
               }}
             >

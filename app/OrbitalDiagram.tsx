@@ -304,7 +304,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
             alt=""
             width={centerSize}
             height={centerSize}
-            style={{ position: "absolute", inset: 0, objectFit: "contain", opacity: 0.22, filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))", width: "100%", height: "100%" }}
+            style={{ position: "absolute", inset: 0, objectFit: "contain", opacity: 0.45, filter: "drop-shadow(0 0 24px rgba(0,210,239,0.6))", width: "100%", height: "100%" }}
           />
           <Image
             src="/logos/aile-logo.png"

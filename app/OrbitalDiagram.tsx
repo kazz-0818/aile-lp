@@ -40,7 +40,7 @@ const orbitCompanies = [
     logo: "/logos/lien-icon.png",
     color: "#c084fc",
     angle: 224,
-    logoScale: 0.88,
+    logoScale: 0.78,
   },
   {
     id: "titan",

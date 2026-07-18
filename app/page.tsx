@@ -53,7 +53,7 @@ const companies: Company[] = [
     id: "titan",
     name: "TiTAN",
     nameJP: "株式会社 TiTAN",
-    role: "金融教育",
+    role: "オンライン金融スクール事業",
     roleLogo: "/logos/finedge-logo.png",
     roleLogoAlt: "FiNEDGE",
     roleLogoScale: 2.9,

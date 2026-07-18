@@ -382,7 +382,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       {showLabels && subBrands.filter((b) => b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
-        const satSize = Math.round(72 * sc);
+        const satSize = Math.round(84 * sc);
         return (
           <div
             key={b.name}

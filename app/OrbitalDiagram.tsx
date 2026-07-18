@@ -44,18 +44,19 @@ const orbitCompanies = [
     id: "titan",
     name: "TiTAN",
     nameJP: "株式会社TiTAN",
-    sub: "オンライン金融教育 · FiNEDGE",
+    sub: "オンライン金融スクール事業",
     logo: "/logos/titan-icon.png",
     color: "#b0b8c8",
     angle: 292,
   },
 ];
 
-/* LiEN配下の店舗ブランド（LiENノードから枝線で表示） */
-const lienBranches = [
-  { name: "BLUE",  color: "#60a5fa", angle: 236 },
-  { name: "GREEN", color: "#4ade80", angle: 254 },
-  { name: "LILAC", color: "#c084fc", angle: 272 },
+/* 会社ノードから枝線で表示するサブブランド（parentAngle = 親ノードの角度） */
+const subBrands = [
+  { name: "BLUE",    color: "#60a5fa", angle: 236, parentAngle: 224 },
+  { name: "GREEN",   color: "#4ade80", angle: 254, parentAngle: 224 },
+  { name: "LILAC",   color: "#c084fc", angle: 272, parentAngle: 224 },
+  { name: "FiNEDGE", color: "#cbd5e1", angle: 316, parentAngle: 292 },
 ];
 
 function toXY(cx: number, cy: number, r: number, angleDeg: number) {
@@ -193,30 +194,24 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
-        {/* LiEN → 店舗ブランドへの枝線 */}
-        {showLabels && (() => {
-          const lienPos = toXY(CX, CY, R_OUTER, 224);
+        {/* 会社ノード → サブブランドへの枝線 */}
+        {showLabels && subBrands.map((b) => {
+          const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+          const dot = toXY(CX, CY, R_OUTER + 60 * sc, b.angle);
           return (
-            <g>
-              {lienBranches.map((b) => {
-                const dot = toXY(CX, CY, R_OUTER + 60 * sc, b.angle);
-                return (
-                  <g key={b.name}>
-                    <line
-                      x1={lienPos.x} y1={lienPos.y}
-                      x2={dot.x} y2={dot.y}
-                      stroke={b.color}
-                      strokeWidth="1"
-                      strokeOpacity="0.45"
-                      strokeDasharray="3 6"
-                    />
-                    <circle cx={dot.x} cy={dot.y} r={3 * sc} fill={b.color} fillOpacity="0.9" />
-                  </g>
-                );
-              })}
+            <g key={b.name}>
+              <line
+                x1={parentPos.x} y1={parentPos.y}
+                x2={dot.x} y2={dot.y}
+                stroke={b.color}
+                strokeWidth="1"
+                strokeOpacity="0.45"
+                strokeDasharray="3 6"
+              />
+              <circle cx={dot.x} cy={dot.y} r={3 * sc} fill={b.color} fillOpacity="0.9" />
             </g>
           );
-        })()}
+        })}
 
         {[0, 72, 144, 216, 288].map((offset, i) => {
           const angle = (offset + rot1 * 3) % 360;
@@ -328,8 +323,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         );
       })}
 
-      {/* ── LiEN 店舗ブランドラベル ── */}
-      {showLabels && lienBranches.map((b) => {
+      {/* ── サブブランドラベル ── */}
+      {showLabels && subBrands.map((b) => {
         const dot = toXY(CX, CY, R_OUTER + 60 * sc, b.angle);
         return (
           <div

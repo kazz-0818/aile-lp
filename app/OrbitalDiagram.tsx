@@ -107,9 +107,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220 * sc;
   const R_MID   = 160 * sc;
   const R_INNER  = 95 * sc;
-  const LOGO_BOX = Math.round(108 * sc);
-  const LOGO_IMG = Math.round(82 * sc);
-  const LOGO_IMG_MAX_H = Math.round(70 * sc);
+  const LOGO_BOX = Math.round(140 * sc);
+  const LOGO_IMG = Math.round(118 * sc);
+  const LOGO_IMG_MAX_H = Math.round(104 * sc);
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);

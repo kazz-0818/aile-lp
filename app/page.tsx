@@ -112,7 +112,7 @@ const companies: Company[] = [
     color: "#c084fc",
     desc: "LiENです。大阪に、くつろぎと洗練の時間を届けます。",
     longDesc:
-      "大阪を中心に、シーシャバー・シーシャカフェ・ヘアサロンを展開。都市の中に心安らぐ特別な空間を創り続けます。",
+      "大阪を中心に、シーシャバー・シーシャカフェ・ラウンジを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
       { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2022-11" },
       { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2024-01" },
@@ -122,7 +122,7 @@ const companies: Company[] = [
       { name: "FC展開・多店舗化", status: "planned" },
     ],
     evolutions: [
-      { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にヘアサロン複合型の新業態を出店" },
+      { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にラウンジ複合型の新業態を出店" },
       { date: "2024-01-28", title: "GREEN オープン", desc: "アメ村にシーシャカフェをオープン" },
       { date: "2023-09-19", title: "会社設立", desc: "株式会社LiENを設立" },
       { date: "2022-11-28", title: "BLUE オープン", desc: "梅田に1号店シーシャバーをオープン" },

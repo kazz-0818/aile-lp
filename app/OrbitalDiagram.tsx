@@ -52,12 +52,12 @@ const orbitCompanies = [
 ];
 
 /* 会社ノードの周りを衛星のように回るサブブランド（parentAngle = 親ノードの角度, phase = 初期位相） */
-const subBrands = [
+const subBrands: { name: string; color: string; parentAngle: number; phase: number; logo?: string }[] = [
   { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0 },
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120 },
   { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240 },
-  { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90 },
-  { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270 },
+  { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90, logo: "/logos/finedge-logo.png" },
+  { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png" },
 ];
 const satParentAngles = [...new Set(subBrands.map((b) => b.parentAngle))];
 
@@ -215,8 +215,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
-        {/* サブブランド衛星ドット */}
-        {showLabels && subBrands.map((b) => {
+        {/* サブブランド衛星ドット（ロゴを持つものはHTML側で画像表示） */}
+        {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
           const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
           const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
           return (
@@ -375,8 +375,40 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         );
       })}
 
+      {/* ── サブブランド衛星ロゴ（軌道上を周回） ── */}
+      {showLabels && subBrands.filter((b) => b.logo).map((b) => {
+        const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+        const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+        return (
+          <div
+            key={b.name}
+            style={{
+              position: "absolute",
+              left: `${(dot.x / SIZE) * 100}%`,
+              top: `${(dot.y / SIZE) * 100}%`,
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
+              zIndex: 11,
+            }}
+          >
+            <Image
+              src={b.logo!}
+              alt={b.name}
+              width={200}
+              height={200}
+              style={{
+                width: Math.round(76 * sc),
+                height: "auto",
+                objectFit: "contain",
+                filter: `drop-shadow(0 0 8px ${b.color}60)`,
+              }}
+            />
+          </div>
+        );
+      })}
+
       {/* ── サブブランド衛星ラベル（ドットに追従） ── */}
-      {showLabels && subBrands.map((b) => {
+      {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         const dx = dot.x - parentPos.x;

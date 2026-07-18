@@ -380,6 +380,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       {showLabels && subBrands.filter((b) => b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+        const satSize = Math.round(72 * sc);
         return (
           <div
             key={b.name}
@@ -387,6 +388,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               position: "absolute",
               left: `${(dot.x / SIZE) * 100}%`,
               top: `${(dot.y / SIZE) * 100}%`,
+              width: satSize,
+              height: satSize,
               transform: "translate(-50%, -50%)",
               pointerEvents: "none",
               zIndex: 11,
@@ -395,11 +398,11 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
             <Image
               src={b.logo!}
               alt={b.name}
-              width={200}
-              height={200}
+              width={satSize}
+              height={satSize}
               style={{
-                width: Math.round(96 * sc),
-                height: "auto",
+                width: satSize,
+                height: satSize,
                 objectFit: "contain",
                 filter: `drop-shadow(0 0 8px ${b.color}60)`,
               }}

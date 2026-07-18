@@ -411,17 +411,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
-        const dx = dot.x - parentPos.x;
-        const dy = dot.y - parentPos.y;
-        // ドットから見て親ロゴと反対側（外側）にラベルを出す
-        const transform =
-          Math.abs(dx) > Math.abs(dy)
-            ? dx > 0
-              ? "translate(8px, -50%)"
-              : "translate(calc(-100% - 8px), -50%)"
-            : dy > 0
-              ? "translate(-50%, 8px)"
-              : "translate(-50%, calc(-100% - 8px))";
         return (
           <div
             key={b.name}
@@ -429,7 +418,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               position: "absolute",
               left: `${(dot.x / SIZE) * 100}%`,
               top: `${(dot.y / SIZE) * 100}%`,
-              transform,
+              transform: "translate(-50%, calc(-100% - 8px))",
               pointerEvents: "none",
               whiteSpace: "nowrap",
             }}

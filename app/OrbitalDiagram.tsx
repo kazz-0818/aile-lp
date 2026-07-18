@@ -304,8 +304,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                   <div
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      borderRadius: Math.round(30 * sc),
+                      inset: Math.round(8 * sc),
+                      borderRadius: Math.round(26 * sc),
                       background: "rgba(5,5,8,0.7)",
                       border: `1.5px solid ${c.color}80`,
                       boxShadow: `0 0 20px ${c.color}40`,

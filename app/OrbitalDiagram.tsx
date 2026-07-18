@@ -26,7 +26,7 @@ const orbitCompanies = [
     id: "bravo",
     name: "BRAVO",
     nameJP: "株式会社BRAVO",
-    sub: "アパレルブランド事業 · BRANDVOX",
+    sub: "アパレルブランド事業",
     logo: "/logos/bravo-icon.png",
     color: "#facc15",
     angle: 136,
@@ -53,10 +53,11 @@ const orbitCompanies = [
 
 /* 会社ノードから枝線で表示するサブブランド（parentAngle = 親ノードの角度） */
 const subBrands = [
-  { name: "BLUE",    color: "#60a5fa", angle: 236, parentAngle: 224 },
-  { name: "GREEN",   color: "#4ade80", angle: 254, parentAngle: 224 },
-  { name: "LILAC",   color: "#c084fc", angle: 272, parentAngle: 224 },
-  { name: "FiNEDGE", color: "#cbd5e1", angle: 316, parentAngle: 292 },
+  { name: "BLUE",     color: "#60a5fa", angle: 236, parentAngle: 224, side: "left" },
+  { name: "GREEN",    color: "#4ade80", angle: 254, parentAngle: 224, side: "left" },
+  { name: "LILAC",    color: "#c084fc", angle: 272, parentAngle: 224, side: "left" },
+  { name: "FiNEDGE",  color: "#cbd5e1", angle: 316, parentAngle: 292, side: "left" },
+  { name: "BRANDVOX", color: "#facc15", angle: 104, parentAngle: 136, side: "right" },
 ];
 
 function toXY(cx: number, cy: number, r: number, angleDeg: number) {
@@ -333,8 +334,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               position: "absolute",
               left: `${(dot.x / SIZE) * 100}%`,
               top: `${(dot.y / SIZE) * 100}%`,
-              transform: "translate(-100%, -50%)",
-              paddingRight: 10,
+              transform: b.side === "right" ? "translate(0%, -50%)" : "translate(-100%, -50%)",
+              paddingRight: b.side === "right" ? 0 : 10,
+              paddingLeft: b.side === "right" ? 10 : 0,
               pointerEvents: "none",
               whiteSpace: "nowrap",
             }}

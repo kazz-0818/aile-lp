@@ -108,9 +108,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220 * sc;
   const R_MID   = 160 * sc;
   const R_INNER  = 95 * sc;
-  const LOGO_BOX = Math.round(148 * sc);
-  const LOGO_IMG = Math.round(126 * sc);
-  const NODE_R = 74 * sc;
+  const LOGO_BOX = Math.round(128 * sc);
+  const LOGO_IMG = Math.round(106 * sc);
+  const NODE_R = 64 * sc;
   const SAT_ORBIT_R = 98 * sc;
   const satRot = -(tick / 30000) * 360;
   const labelOffset = 84 * sc;
@@ -224,7 +224,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               key={`sat-${b.name}`}
               cx={dot.x}
               cy={dot.y}
-              r={3.5 * sc}
+              r={5 * sc}
               fill={b.color}
               fillOpacity="0.95"
               filter="url(#glow-soft)"
@@ -397,7 +397,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               width={200}
               height={200}
               style={{
-                width: Math.round(76 * sc),
+                width: Math.round(96 * sc),
                 height: "auto",
                 objectFit: "contain",
                 filter: `drop-shadow(0 0 8px ${b.color}60)`,
@@ -425,7 +425,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           >
             <span style={{
               fontFamily: "Orbitron, monospace",
-              fontSize: Math.max(Math.round(11 * sc), 9),
+              fontSize: Math.max(Math.round(13 * sc), 11),
               fontWeight: 700,
               letterSpacing: "0.12em",
               color: b.color,

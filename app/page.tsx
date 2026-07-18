@@ -571,12 +571,12 @@ export default function Home() {
               style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(12px, 2vw, 22px)", marginBottom: 6 }}
             >
               <Image
-                src="/logos/aile-mark.png"
+                src="/logos/aile-text.png"
                 alt="AiLE"
                 width={158}
-                height={118}
+                height={70}
                 priority
-                style={{ height: "clamp(64px, 10vw, 110px)", width: "auto", filter: "drop-shadow(0 0 16px rgba(0,210,239,0.45))" }}
+                style={{ height: "clamp(40px, 6.5vw, 68px)", width: "auto", filter: "drop-shadow(0 0 16px rgba(0,210,239,0.45))" }}
               />
               <Image
                 src="/logos/aile-group-text.png"

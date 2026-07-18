@@ -107,9 +107,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220 * sc;
   const R_MID   = 160 * sc;
   const R_INNER  = 95 * sc;
-  const LOGO_BOX = Math.round(140 * sc);
-  const LOGO_IMG = Math.round(118 * sc);
-  const LOGO_IMG_MAX_H = Math.round(104 * sc);
+  const LOGO_BOX = Math.round(172 * sc);
+  const LOGO_IMG = Math.round(150 * sc);
+  const NODE_R = 86 * sc;
+  const NODE_GLOW_R = 94 * sc;
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);
@@ -195,6 +196,27 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
+        {/* カーソルを合わせた会社のみ円形ノードを表示 */}
+        {orbitCompanies.map((c) => {
+          if (hovered !== c.id) return null;
+          const pos = toXY(CX, CY, R_OUTER, c.angle);
+          return (
+            <g key={`hover-${c.id}`} pointerEvents="none">
+              <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />
+              <circle
+                cx={pos.x}
+                cy={pos.y}
+                r={NODE_R}
+                fill={`${c.color}18`}
+                stroke={c.color}
+                strokeWidth="1.5"
+                strokeOpacity="0.7"
+                filter="url(#glow-soft)"
+              />
+            </g>
+          );
+        })}
+
         {/* 会社ノード → サブブランドへの枝線 */}
         {showLabels && subBrands.map((b) => {
           const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
@@ -258,6 +280,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                borderRadius: Math.round(30 * sc),
+                background: isHov ? "rgba(5,5,8,0.82)" : "transparent",
+                border: isHov ? `1.5px solid ${c.color}80` : "1.5px solid transparent",
+                boxShadow: isHov ? `0 0 20px ${c.color}40` : "none",
                 cursor: "pointer",
                 transition: "all 0.25s",
                 filter: isHov ? `drop-shadow(0 0 14px ${c.color}90)` : "none",
@@ -269,7 +295,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 alt={c.name}
                 width={LOGO_IMG}
                 height={LOGO_IMG}
-                style={{ objectFit: "contain", maxWidth: LOGO_IMG, maxHeight: LOGO_IMG_MAX_H, width: "auto", height: "auto" }}
+                style={{ objectFit: "contain", width: LOGO_IMG, height: LOGO_IMG }}
               />
             </div>
 

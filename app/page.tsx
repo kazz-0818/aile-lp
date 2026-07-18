@@ -46,6 +46,7 @@ const companies: Company[] = [
       { date: "2025-09", title: "オンライン研修開始", desc: "動画・テスト形式での研修コンテンツを本格展開" },
       { date: "2024-03", title: "採用支援サービス拡充", desc: "採用戦略立案から面接同席まで一気通貫でサポート" },
       { date: "2023-04", title: "サービス開始", desc: "営業代行を中核サービスとして立ち上げ" },
+      { date: "2020-06-08", title: "会社設立", desc: "株式会社IWiLLを設立" },
     ],
   },
   {
@@ -63,7 +64,7 @@ const companies: Company[] = [
     longDesc:
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
     capabilities: [
-      { name: "FiNEDGE 金融教育コース", status: "active", since: "2023-08" },
+      { name: "FiNEDGE 金融教育コース", status: "active", since: "2025-09" },
       { name: "投資入門カリキュラム", status: "active", since: "2023-10" },
       { name: "資産形成シミュレーター", status: "planned" },
       { name: "メンター制度", status: "active", since: "2024-05" },
@@ -72,8 +73,10 @@ const companies: Company[] = [
     ],
     evolutions: [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
+      { date: "2025-09", title: "FiNEDGE サービス開始", desc: "オンライン金融スクールサービスを開始" },
+      { date: "2025-06", title: "株式会社TiTANへ社名変更", desc: "社名を株式会社TiTANへ変更" },
       { date: "2024-05", title: "メンター制度導入", desc: "現役FPによる1on1メンタリングプランを追加" },
-      { date: "2023-08", title: "FiNEDGE 開校", desc: "オンライン金融教育スクールとして本格ローンチ" },
+      { date: "2020-06-20", title: "会社設立", desc: "事業の運営会社を設立" },
     ],
   },
   {
@@ -95,8 +98,8 @@ const companies: Company[] = [
     ],
     evolutions: [
       { date: "2025-11", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
-      { date: "2024-01", title: "ラクシス 正式公開", desc: "中小企業向け業務効率化SaaS「ラクシス」の本格展開" },
-      { date: "2022-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
+      { date: "2025-10-15", title: "会社設立", desc: "株式会社NLGを設立" },
+      { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
     ],
   },
   {
@@ -110,18 +113,18 @@ const companies: Company[] = [
     longDesc:
       "大阪を中心に、シーシャバー・シーシャカフェ・ヘアサロンを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
-      { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2023-02" },
-      { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2023-07" },
-      { name: "Salon de LILAC（東心斎橋）", status: "active", since: "2024-04" },
+      { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2022-11" },
+      { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2024-01" },
+      { name: "Salon de LILAC（東心斎橋）", status: "active", since: "2024-12" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", status: "new", since: "2025-08" },
       { name: "オリジナルフレーバー開発", status: "planned" },
       { name: "FC展開・多店舗化", status: "planned" },
     ],
     evolutions: [
-      { date: "2025-09", title: "オリジナルフレーバー開発", desc: "LiEN独自ブレンドのシーシャフレーバーラインアップを展開" },
-      { date: "2024-04", title: "Salon de LILAC オープン", desc: "東心斎橋にヘアサロン複合型の新業態を出店" },
-      { date: "2023-07", title: "GREEN オープン", desc: "アメ村にシーシャカフェ2号店をオープン" },
-      { date: "2023-02", title: "BLUE オープン", desc: "梅田に1号店シーシャバーをオープン" },
+      { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にヘアサロン複合型の新業態を出店" },
+      { date: "2024-01-28", title: "GREEN オープン", desc: "アメ村にシーシャカフェをオープン" },
+      { date: "2023-09-19", title: "会社設立", desc: "株式会社LiENを設立" },
+      { date: "2022-11-28", title: "BLUE オープン", desc: "梅田に1号店シーシャバーをオープン" },
     ],
   },
   {
@@ -150,6 +153,7 @@ const companies: Company[] = [
       { date: "2025-07", title: "STELLAポイント機能追加", desc: "スタイル投稿でポイント獲得、商品タグ付け投稿による紹介報酬を開始" },
       { date: "2024-10", title: "BRAVO メディア連携", desc: "ファッションメディア「BRAVO」の記事をアプリ内で読める機能を追加" },
       { date: "2024-06", title: "BRANDVOX ローンチ", desc: "世界中のブランド品を楽しむソーシャルショッピングアプリとして正式リリース" },
+      { date: "1997-11-27", title: "会社設立", desc: "株式会社BRAVOを設立" },
     ],
   },
 ];

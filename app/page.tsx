@@ -97,9 +97,10 @@ const companies: Company[] = [
       { name: "クラウドマイグレーション支援", status: "planned" },
     ],
     evolutions: [
-      { date: "2025-11", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
-      { date: "2025-10-15", title: "会社設立", desc: "株式会社NLGを設立" },
       { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
+      { date: "2026-04", title: "株式会社NLGに社名変更", desc: "N LIGHTNING株式会社から株式会社NLGへ社名変更" },
+      { date: "2025-11", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
+      { date: "2025-10-15", title: "会社設立", desc: "N LIGHTNING株式会社を設立" },
     ],
   },
   {
@@ -150,10 +151,11 @@ const companies: Company[] = [
       { name: "ファッションメディア「BRAVO」記事配信", status: "active", since: "2024-10" },
     ],
     evolutions: [
+      { date: "2026-05", title: "株式会社BRAVOに社名変更", desc: "有限会社ジーアイティーから株式会社BRAVOへ社名変更" },
       { date: "2025-07", title: "STELLAポイント機能追加", desc: "スタイル投稿でポイント獲得、商品タグ付け投稿による紹介報酬を開始" },
       { date: "2024-10", title: "BRAVO メディア連携", desc: "ファッションメディア「BRAVO」の記事をアプリ内で読める機能を追加" },
       { date: "2024-06", title: "BRANDVOX ローンチ", desc: "世界中のブランド品を楽しむソーシャルショッピングアプリとして正式リリース" },
-      { date: "1997-11-27", title: "会社設立", desc: "株式会社BRAVOを設立" },
+      { date: "1997-11-27", title: "会社設立", desc: "有限会社ジーアイティーを設立" },
     ],
   },
 ];

@@ -51,14 +51,15 @@ const orbitCompanies = [
   },
 ];
 
-/* 会社ノードから枝線で表示するサブブランド（parentAngle = 親ノードの角度） */
+/* 会社ノードの周りを衛星のように回るサブブランド（parentAngle = 親ノードの角度, phase = 初期位相） */
 const subBrands = [
-  { name: "BLUE",     color: "#60a5fa", angle: 236, parentAngle: 224, side: "left" },
-  { name: "GREEN",    color: "#4ade80", angle: 254, parentAngle: 224, side: "left" },
-  { name: "LILAC",    color: "#c084fc", angle: 272, parentAngle: 224, side: "left" },
-  { name: "FiNEDGE",  color: "#cbd5e1", angle: 316, parentAngle: 292, side: "left" },
-  { name: "BRANDVOX", color: "#facc15", angle: 104, parentAngle: 136, side: "right" },
+  { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0 },
+  { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120 },
+  { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240 },
+  { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90 },
+  { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270 },
 ];
+const satParentAngles = [...new Set(subBrands.map((b) => b.parentAngle))];
 
 function toXY(cx: number, cy: number, r: number, angleDeg: number) {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
@@ -110,7 +111,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const LOGO_BOX = Math.round(148 * sc);
   const LOGO_IMG = Math.round(126 * sc);
   const NODE_R = 74 * sc;
-  const NODE_GLOW_R = 82 * sc;
+  const SAT_ORBIT_R = 98 * sc;
+  const satRot = -(tick / 30000) * 360;
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);
@@ -196,43 +198,37 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           );
         })}
 
-        {/* カーソルを合わせた会社のみ円形ノードを表示 */}
-        {orbitCompanies.map((c) => {
-          if (hovered !== c.id) return null;
-          const pos = toXY(CX, CY, R_OUTER, c.angle);
+        {/* サブブランド衛星の軌道リング */}
+        {showLabels && satParentAngles.map((pa) => {
+          const parentPos = toXY(CX, CY, R_OUTER, pa);
           return (
-            <g key={`hover-${c.id}`} pointerEvents="none">
-              <circle cx={pos.x} cy={pos.y} r={NODE_GLOW_R} fill={`${c.color}12`} />
-              <circle
-                cx={pos.x}
-                cy={pos.y}
-                r={NODE_R}
-                fill={`${c.color}18`}
-                stroke={c.color}
-                strokeWidth="1.5"
-                strokeOpacity="0.7"
-                filter="url(#glow-soft)"
-              />
-            </g>
+            <circle
+              key={`sat-orbit-${pa}`}
+              cx={parentPos.x}
+              cy={parentPos.y}
+              r={SAT_ORBIT_R}
+              fill="none"
+              stroke="rgba(255,255,255,0.14)"
+              strokeWidth="1"
+              strokeDasharray="2 6"
+            />
           );
         })}
 
-        {/* 会社ノード → サブブランドへの枝線 */}
+        {/* サブブランド衛星ドット */}
         {showLabels && subBrands.map((b) => {
           const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
-          const dot = toXY(CX, CY, R_OUTER + 60 * sc, b.angle);
+          const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
           return (
-            <g key={b.name}>
-              <line
-                x1={parentPos.x} y1={parentPos.y}
-                x2={dot.x} y2={dot.y}
-                stroke={b.color}
-                strokeWidth="1"
-                strokeOpacity="0.45"
-                strokeDasharray="3 6"
-              />
-              <circle cx={dot.x} cy={dot.y} r={3 * sc} fill={b.color} fillOpacity="0.9" />
-            </g>
+            <circle
+              key={`sat-${b.name}`}
+              cx={dot.x}
+              cy={dot.y}
+              r={3.5 * sc}
+              fill={b.color}
+              fillOpacity="0.95"
+              filter="url(#glow-soft)"
+            />
           );
         })}
 
@@ -280,22 +276,51 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: Math.round(30 * sc),
-                background: isHov ? "rgba(5,5,8,0.82)" : "transparent",
-                border: isHov ? `1.5px solid ${c.color}80` : "1.5px solid transparent",
-                boxShadow: isHov ? `0 0 20px ${c.color}40` : "none",
                 cursor: "pointer",
                 transition: "all 0.25s",
                 filter: isHov ? `drop-shadow(0 0 14px ${c.color}90)` : "none",
                 zIndex: 10,
               }}
             >
+              {isHov && (
+                <>
+                  {/* 円と角丸四角を同じ親要素の中央に重ねて配置 */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "50%",
+                      width: NODE_R * 2,
+                      height: NODE_R * 2,
+                      transform: "translate(-50%, -50%)",
+                      borderRadius: "50%",
+                      background: `${c.color}18`,
+                      border: `1.5px solid ${c.color}b3`,
+                      boxShadow: `0 0 22px ${c.color}45`,
+                      pointerEvents: "none",
+                      zIndex: 0,
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: Math.round(30 * sc),
+                      background: "rgba(5,5,8,0.7)",
+                      border: `1.5px solid ${c.color}80`,
+                      boxShadow: `0 0 20px ${c.color}40`,
+                      pointerEvents: "none",
+                      zIndex: 1,
+                    }}
+                  />
+                </>
+              )}
               <Image
                 src={c.logo}
                 alt={c.name}
                 width={LOGO_IMG}
                 height={LOGO_IMG}
-                style={{ objectFit: "contain", width: LOGO_IMG, height: LOGO_IMG }}
+                style={{ position: "relative", zIndex: 2, objectFit: "contain", width: LOGO_IMG, height: LOGO_IMG }}
               />
             </div>
 
@@ -350,9 +375,21 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         );
       })}
 
-      {/* ── サブブランドラベル ── */}
+      {/* ── サブブランド衛星ラベル（ドットに追従） ── */}
       {showLabels && subBrands.map((b) => {
-        const dot = toXY(CX, CY, R_OUTER + 60 * sc, b.angle);
+        const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+        const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+        const dx = dot.x - parentPos.x;
+        const dy = dot.y - parentPos.y;
+        // ドットから見て親ロゴと反対側（外側）にラベルを出す
+        const transform =
+          Math.abs(dx) > Math.abs(dy)
+            ? dx > 0
+              ? "translate(8px, -50%)"
+              : "translate(calc(-100% - 8px), -50%)"
+            : dy > 0
+              ? "translate(-50%, 8px)"
+              : "translate(-50%, calc(-100% - 8px))";
         return (
           <div
             key={b.name}
@@ -360,16 +397,14 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               position: "absolute",
               left: `${(dot.x / SIZE) * 100}%`,
               top: `${(dot.y / SIZE) * 100}%`,
-              transform: b.side === "right" ? "translate(0%, -50%)" : "translate(-100%, -50%)",
-              paddingRight: b.side === "right" ? 0 : 10,
-              paddingLeft: b.side === "right" ? 10 : 0,
+              transform,
               pointerEvents: "none",
               whiteSpace: "nowrap",
             }}
           >
             <span style={{
               fontFamily: "Orbitron, monospace",
-              fontSize: Math.max(Math.round(12 * sc), 10),
+              fontSize: Math.max(Math.round(11 * sc), 9),
               fontWeight: 700,
               letterSpacing: "0.12em",
               color: b.color,

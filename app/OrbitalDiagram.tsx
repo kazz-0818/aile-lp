@@ -50,7 +50,7 @@ const orbitCompanies = [
     logo: "/logos/titan-icon.png",
     color: "#b0b8c8",
     angle: 292,
-    logoScale: 1.15,
+    logoScale: 1.28,
   },
 ];
 

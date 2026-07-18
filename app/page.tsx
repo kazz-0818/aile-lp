@@ -565,10 +565,25 @@ export default function Home() {
           {/* Text */}
           <div style={{ textAlign: "center", width: "100%" }}>
             <h1
-              className="font-orbitron glow-text"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.05em", color: "#e2e8f0" }}
+              aria-label="AiLE GROUP"
+              style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(12px, 2vw, 22px)", marginBottom: 6 }}
             >
-              AiLE GROUP
+              <Image
+                src="/logos/aile-mark.png"
+                alt="AiLE"
+                width={158}
+                height={118}
+                priority
+                style={{ height: "clamp(64px, 10vw, 110px)", width: "auto", filter: "drop-shadow(0 0 16px rgba(0,210,239,0.45))" }}
+              />
+              <Image
+                src="/logos/aile-group-text.png"
+                alt="GROUP"
+                width={146}
+                height={20}
+                priority
+                style={{ height: "clamp(14px, 2.2vw, 24px)", width: "auto", marginBottom: "clamp(4px, 0.8vw, 9px)", filter: "drop-shadow(0 0 10px rgba(0,210,239,0.4))" }}
+              />
             </h1>
             <p
               className="font-orbitron"

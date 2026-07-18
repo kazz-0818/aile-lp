@@ -30,7 +30,7 @@ const orbitCompanies = [
     logo: "/logos/bravo-icon.png",
     color: "#facc15",
     angle: 136,
-    logoScale: 0.85,
+    logoScale: 0.75,
   },
   {
     id: "lien",

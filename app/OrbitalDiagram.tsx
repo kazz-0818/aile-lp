@@ -30,6 +30,7 @@ const orbitCompanies = [
     logo: "/logos/bravo-icon.png",
     color: "#facc15",
     angle: 136,
+    logoScale: 0.85,
   },
   {
     id: "lien",
@@ -320,7 +321,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 alt={c.name}
                 width={LOGO_IMG}
                 height={LOGO_IMG}
-                style={{ position: "relative", zIndex: 2, objectFit: "contain", width: LOGO_IMG, height: LOGO_IMG }}
+                style={{ position: "relative", zIndex: 2, objectFit: "contain", width: Math.round(LOGO_IMG * ((c as { logoScale?: number }).logoScale ?? 1)), height: Math.round(LOGO_IMG * ((c as { logoScale?: number }).logoScale ?? 1)) }}
               />
             </div>
 

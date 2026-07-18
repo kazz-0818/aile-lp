@@ -107,10 +107,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const R_OUTER = 220 * sc;
   const R_MID   = 160 * sc;
   const R_INNER  = 95 * sc;
-  const LOGO_BOX = Math.round(172 * sc);
-  const LOGO_IMG = Math.round(150 * sc);
-  const NODE_R = 86 * sc;
-  const NODE_GLOW_R = 94 * sc;
+  const LOGO_BOX = Math.round(148 * sc);
+  const LOGO_IMG = Math.round(126 * sc);
+  const NODE_R = 74 * sc;
+  const NODE_GLOW_R = 82 * sc;
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);

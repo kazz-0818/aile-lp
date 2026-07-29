@@ -322,36 +322,20 @@ body {
   background: linear-gradient(to bottom, rgba(8, 145, 178, 0.28), rgba(18, 36, 56, 0.06));
 }
 
-/* Dark → Light bridge */
+/* Dark → Light bridge — short, quiet fade (oklab = no muddy mid-band) */
 .theme-bridge {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: clamp(72px, 12vw, 140px);
+  height: clamp(32px, 4.5vw, 48px);
+  margin-top: -1px;
   pointer-events: none;
   background: linear-gradient(
-    to bottom,
+    to bottom in oklab,
     #050508 0%,
-    #080a10 18%,
-    #12161f 36%,
-    #2a3140 54%,
-    #6a7588 72%,
-    #b8c2d0 88%,
+    #050508 22%,
     #e9edf3 100%
   );
-}
-.theme-bridge::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 180, 210, 0.04) 45%,
-    rgba(0, 180, 210, 0.06) 70%,
-    transparent 100%
-  );
-  pointer-events: none;
 }
 
 /* Light zone shell */
@@ -360,10 +344,11 @@ body {
   z-index: 1;
   color: var(--lz-text);
   background-color: var(--lz-bg);
+  /* Tech glow sits below the seam so the bridge stays quiet */
   background-image:
-    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(0, 190, 220, 0.07), transparent 58%),
-    radial-gradient(ellipse 50% 35% at 95% 18%, rgba(14, 116, 144, 0.05), transparent 55%),
-    radial-gradient(ellipse 45% 30% at 5% 40%, rgba(100, 140, 180, 0.04), transparent 50%),
+    radial-gradient(ellipse 85% 48% at 50% 8%, rgba(0, 180, 210, 0.045), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 95% 22%, rgba(14, 116, 144, 0.04), transparent 55%),
+    radial-gradient(ellipse 45% 30% at 5% 42%, rgba(100, 140, 180, 0.035), transparent 50%),
     linear-gradient(180deg, #e9edf3 0%, #eef2f7 45%, #f1f4f8 100%);
 }
 .light-zone::before {

@@ -581,7 +581,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero（ダーク維持） ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 8px" : "100px 24px 60px", overflow: "hidden", background: "#050508" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 24px" : "100px 24px 60px", overflow: "hidden", background: "#050508" }}>
         {/* Background blobs — hero only */}
         {blobs.map((b, i) => (
           <div
@@ -596,6 +596,20 @@ export default function Home() {
             }}
           />
         ))}
+        {/* Soft bottom veil — keeps hero dark while easing into the bridge */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 48,
+            pointerEvents: "none",
+            zIndex: 2,
+            background: "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.55) 55%, #050508 100%)",
+          }}
+        />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}
@@ -644,7 +658,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* ─── Dark → Light グラデーション境界 ─── */}
+      {/* ─── Dark → Light（短く控えめな輝度フェード） ─── */}
       <div className="theme-bridge" aria-hidden="true" />
 
       {/* ─── Light zone: ヒーローより下 ─── */}

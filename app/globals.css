@@ -222,8 +222,9 @@ body {
 .capability-link-text {
   transition: color 0.28s ease, text-shadow 0.28s ease, filter 0.28s ease, opacity 0.28s ease;
 }
-.capability-link-dot {
-  transition: box-shadow 0.28s ease, opacity 0.28s ease;
+.capability-link-dot,
+.capability-link-icon {
+  transition: box-shadow 0.28s ease, opacity 0.28s ease, filter 0.28s ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .capability-link:hover .capability-link-text {
@@ -236,6 +237,10 @@ body {
   }
   .capability-link:hover .capability-link-dot {
     box-shadow: 0 0 8px color-mix(in srgb, var(--cap-color) 70%, transparent);
+    opacity: 1;
+  }
+  .capability-link:hover .capability-link-icon {
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--cap-color) 55%, transparent));
     opacity: 1;
   }
   .capability-link:focus-visible .capability-link-text {
@@ -255,6 +260,9 @@ body {
   }
   .light-zone .capability-link:hover .capability-link-dot {
     box-shadow: 0 0 10px color-mix(in srgb, var(--cap-color) 75%, transparent);
+  }
+  .light-zone .capability-link:hover .capability-link-icon {
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--cap-color) 60%, transparent));
   }
 }
 

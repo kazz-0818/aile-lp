@@ -13,7 +13,7 @@ type Company = {
   color: string;
   desc: string;
   longDesc: string;
-  capabilities: { name: string; href?: string }[];
+  capabilities: { name: string; href?: string; logo?: string }[];
   evolutions: { date: string; title: string; desc: string }[];
   subLogo?: string;
   roleLogo?: string;
@@ -108,9 +108,9 @@ const companies: Company[] = [
     longDesc:
       "大阪を中心に、シーシャバー・シーシャカフェ・ラウンジを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
-      { name: "Shisha Bar BLUE（梅田）", href: "https://share.google/zTG6OrxeYyQCPWKvV" },
-      { name: "Shisha Cafe GREEN（アメ村）", href: "https://www.instagram.com/cafe_green0128/?hl=en" },
-      { name: "Salon de LILAC（東心斎橋）", href: "https://www.instagram.com/salon_de.lilac/?hl=en" },
+      { name: "Shisha Bar BLUE（梅田）", href: "https://share.google/zTG6OrxeYyQCPWKvV", logo: "/logos/blue.png" },
+      { name: "Shisha Cafe GREEN（アメ村）", href: "https://www.instagram.com/cafe_green0128/?hl=en", logo: "/logos/green.png" },
+      { name: "Salon de LILAC（東心斎橋）", href: "https://www.instagram.com/salon_de.lilac/?hl=en", logo: "/logos/lilac.png" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", href: "https://lin.ee/W4ttdzA" },
     ],
     evolutions: [
@@ -325,6 +325,8 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
           </h3>
           <div>
             {company.capabilities.map((cap, i) => {
+              const capTextSize = isMobile ? 12 : 14;
+              const capIconSize = isMobile ? 14 : 16;
               const rowStyle: CSSProperties = {
                 display: "flex",
                 alignItems: "center",
@@ -336,20 +338,37 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
               };
               const content = (
                 <>
-                  <div
-                    className={cap.href ? "capability-link-dot" : undefined}
-                    style={{
-                      width: 5,
-                      height: 5,
-                      borderRadius: "50%",
-                      flexShrink: 0,
-                      backgroundColor: company.color,
-                    }}
-                  />
+                  {cap.logo ? (
+                    <Image
+                      src={cap.logo}
+                      alt=""
+                      aria-hidden
+                      width={capIconSize}
+                      height={capIconSize}
+                      className={cap.href ? "capability-link-icon" : undefined}
+                      style={{
+                        width: capIconSize,
+                        height: capIconSize,
+                        objectFit: "contain",
+                        flexShrink: 0,
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className={cap.href ? "capability-link-dot" : undefined}
+                      style={{
+                        width: 5,
+                        height: 5,
+                        borderRadius: "50%",
+                        flexShrink: 0,
+                        backgroundColor: company.color,
+                      }}
+                    />
+                  )}
                   <span
                     className={cap.href ? "capability-link-text" : undefined}
                     style={{
-                      fontSize: isMobile ? 12 : 14,
+                      fontSize: capTextSize,
                       color: "#2a3346",
                       fontWeight: 300,
                       wordBreak: "break-all",

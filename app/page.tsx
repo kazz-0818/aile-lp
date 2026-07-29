@@ -68,7 +68,7 @@ const companies: Company[] = [
       { name: "金融教育オンラインスクール「FiNEDGE」運営", href: "https://finedge.jp/" },
     ],
     evolutions: [
-      { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
+      { date: "2026-07", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
       { date: "2025-12", title: "FiNEDGEサービス 開始", desc: "オンライン金融スクールサービスを開始" },
       { date: "2025-10", title: "株式会社TiTANへ社名変更", desc: "大幅な事業シフトを行う" },
       { date: "2020-07", title: "ライバーマネジメント事業 開始", desc: "" },

@@ -93,7 +93,7 @@ const companies: Company[] = [
     evolutions: [
       { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
       { date: "2026-04", title: "株式会社NLGに社名変更", desc: "N LIGHTNING株式会社から株式会社NLGへ社名変更" },
-      { date: "2025-11", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
+      { date: "2025-10", title: "AI 機能組み込み対応", desc: "LLM・画像認識のシステム統合を本格提供開始" },
       { date: "2025-10-15", title: "会社設立", desc: "N LIGHTNING株式会社を設立" },
     ],
   },

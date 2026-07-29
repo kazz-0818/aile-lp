@@ -137,9 +137,6 @@ const companies: Company[] = [
     capabilities: [
       { name: "BRANDVOXアプリ", href: "https://ogs8t.app.link/wA31E4w194b" },
       { name: "BRANDVOX オンラインショップ", href: "https://maison-regalia.com/" },
-      { name: "スタイル投稿 × STELLAポイント" },
-      { name: "商品タグ付け・紹介報酬" },
-      { name: "ログイン・招待など日常アクションでポイント獲得" },
       { name: "ファッションメディア「BRAVO」記事配信", href: "https://bravo-online.com/" },
     ],
     evolutions: [

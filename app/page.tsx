@@ -88,7 +88,7 @@ const companies: Company[] = [
       "システム開発事業として企業のDXを支援。自社サービス「ラクシス」をはじめ、DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で提供します。",
     capabilities: [
       { name: "転売プラットフォーム「FLIP BASE」運営" },
-      { name: "業務効率化フルオーダーシステム「ラクシス」展開", href: "https://laxis-lp.vercel.app/" },
+      { name: "フルオーダーメイド型システム「ラクシス」運営", href: "https://laxis-lp.vercel.app/" },
     ],
     evolutions: [
       { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },

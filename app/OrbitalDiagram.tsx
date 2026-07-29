@@ -64,6 +64,7 @@ const subBrands: {
   logoMark?: string;
   logoScale?: number;
   logoMarkScale?: number;
+  logoWordHeightScale?: number;
 }[] = [
   { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.67 },
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
@@ -76,7 +77,8 @@ const subBrands: {
     logo: "/logos/finedge-logo.png",
     logoMark: "/logos/finedge-mark.png",
     logoMarkScale: 0.45,
-    logoScale: 0.80,
+    logoScale: 1.12,
+    logoWordHeightScale: 0.52,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
 ];
@@ -404,7 +406,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const hasStack = Boolean(b.logoMark);
         const markSize = Math.round(satSize * (b.logoMarkScale ?? 0.42));
         const wordSize = Math.round(satSize * (b.logoScale ?? 1));
-        const wordHeight = hasStack ? Math.round(wordSize * 0.3) : wordSize;
+        const wordHeight = hasStack
+          ? Math.round(wordSize * (b.logoWordHeightScale ?? 0.3))
+          : wordSize;
         const logoShadow = `drop-shadow(0 0 8px ${b.color}60)`;
         return (
           <div

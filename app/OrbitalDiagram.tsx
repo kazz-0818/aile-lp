@@ -95,11 +95,6 @@ function toXY(cx: number, cy: number, r: number, angleDeg: number) {
   };
 }
 
-/** 観覧車ゴンドラ用 — 公転角を打ち消してテキストを水平に保つ */
-function ferrisUpright(currentAngle: number) {
-  return `translate(-50%, -50%) rotate(${-currentAngle}deg)`;
-}
-
 export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
@@ -338,7 +333,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 position: "absolute",
                 left: `${(pos.x / SIZE) * 100}%`,
                 top: `${(pos.y / SIZE) * 100}%`,
-                transform: ferrisUpright(currentAngle),
+                transform: "translate(-50%, -50%)",
                 width: LOGO_BOX,
                 height: LOGO_BOX,
                 display: "flex",
@@ -402,7 +397,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                   position: "absolute",
                   left: `${(labelPos.x / SIZE) * 100}%`,
                   top: `${(labelPos.y / SIZE) * 100}%`,
-                  transform: ferrisUpright(currentAngle),
+                  transform: "translate(-50%, -50%)",
                   textAlign: "center",
                   cursor: "pointer",
                   pointerEvents: "none",

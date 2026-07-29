@@ -65,6 +65,7 @@ const subBrands: {
   logoScale?: number;
   logoMarkScale?: number;
   logoWordHeightScale?: number;
+  logoStackGap?: number;
 }[] = [
   { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.67 },
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
@@ -76,9 +77,10 @@ const subBrands: {
     phase: 90,
     logo: "/logos/finedge-logo.png",
     logoMark: "/logos/finedge-mark.png",
-    logoMarkScale: 0.45,
-    logoScale: 1.12,
-    logoWordHeightScale: 0.52,
+    logoMarkScale: 0.54,
+    logoScale: 1.30,
+    logoWordHeightScale: 0.54,
+    logoStackGap: -6,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
 ];
@@ -410,6 +412,11 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           ? Math.round(wordSize * (b.logoWordHeightScale ?? 0.3))
           : wordSize;
         const logoShadow = `drop-shadow(0 0 8px ${b.color}60)`;
+        const stackGap = hasStack
+          ? b.logoStackGap !== undefined
+            ? Math.round(b.logoStackGap * sc)
+            : Math.max(Math.round(1 * sc), 1)
+          : 0;
         return (
           <div
             key={b.name}
@@ -426,7 +433,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               flexDirection: hasStack ? "column" : "row",
               alignItems: "center",
               justifyContent: "center",
-              gap: hasStack ? Math.max(Math.round(1 * sc), 1) : 0,
+              gap: stackGap >= 0 ? stackGap : 0,
             }}
           >
             {b.logoMark && (
@@ -454,6 +461,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 height: hasStack ? wordHeight : wordSize,
                 objectFit: "contain",
                 filter: logoShadow,
+                marginTop: hasStack && stackGap < 0 ? stackGap : undefined,
               }}
             />
           </div>

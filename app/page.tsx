@@ -114,7 +114,7 @@ const companies: Company[] = [
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", href: "https://lin.ee/W4ttdzA" },
     ],
     evolutions: [
-      { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にラウンジ複合型の新業態を出店" },
+      { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にラウンジをオープン" },
       { date: "2024-01-28", title: "GREEN オープン", desc: "アメ村にシーシャカフェをオープン" },
       { date: "2023-09-19", title: "会社設立", desc: "株式会社LiENを設立" },
       { date: "2022-11-28", title: "BLUE オープン", desc: "梅田に1号店シーシャバーをオープン" },

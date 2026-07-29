@@ -114,6 +114,11 @@ body {
   border-color: rgba(255,255,255,0.14);
   background: rgba(255,255,255,0.06);
 }
+/* Business Contents など、行単位の操作があるカードは枠ホバーを無効化 */
+.glass-card.glass-card--static:hover {
+  border-color: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+}
 
 /* Capability row */
 .cap-row {
@@ -124,6 +129,37 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .cap-row:last-child { border-bottom: none; }
+
+/* Business Contents: リンクテキスト単位の上品な光演出（PCホバーのみ） */
+.capability-link {
+  --cap-color: #ffffff;
+}
+.capability-link-text {
+  transition: color 0.28s ease, text-shadow 0.28s ease, filter 0.28s ease, opacity 0.28s ease;
+}
+.capability-link-dot {
+  transition: box-shadow 0.28s ease, opacity 0.28s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .capability-link:hover .capability-link-text {
+    color: var(--cap-color);
+    opacity: 1;
+    filter: brightness(1.12);
+    text-shadow:
+      0 0 10px color-mix(in srgb, var(--cap-color) 50%, transparent),
+      0 0 22px color-mix(in srgb, var(--cap-color) 22%, transparent);
+  }
+  .capability-link:hover .capability-link-dot {
+    box-shadow: 0 0 8px color-mix(in srgb, var(--cap-color) 70%, transparent);
+    opacity: 1;
+  }
+  .capability-link:focus-visible .capability-link-text {
+    color: var(--cap-color);
+    text-shadow:
+      0 0 10px color-mix(in srgb, var(--cap-color) 50%, transparent),
+      0 0 22px color-mix(in srgb, var(--cap-color) 22%, transparent);
+  }
+}
 
 /* Chat bubble */
 .chat-bubble {

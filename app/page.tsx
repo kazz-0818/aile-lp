@@ -311,7 +311,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
 
       <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
         {/* Business Contents */}
-        <div className="glass-card" style={{ padding: cardPadding }}>
+        <div className="glass-card glass-card--static" style={{ padding: cardPadding }}>
           <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
             Business Contents
           </h3>
@@ -329,6 +329,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
               const content = (
                 <>
                   <div
+                    className={cap.href ? "capability-link-dot" : undefined}
                     style={{
                       width: 5,
                       height: 5,
@@ -338,6 +339,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                     }}
                   />
                   <span
+                    className={cap.href ? "capability-link-text" : undefined}
                     style={{
                       fontSize: isMobile ? 12 : 14,
                       color: "rgba(255,255,255,0.72)",
@@ -356,7 +358,12 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                   href={cap.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ ...rowStyle, cursor: "pointer" }}
+                  className="capability-link"
+                  style={{
+                    ...rowStyle,
+                    cursor: "pointer",
+                    ["--cap-color" as string]: company.color,
+                  }}
                 >
                   {content}
                 </a>

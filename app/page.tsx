@@ -137,7 +137,7 @@ const companies: Company[] = [
     capabilities: [
       { name: "「BRANDVOX」アプリ展開", href: "https://ogs8t.app.link/wA31E4w194b" },
       { name: "「BRANDVOX」オンラインショップ展開", href: "https://maison-regalia.com/" },
-      { name: "ファッションメディア「BRAVO」記事配信", href: "https://bravo-online.com/" },
+      { name: "ファッションメディア「BRAVO」運営", href: "https://bravo-online.com/" },
       { name: "無料古着仕入れサービス「TADAFURU」展開", href: "http://tadafuru.com/" },
     ],
     evolutions: [

@@ -91,7 +91,7 @@ const companies: Company[] = [
       { name: "フルオーダーメイド型システム「ラクシス」運営", href: "https://laxis-lp.vercel.app/" },
     ],
     evolutions: [
-      { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
+      { date: "2026-06", title: "「ラクシス」サービス 開始", desc: "業務効率化フルオーダーメイド型システム開発" },
       { date: "2026-04", title: "株式会社NLGに社名変更", desc: "N LIGHTNING株式会社から株式会社NLGへ社名変更" },
       { date: "2025-10", title: "「FLIP BASE」サービス 開始", desc: "" },
       { date: "2025-10-15", title: "会社設立", desc: "N LIGHTNING株式会社を設立" },

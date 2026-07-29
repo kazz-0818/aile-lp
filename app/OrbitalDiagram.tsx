@@ -75,8 +75,8 @@ const subBrands: {
     phase: 90,
     logo: "/logos/finedge-logo.png",
     logoMark: "/logos/finedge-mark.png",
-    logoMarkScale: 0.38,
-    logoScale: 0.58,
+    logoMarkScale: 0.45,
+    logoScale: 0.80,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
 ];

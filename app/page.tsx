@@ -135,7 +135,7 @@ const companies: Company[] = [
     longDesc:
       "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",
     capabilities: [
-      { name: "BRANDVOXアプリ", href: "https://ogs8t.app.link/wA31E4w194b" },
+      { name: "「BRANDVOX」アプリ展開", href: "https://ogs8t.app.link/wA31E4w194b" },
       { name: "BRANDVOX オンラインショップ", href: "https://maison-regalia.com/" },
       { name: "ファッションメディア「BRAVO」記事配信", href: "https://bravo-online.com/" },
       { name: "無料古着仕入れサービス「TADAFURU」展開", href: "http://tadafuru.com/" },

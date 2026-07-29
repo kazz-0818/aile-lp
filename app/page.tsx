@@ -626,7 +626,7 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 0,
-            height: "clamp(260px, 42vw, 460px)",
+            height: "clamp(260px, 42vw, 520px)",
             pointerEvents: "none",
             zIndex: 2,
             background:

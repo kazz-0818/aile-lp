@@ -18,6 +18,7 @@ SOURCES = {
     "lilac.png": ASSETS / "LILAC-___-575cc110-ba23-431d-8782-24870199768a.png",
     "blue.png": ASSETS / "IMG_0624-7225f216-d13b-41c5-b755-bf85644fec41.png",
     "brandvox-logo.png": ASSETS / "Brandvox_Logo_Gold-5ef5c045-efe5-4e63-a153-19672200b445.png",
+    "brandvox-logo-horizontal.png": ASSETS / "Brandvox_Wide_icon_Gold-783c0416-782d-4389-8026-72e0956c015e.png",
     "finedge-mark.png": ASSETS / "FiNEDGE_logo-6cbbceb2-9e51-4452-b67a-20e0a50156d4.png",
     "laxis.png": ASSETS / "LAXIS____-2200731d-ccaf-43b2-b3b4-4da56426b2b6.png",
 }
@@ -213,6 +214,7 @@ def main() -> None:
         "lilac.png": lambda im: remove_white_bg(im, threshold=30, softness=20),
         "blue.png": lambda im: remove_navy_bg(im, threshold=45, softness=24, min_brightness=16),
         "brandvox-logo.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
+        "brandvox-logo-horizontal.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
         "finedge-mark.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
         "laxis.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
     }
@@ -233,13 +235,6 @@ def main() -> None:
             f"opaque={stats['opaque']} ({100*stats['transparent']/stats['total']:.1f}% transparent)"
         )
 
-    brandvox_path = OUT_DIR / "brandvox-logo.png"
-    if brandvox_path.exists():
-        vertical = Image.open(brandvox_path)
-        horizontal = make_brandvox_horizontal(vertical)
-        horizontal_path = OUT_DIR / "brandvox-logo-horizontal.png"
-        horizontal.save(horizontal_path, "PNG", optimize=True)
-        print(f"brandvox-logo-horizontal.png: {horizontal.size} -> {horizontal_path}")
 
 
 if __name__ == "__main__":

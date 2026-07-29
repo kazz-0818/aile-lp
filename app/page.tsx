@@ -20,6 +20,7 @@ type Company = {
   roleLogoAlt?: string;
   roleLogoScale?: number;
   roleLogoSlotWidth?: number;
+  siteUrl?: string;
 };
 
 /* ─── Data ─── */
@@ -81,6 +82,7 @@ const companies: Company[] = [
     role: "システム開発事業",
     logo: "/logos/nlg-logo.png",
     color: "#60a5fa",
+    siteUrl: "https://n-lightningaile.com/",
     desc: "NLGです。システム開発事業を軸に、業務効率化SaaS「ラクシス」で御社のDXを支援します。",
     longDesc:
       "システム開発事業として企業のDXを支援。自社サービス「ラクシス」をはじめ、DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で提供します。",
@@ -190,103 +192,130 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
   return (
     <div id={company.id} className="section-anchor" style={{ marginBottom: isMobile ? 48 : 80 }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 12 : 24, marginBottom: isMobile ? 24 : 40, paddingBottom: isMobile ? 20 : 32, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-        {/* カラーバー */}
-        <div style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: isMobile ? 44 : 64 }} />
-        {/* ロゴ */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-          <Image
-            src={company.logo}
-            alt={company.name}
-            width={logoSize}
-            height={logoSize}
-            className="object-contain"
-            style={{ maxHeight: logoSize, width: "auto", opacity: 0.95 }}
-          />
-          {company.subLogo && (
-            <Image
-              src={company.subLogo}
-              alt="sub"
-              width={isMobile ? 44 : 70}
-              height={isMobile ? 44 : 70}
-              className="object-contain"
-              style={{ maxHeight: isMobile ? 44 : 70, width: "auto", opacity: 0.8 }}
-            />
-          )}
-        </div>
-        {/* テキスト */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <h2
-            className="font-orbitron"
-            style={{ fontSize: nameFontSize, fontWeight: 800, letterSpacing: "0.05em", color: company.color, marginBottom: 4, lineHeight: 1.2 }}
-          >
-            {company.nameJP}
-          </h2>
-          {/* role行: モバイルはテキストのみ */}
-          {isMobile ? (
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
-              {company.role}{company.roleLogoAlt ? ` / ${company.roleLogoAlt}` : ""}
-            </p>
-          ) : (
-            <p
-              style={{
-                color: "rgba(255,255,255,0.4)",
-                fontSize: 13,
-                fontWeight: 300,
-                letterSpacing: "0.05em",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                flexWrap: "wrap",
-                height: 20,
-                lineHeight: "20px",
-                minHeight: 20,
-                maxHeight: 20,
-                overflow: "visible",
-              }}
-            >
-              {company.roleLogo ? (
-                <>
-                  <span style={{ lineHeight: "20px" }}>{company.role}</span>
-                  <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
-                  <span
-                    style={{
-                      position: "relative",
-                      display: "inline-block",
-                      width: company.roleLogoSlotWidth ?? 96,
-                      height: 20,
-                      flexShrink: 0,
-                      overflow: "visible",
-                    }}
-                  >
-                    <Image
-                      src={company.roleLogo}
-                      alt={company.roleLogoAlt ?? company.name}
-                      width={120}
-                      height={120}
-                      className="object-contain"
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: "50%",
-                        width: 40,
-                        height: 40,
-                        objectFit: "contain",
-                        opacity: 0.95,
-                        mixBlendMode: "lighten",
-                        transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
-                        transformOrigin: "left center",
-                      }}
-                    />
-                  </span>
-                </>
-              ) : (
-                company.role
+      {(() => {
+        const headerStyle: CSSProperties = {
+          display: "flex",
+          alignItems: "center",
+          gap: isMobile ? 12 : 24,
+          marginBottom: isMobile ? 24 : 40,
+          paddingBottom: isMobile ? 20 : 32,
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          textDecoration: "none",
+          color: "inherit",
+          ...(company.siteUrl ? { cursor: "pointer" } : {}),
+        };
+        const headerInner = (
+          <>
+            {/* カラーバー */}
+            <div style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: isMobile ? 44 : 64 }} />
+            {/* ロゴ */}
+            <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+              <Image
+                src={company.logo}
+                alt={company.name}
+                width={logoSize}
+                height={logoSize}
+                className="object-contain"
+                style={{ maxHeight: logoSize, width: "auto", opacity: 0.95 }}
+              />
+              {company.subLogo && (
+                <Image
+                  src={company.subLogo}
+                  alt="sub"
+                  width={isMobile ? 44 : 70}
+                  height={isMobile ? 44 : 70}
+                  className="object-contain"
+                  style={{ maxHeight: isMobile ? 44 : 70, width: "auto", opacity: 0.8 }}
+                />
               )}
-            </p>
-          )}
-        </div>
-      </div>
+            </div>
+            {/* テキスト */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h2
+                className="font-orbitron"
+                style={{ fontSize: nameFontSize, fontWeight: 800, letterSpacing: "0.05em", color: company.color, marginBottom: 4, lineHeight: 1.2 }}
+              >
+                {company.nameJP}
+              </h2>
+              {/* role行: モバイルはテキストのみ */}
+              {isMobile ? (
+                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
+                  {company.role}{company.roleLogoAlt ? ` / ${company.roleLogoAlt}` : ""}
+                </p>
+              ) : (
+                <p
+                  style={{
+                    color: "rgba(255,255,255,0.4)",
+                    fontSize: 13,
+                    fontWeight: 300,
+                    letterSpacing: "0.05em",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    flexWrap: "wrap",
+                    height: 20,
+                    lineHeight: "20px",
+                    minHeight: 20,
+                    maxHeight: 20,
+                    overflow: "visible",
+                  }}
+                >
+                  {company.roleLogo ? (
+                    <>
+                      <span style={{ lineHeight: "20px" }}>{company.role}</span>
+                      <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
+                      <span
+                        style={{
+                          position: "relative",
+                          display: "inline-block",
+                          width: company.roleLogoSlotWidth ?? 96,
+                          height: 20,
+                          flexShrink: 0,
+                          overflow: "visible",
+                        }}
+                      >
+                        <Image
+                          src={company.roleLogo}
+                          alt={company.roleLogoAlt ?? company.name}
+                          width={120}
+                          height={120}
+                          className="object-contain"
+                          style={{
+                            position: "absolute",
+                            left: 0,
+                            top: "50%",
+                            width: 40,
+                            height: 40,
+                            objectFit: "contain",
+                            opacity: 0.95,
+                            mixBlendMode: "lighten",
+                            transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
+                            transformOrigin: "left center",
+                          }}
+                        />
+                      </span>
+                    </>
+                  ) : (
+                    company.role
+                  )}
+                </p>
+              )}
+            </div>
+          </>
+        );
+        return company.siteUrl ? (
+          <a
+            href={company.siteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={headerStyle}
+          >
+            {headerInner}
+          </a>
+        ) : (
+          <div style={headerStyle}>{headerInner}</div>
+        );
+      })()}
 
       <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
         {/* Business Contents */}

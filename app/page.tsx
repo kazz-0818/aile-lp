@@ -13,7 +13,13 @@ type Company = {
   color: string;
   desc: string;
   longDesc: string;
-  capabilities: { name: string; href?: string; logo?: string }[];
+  capabilities: {
+    name: string;
+    href?: string;
+    logo?: string;
+    mapHref?: string;
+    instagramHref?: string;
+  }[];
   evolutions: { date: string; title: string; desc: string }[];
   subLogo?: string;
   roleLogo?: string;
@@ -108,7 +114,13 @@ const companies: Company[] = [
     longDesc:
       "大阪を中心に、シーシャバー・シーシャカフェ・ラウンジを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
-      { name: "Shisha Bar BLUE（梅田）", href: "https://share.google/zTG6OrxeYyQCPWKvV", logo: "/logos/blue.png" },
+      {
+        name: "Shisha Bar BLUE（梅田）",
+        href: "https://share.google/zTG6OrxeYyQCPWKvV",
+        logo: "/logos/blue.png",
+        mapHref: "https://maps.app.goo.gl/V7JTxSMmGPanABUB9?g_st=com.google.maps.preview.copy",
+        instagramHref: "https://www.instagram.com/bar_blue1128",
+      },
       { name: "Shisha Cafe GREEN（アメ村）", href: "https://www.instagram.com/cafe_green0128/?hl=en", logo: "/logos/green.png" },
       { name: "Salon de LILAC（東心斎橋）", href: "https://www.instagram.com/salon_de.lilac/?hl=en", logo: "/logos/lilac.png" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", href: "https://lin.ee/W4ttdzA" },
@@ -164,6 +176,45 @@ const blobs = [
   { color: "#f97316", left: "58%", top: "70%", size: 350 },
   { color: "#f472b6", left: "12%", top: "62%", size: 250 },
 ];
+
+function CapabilityMapIcon({ size = 17 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 21s-6-5.686-6-10a6 6 0 1 1 12 0c0 4.314-6 10-6 10z" />
+      <circle cx="12" cy="11" r="2.5" />
+    </svg>
+  );
+}
+
+function CapabilityInstagramIcon({ size = 17 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 
 /* ─── Component: Status Badge ─── */
 function Badge({ status }: { status: string }) {
@@ -344,6 +395,8 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
             {company.capabilities.map((cap, i) => {
               const capTextSize = isMobile ? 12 : 14;
               const capIconSize = isMobile ? 14 : 16;
+              const actionIconSize = isMobile ? 16 : 17;
+              const hasActionIcons = !!(cap.mapHref || cap.instagramHref);
               const rowStyle: CSSProperties = {
                 display: "flex",
                 alignItems: "center",
@@ -353,7 +406,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                 textDecoration: "none",
                 color: "inherit",
               };
-              const content = (
+              const mainContent = (
                 <>
                   {cap.logo ? (
                     <Image
@@ -396,6 +449,75 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                   </span>
                 </>
               );
+              const actionIcons = hasActionIcons ? (
+                <div className="capability-action-icons">
+                  {cap.mapHref ? (
+                    <a
+                      href={cap.mapHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="capability-action-icon"
+                      aria-label="地図を開く"
+                      style={{ ["--cap-color" as string]: company.color }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <CapabilityMapIcon size={actionIconSize} />
+                    </a>
+                  ) : null}
+                  {cap.instagramHref ? (
+                    <a
+                      href={cap.instagramHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="capability-action-icon"
+                      aria-label="Instagramを開く"
+                      style={{ ["--cap-color" as string]: company.color }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <CapabilityInstagramIcon size={actionIconSize} />
+                    </a>
+                  ) : null}
+                </div>
+              ) : null;
+              const mainLinkStyle: CSSProperties = {
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                flex: 1,
+                minWidth: 0,
+                textDecoration: "none",
+                color: "inherit",
+                cursor: cap.href ? "pointer" : "default",
+              };
+
+              if (hasActionIcons) {
+                return (
+                  <div
+                    key={i}
+                    className="capability-row"
+                    style={{
+                      ...rowStyle,
+                      ["--cap-color" as string]: company.color,
+                    }}
+                  >
+                    {cap.href ? (
+                      <a
+                        href={cap.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="capability-link"
+                        style={mainLinkStyle}
+                      >
+                        {mainContent}
+                      </a>
+                    ) : (
+                      <div style={mainLinkStyle}>{mainContent}</div>
+                    )}
+                    {actionIcons}
+                  </div>
+                );
+              }
+
               return cap.href ? (
                 <a
                   key={i}
@@ -409,11 +531,11 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                     ["--cap-color" as string]: company.color,
                   }}
                 >
-                  {content}
+                  {mainContent}
                 </a>
               ) : (
                 <div key={i} style={rowStyle}>
-                  {content}
+                  {mainContent}
                 </div>
               );
             })}

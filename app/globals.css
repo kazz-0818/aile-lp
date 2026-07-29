@@ -267,6 +267,37 @@ body {
   }
 }
 
+.capability-row {
+  --cap-color: #64748b;
+}
+.capability-action-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.capability-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #98a2b3;
+  transition: color 0.28s ease, opacity 0.28s ease, filter 0.28s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .capability-action-icon:hover,
+  .capability-action-icon:focus-visible {
+    color: var(--cap-color);
+    opacity: 1;
+    filter: brightness(1.08);
+  }
+  .light-zone .capability-action-icon:hover,
+  .light-zone .capability-action-icon:focus-visible {
+    color: var(--cap-color);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--cap-color) 45%, transparent));
+  }
+}
+
 /* 会社ヘッダー（siteUrl付き）: Business Contents と同トーンの光演出（PCホバーのみ） */
 .company-header-link {
   --header-color: #ffffff;

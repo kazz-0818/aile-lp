@@ -36,7 +36,7 @@ const companies: Company[] = [
     longDesc:
       "高品質な営業代行サービスと、次世代を担う人材の教育・育成を通じて、企業の成長エンジンとして機能します。",
     capabilities: [
-      { name: "営業代行" },
+      { name: "To C 営業代行業" },
       { name: "人材教育" },
     ],
     evolutions: [

@@ -71,7 +71,7 @@ const companies: Company[] = [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
       { date: "2025-09", title: "FiNEDGE サービス開始", desc: "オンライン金融スクールサービスを開始" },
       { date: "2025-06", title: "株式会社TiTANへ社名変更", desc: "社名を株式会社TiTANへ変更" },
-      { date: "2024-05", title: "メンター制度導入", desc: "現役FPによる1on1メンタリングプランを追加" },
+      { date: "2024-05", title: "ライバーマネジメント事業運営", desc: "現役FPによる1on1メンタリングプランを追加" },
       { date: "2020-06-20", title: "会社設立", desc: "事業の運営会社を設立" },
     ],
   },

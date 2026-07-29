@@ -138,6 +138,7 @@ const companies: Company[] = [
       { name: "BRANDVOXアプリ", href: "https://ogs8t.app.link/wA31E4w194b" },
       { name: "BRANDVOX オンラインショップ", href: "https://maison-regalia.com/" },
       { name: "ファッションメディア「BRAVO」記事配信", href: "https://bravo-online.com/" },
+      { name: "無料古着仕入れサービス「TADAFURU」展開", href: "http://tadafuru.com/" },
     ],
     evolutions: [
       { date: "2026-05", title: "株式会社BRAVOに社名変更", desc: "有限会社ジーアイティーから株式会社BRAVOへ社名変更" },

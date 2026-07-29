@@ -97,15 +97,13 @@ function toXY(cx: number, cy: number, r: number, angleDeg: number) {
 
 export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [tick, setTick] = useState(0);
+  const [, setFrame] = useState(0);
   const [diagramSize, setDiagramSize] = useState(520);
   const [showLabels, setShowLabels] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const rafRef = useRef<number | null>(null);
-  const startRef = useRef(Date.now());
+  const epochRef = useRef(performance.now());
   const containerRef = useRef<HTMLDivElement>(null);
-  const pausedAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -127,23 +125,14 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   }, []);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || !isVisible) return;
+    let raf = 0;
     const loop = () => {
-      if (pausedAtRef.current !== null) {
-        startRef.current += Date.now() - pausedAtRef.current;
-        pausedAtRef.current = null;
-      }
-      setTick(Date.now() - startRef.current);
-      rafRef.current = requestAnimationFrame(loop);
+      setFrame((n) => n + 1);
+      raf = requestAnimationFrame(loop);
     };
-    if (isVisible) {
-      rafRef.current = requestAnimationFrame(loop);
-    } else if (pausedAtRef.current === null) {
-      pausedAtRef.current = Date.now();
-    }
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, [reducedMotion, isVisible]);
 
   useEffect(() => {
@@ -177,7 +166,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const centerSize = Math.round(176 * sc);
   const aileLogoSize = Math.round(148 * sc);
 
-  const motion = reducedMotion ? 0 : tick;
+  const motion = reducedMotion ? 0 : performance.now() - epochRef.current;
   const companyOrbitMs = diagramSize < 540 ? 96000 : 72000;
   const companyOrbit = (motion / companyOrbitMs) * 360;
   const satRot = -(motion / (diagramSize < 540 ? 38000 : 30000)) * 360;

@@ -55,11 +55,29 @@ const orbitCompanies = [
 ];
 
 /* 会社ノードの周りを衛星のように回るサブブランド（parentAngle = 親ノードの角度, phase = 初期位相） */
-const subBrands: { name: string; color: string; parentAngle: number; phase: number; logo?: string; logoScale?: number }[] = [
+const subBrands: {
+  name: string;
+  color: string;
+  parentAngle: number;
+  phase: number;
+  logo?: string;
+  logoMark?: string;
+  logoScale?: number;
+  logoMarkScale?: number;
+}[] = [
   { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.67 },
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
   { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240, logo: "/logos/lilac.png",  logoScale: 0.62 },
-  { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90, logo: "/logos/finedge-logo.png" },
+  {
+    name: "FiNEDGE",
+    color: "#cbd5e1",
+    parentAngle: 292,
+    phase: 90,
+    logo: "/logos/finedge-logo.png",
+    logoMark: "/logos/finedge-mark.png",
+    logoMarkScale: 0.38,
+    logoScale: 0.58,
+  },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
 ];
 const satParentAngles = [...new Set(subBrands.map((b) => b.parentAngle))];
@@ -383,7 +401,11 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         const satSize = Math.round(84 * sc);
-        const imgSize = Math.round(satSize * (b.logoScale ?? 1));
+        const hasStack = Boolean(b.logoMark);
+        const markSize = Math.round(satSize * (b.logoMarkScale ?? 0.42));
+        const wordSize = Math.round(satSize * (b.logoScale ?? 1));
+        const wordHeight = hasStack ? Math.round(wordSize * 0.3) : wordSize;
+        const logoShadow = `drop-shadow(0 0 8px ${b.color}60)`;
         return (
           <div
             key={b.name}
@@ -397,20 +419,37 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               pointerEvents: "none",
               zIndex: 11,
               display: "flex",
+              flexDirection: hasStack ? "column" : "row",
               alignItems: "center",
               justifyContent: "center",
+              gap: hasStack ? Math.max(Math.round(1 * sc), 1) : 0,
             }}
           >
+            {b.logoMark && (
+              <Image
+                src={b.logoMark}
+                alt=""
+                width={markSize}
+                height={markSize}
+                aria-hidden
+                style={{
+                  width: markSize,
+                  height: markSize,
+                  objectFit: "contain",
+                  filter: logoShadow,
+                }}
+              />
+            )}
             <Image
               src={b.logo!}
               alt={b.name}
-              width={imgSize}
-              height={imgSize}
+              width={wordSize}
+              height={wordHeight}
               style={{
-                width: imgSize,
-                height: imgSize,
+                width: wordSize,
+                height: hasStack ? wordHeight : wordSize,
                 objectFit: "contain",
-                filter: `drop-shadow(0 0 8px ${b.color}60)`,
+                filter: logoShadow,
               }}
             />
           </div>

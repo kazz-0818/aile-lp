@@ -9,28 +9,28 @@
   --border: rgba(255,255,255,0.08);
   --text: #e2e8f0;
   --text-muted: rgba(255,255,255,0.45);
-  /* Light zone — cool gray / cyan high-tech */
-  --lz-bg: #e9edf3;
-  --lz-bg-mid: #eef2f7;
-  --lz-bg-elevated: rgba(255, 255, 255, 0.78);
-  --lz-bg-elevated-solid: #f7f9fc;
-  --lz-text: #11151d;
-  --lz-text-secondary: #3a4252;
-  --lz-text-muted: #5c677a;
-  --lz-text-faint: #8490a3;
-  --lz-border: rgba(18, 36, 56, 0.09);
-  --lz-border-strong: rgba(8, 145, 178, 0.18);
-  --lz-border-cyan: rgba(0, 180, 210, 0.14);
+  /* Light zone — luminous pearl / ice glass */
+  --lz-bg: #f5f7fb;
+  --lz-bg-mid: #fafbfd;
+  --lz-bg-elevated: rgba(255, 255, 255, 0.7);
+  --lz-bg-elevated-solid: #ffffff;
+  --lz-text: #0c1220;
+  --lz-text-secondary: #2a3346;
+  --lz-text-muted: #667085;
+  --lz-text-faint: #98a2b3;
+  --lz-border: rgba(40, 60, 90, 0.08);
+  --lz-border-strong: rgba(14, 116, 144, 0.2);
+  --lz-border-cyan: rgba(14, 165, 190, 0.16);
   --lz-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 1px 2px rgba(15, 30, 50, 0.04),
-    0 10px 32px rgba(15, 35, 55, 0.07);
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 2px rgba(20, 40, 70, 0.03),
+    0 12px 40px rgba(30, 50, 80, 0.06);
   --lz-shadow-hover:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 2px 6px rgba(15, 30, 50, 0.05),
-    0 16px 40px rgba(8, 100, 130, 0.1);
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 4px 12px rgba(20, 40, 70, 0.04),
+    0 20px 48px rgba(14, 120, 150, 0.1);
   --lz-accent: #0e7490;
-  --lz-accent-soft: rgba(0, 180, 210, 0.08);
+  --lz-accent-soft: rgba(14, 165, 190, 0.07);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -166,27 +166,42 @@ body {
   background: rgba(255,255,255,0.04);
 }
 
-/* Card — light zone: frosted glass */
+/* Card — light zone: luminous frosted glass */
 .light-zone .glass-card {
   background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 250, 253, 0.82) 100%);
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.62) 48%,
+      rgba(244, 249, 252, 0.55) 100%
+    );
   border: 1px solid var(--lz-border);
-  border-top-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(18px) saturate(1.15);
-  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  border-top-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
   box-shadow: var(--lz-shadow);
 }
 .light-zone .glass-card:hover {
   border-color: var(--lz-border-strong);
   background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 250, 253, 0.88) 100%);
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.72) 50%,
+      rgba(240, 248, 252, 0.65) 100%
+    );
   box-shadow: var(--lz-shadow-hover);
 }
 .light-zone .glass-card.glass-card--static:hover {
   border-color: var(--lz-border);
-  border-top-color: rgba(255, 255, 255, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.98);
   background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 250, 253, 0.82) 100%);
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.62) 48%,
+      rgba(244, 249, 252, 0.55) 100%
+    );
   box-shadow: var(--lz-shadow);
 }
 
@@ -340,8 +355,9 @@ body {
       rgba(8, 12, 20, 0.72) 28%,
       rgba(18, 28, 42, 0.42) 48%,
       rgba(120, 150, 180, 0.18) 68%,
-      rgba(220, 230, 240, 0.55) 84%,
-      #e9edf3 100%
+      rgba(200, 220, 235, 0.35) 78%,
+      rgba(245, 247, 251, 0.82) 92%,
+      #f5f7fb 100%
     );
 }
 /* Soft luminous frost — gives the “透き通る” glass feel */
@@ -353,16 +369,16 @@ body {
     linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(255, 255, 255, 0.02) 30%,
-      rgba(255, 255, 255, 0.06) 52%,
-      rgba(240, 248, 255, 0.14) 72%,
-      rgba(255, 255, 255, 0.28) 90%,
-      rgba(255, 255, 255, 0.4) 100%
+      rgba(255, 255, 255, 0.02) 28%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(248, 252, 255, 0.2) 72%,
+      rgba(255, 255, 255, 0.42) 90%,
+      rgba(255, 255, 255, 0.55) 100%
     ),
     radial-gradient(
-      ellipse 90% 55% at 50% 70%,
-      rgba(180, 220, 240, 0.12),
-      transparent 70%
+      ellipse 95% 60% at 50% 78%,
+      rgba(210, 232, 245, 0.22),
+      transparent 72%
     );
   backdrop-filter: blur(18px) saturate(1.1);
   -webkit-backdrop-filter: blur(18px) saturate(1.1);
@@ -398,32 +414,32 @@ body {
   pointer-events: none;
 }
 
-/* Light zone shell */
+/* Light zone shell — pearl / ice atmosphere */
 .light-zone {
   position: relative;
   z-index: 1;
   color: var(--lz-text);
   background-color: var(--lz-bg);
-  /* Glow starts soft below the long bridge so the veil stays clear */
   background-image:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 255, 255, 0.35), transparent 55%),
-    radial-gradient(ellipse 70% 42% at 50% 18%, rgba(0, 180, 210, 0.035), transparent 60%),
-    radial-gradient(ellipse 50% 35% at 95% 28%, rgba(14, 116, 144, 0.035), transparent 55%),
-    radial-gradient(ellipse 45% 30% at 5% 48%, rgba(100, 140, 180, 0.03), transparent 50%),
-    linear-gradient(180deg, #e9edf3 0%, #eef2f7 45%, #f1f4f8 100%);
+    radial-gradient(ellipse 100% 55% at 50% -5%, rgba(255, 255, 255, 0.95), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 18% 22%, rgba(186, 220, 240, 0.22), transparent 62%),
+    radial-gradient(ellipse 65% 40% at 88% 18%, rgba(200, 230, 235, 0.18), transparent 58%),
+    radial-gradient(ellipse 55% 38% at 72% 62%, rgba(230, 236, 245, 0.5), transparent 65%),
+    radial-gradient(ellipse 50% 35% at 12% 70%, rgba(214, 228, 240, 0.28), transparent 60%),
+    linear-gradient(180deg, #f5f7fb 0%, #f8fafc 38%, #fafbfd 72%, #f6f8fb 100%);
 }
 .light-zone::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.28;
+  opacity: 0.22;
   background-image:
-    linear-gradient(rgba(18, 40, 60, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(18, 40, 60, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, rgba(0,0,0,0.4) 18%, rgba(0,0,0,0.3) 65%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, rgba(0,0,0,0.4) 18%, rgba(0,0,0,0.3) 65%, transparent 100%);
+    linear-gradient(rgba(60, 90, 130, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 90, 130, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, rgba(0,0,0,0.35) 22%, rgba(0,0,0,0.22) 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, rgba(0,0,0,0.35) 22%, rgba(0,0,0,0.22) 70%, transparent 100%);
 }
 
 /* Section anchor */

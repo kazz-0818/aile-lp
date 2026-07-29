@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import OrbitalDiagram from "./OrbitalDiagram";
 
 type Company = {
@@ -13,7 +13,7 @@ type Company = {
   color: string;
   desc: string;
   longDesc: string;
-  capabilities: { name: string; status: string; since?: string }[];
+  capabilities: { name: string; href?: string }[];
   evolutions: { date: string; title: string; desc: string }[];
   subLogo?: string;
   roleLogo?: string;
@@ -35,12 +35,12 @@ const companies: Company[] = [
     longDesc:
       "高品質な営業代行サービスと、次世代を担う人材の教育・育成を通じて、企業の成長エンジンとして機能します。",
     capabilities: [
-      { name: "営業代行", status: "active", since: "2023-04" },
-      { name: "人材研修プログラム", status: "active", since: "2023-06" },
-      { name: "組織コンサルティング", status: "active", since: "2024-01" },
-      { name: "採用支援サービス", status: "active", since: "2024-03" },
-      { name: "オンライン研修プラットフォーム", status: "new", since: "2025-09" },
-      { name: "グローバル人材育成", status: "planned" },
+      { name: "営業代行" },
+      { name: "人材研修プログラム" },
+      { name: "組織コンサルティング" },
+      { name: "採用支援サービス" },
+      { name: "オンライン研修プラットフォーム" },
+      { name: "グローバル人材育成" },
     ],
     evolutions: [
       { date: "2025-09", title: "オンライン研修開始", desc: "動画・テスト形式での研修コンテンツを本格展開" },
@@ -64,12 +64,12 @@ const companies: Company[] = [
     longDesc:
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
     capabilities: [
-      { name: "FiNEDGE 金融教育コース", status: "active", since: "2025-09" },
-      { name: "投資入門カリキュラム", status: "active", since: "2023-10" },
-      { name: "資産形成シミュレーター", status: "planned" },
-      { name: "メンター制度", status: "active", since: "2024-05" },
-      { name: "FiNEDGE アプリ版", status: "new", since: "2025-10" },
-      { name: "法人向け金融研修", status: "planned" },
+      { name: "FiNEDGE 金融教育コース" },
+      { name: "投資入門カリキュラム" },
+      { name: "資産形成シミュレーター" },
+      { name: "メンター制度" },
+      { name: "FiNEDGE アプリ版" },
+      { name: "法人向け金融研修" },
     ],
     evolutions: [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
@@ -90,11 +90,11 @@ const companies: Company[] = [
     longDesc:
       "システム開発事業として企業のDXを支援。自社サービス「ラクシス」をはじめ、DXコンサルティングやAPI連携、AI機能組み込みまで一気通貫で提供します。",
     capabilities: [
-      { name: "業務効率化フルオーダーシステム展開(ラクシス)", status: "active", since: "2022-06" },
-      { name: "DX コンサルティング", status: "active", since: "2022-09" },
-      { name: "API 連携・基盤構築", status: "active", since: "2023-03" },
-      { name: "AI 機能組み込み", status: "new", since: "2025-11" },
-      { name: "クラウドマイグレーション支援", status: "planned" },
+      { name: "業務効率化フルオーダーシステム展開(ラクシス)" },
+      { name: "DX コンサルティング" },
+      { name: "API 連携・基盤構築" },
+      { name: "AI 機能組み込み" },
+      { name: "クラウドマイグレーション支援" },
     ],
     evolutions: [
       { date: "2026-06", title: "ラクシス 事業開始", desc: "業務効率化SaaS「ラクシス」として事業を立ち上げ" },
@@ -114,12 +114,12 @@ const companies: Company[] = [
     longDesc:
       "大阪を中心に、シーシャバー・シーシャカフェ・ラウンジを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
-      { name: "Shisha Bar BLUE（梅田）", status: "active", since: "2022-11" },
-      { name: "Shisha Cafe GREEN（アメ村）", status: "active", since: "2024-01" },
-      { name: "Salon de LILAC（東心斎橋）", status: "active", since: "2024-12" },
-      { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", status: "new", since: "2025-08" },
-      { name: "オリジナルフレーバー開発", status: "planned" },
-      { name: "FC展開・多店舗化", status: "planned" },
+      { name: "Shisha Bar BLUE（梅田）" },
+      { name: "Shisha Cafe GREEN（アメ村）" },
+      { name: "Salon de LILAC（東心斎橋）" },
+      { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開" },
+      { name: "オリジナルフレーバー開発" },
+      { name: "FC展開・多店舗化" },
     ],
     evolutions: [
       { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にラウンジ複合型の新業態を出店" },
@@ -143,12 +143,12 @@ const companies: Company[] = [
     longDesc:
       "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",
     capabilities: [
-      { name: "世界中のブランド品ショッピング", status: "active", since: "2024-06" },
-      { name: "日本未上陸ブランドの取扱い", status: "active", since: "2024-06" },
-      { name: "スタイル投稿 × STELLAポイント", status: "new", since: "2025-07" },
-      { name: "商品タグ付け・紹介報酬", status: "new", since: "2025-07" },
-      { name: "ログイン・招待など日常アクションでポイント獲得", status: "active", since: "2024-09" },
-      { name: "ファッションメディア「BRAVO」記事配信", status: "active", since: "2024-10" },
+      { name: "世界中のブランド品ショッピング" },
+      { name: "日本未上陸ブランドの取扱い" },
+      { name: "スタイル投稿 × STELLAポイント" },
+      { name: "商品タグ付け・紹介報酬" },
+      { name: "ログイン・招待など日常アクションでポイント獲得" },
+      { name: "ファッションメディア「BRAVO」記事配信" },
     ],
     evolutions: [
       { date: "2026-05", title: "株式会社BRAVOに社名変更", desc: "有限会社ジーアイティーから株式会社BRAVOへ社名変更" },
@@ -294,25 +294,24 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
       </div>
 
       <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
-        {/* Capabilities */}
+        {/* Business Contents */}
         <div className="glass-card" style={{ padding: cardPadding }}>
           <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
-            Capabilities
+            Business Contents
           </h3>
           <div>
-            {company.capabilities.map((cap, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: isMobile ? "10px 0" : "14px 0",
-                  borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
-                  gap: 8,
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0, flex: 1 }}>
+            {company.capabilities.map((cap, i) => {
+              const rowStyle: CSSProperties = {
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: isMobile ? "10px 0" : "14px 0",
+                borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                textDecoration: "none",
+                color: "inherit",
+              };
+              const content = (
+                <>
                   <div
                     style={{
                       width: 5,
@@ -320,13 +319,12 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                       borderRadius: "50%",
                       flexShrink: 0,
                       backgroundColor: company.color,
-                      opacity: cap.status === "planned" ? 0.25 : 1,
                     }}
                   />
                   <span
                     style={{
                       fontSize: isMobile ? 12 : 14,
-                      color: cap.status === "planned" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.72)",
+                      color: "rgba(255,255,255,0.72)",
                       fontWeight: 300,
                       wordBreak: "break-all",
                       lineHeight: 1.5,
@@ -334,17 +332,24 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                   >
                     {cap.name}
                   </span>
+                </>
+              );
+              return cap.href ? (
+                <a
+                  key={i}
+                  href={cap.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ ...rowStyle, cursor: "pointer" }}
+                >
+                  {content}
+                </a>
+              ) : (
+                <div key={i} style={rowStyle}>
+                  {content}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                  {cap.since && !isMobile && (
-                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.22)" }} className="hidden sm:block">
-                      since {cap.since}
-                    </span>
-                  )}
-                  <Badge status={cap.status} />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

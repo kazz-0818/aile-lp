@@ -95,22 +95,61 @@ function toXY(cx: number, cy: number, r: number, angleDeg: number) {
   };
 }
 
+/** 観覧車ゴンドラ用 — 公転角を打ち消してテキストを水平に保つ */
+function ferrisUpright(currentAngle: number) {
+  return `translate(-50%, -50%) rotate(${-currentAngle}deg)`;
+}
+
 export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
   const [diagramSize, setDiagramSize] = useState(520);
   const [showLabels, setShowLabels] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef(Date.now());
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pausedAtRef = useRef<number | null>(null);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.08 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
     const loop = () => {
+      if (pausedAtRef.current !== null) {
+        startRef.current += Date.now() - pausedAtRef.current;
+        pausedAtRef.current = null;
+      }
       setTick(Date.now() - startRef.current);
       rafRef.current = requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, []);
+    if (isVisible) {
+      rafRef.current = requestAnimationFrame(loop);
+    } else if (pausedAtRef.current === null) {
+      pausedAtRef.current = Date.now();
+    }
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [reducedMotion, isVisible]);
 
   useEffect(() => {
     const update = () => {
@@ -138,19 +177,25 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const LOGO_IMG = Math.round(116 * sc);
   const NODE_R = 69 * sc;
   const SAT_ORBIT_R = 98 * sc;
-  const satRot = -(tick / 30000) * 360;
   const labelOffset = 84 * sc;
 
   const centerSize = Math.round(176 * sc);
   const aileLogoSize = Math.round(148 * sc);
 
-  const rot1 = (tick / 60000) * 360;
-  const rot2 = -(tick / 45000) * 360;
-  const rot3 = (tick / 80000) * 360;
-  const pulse = 1 + 0.04 * Math.sin(tick / 1200);
+  const motion = reducedMotion ? 0 : tick;
+  const companyOrbitMs = diagramSize < 540 ? 96000 : 72000;
+  const companyOrbit = (motion / companyOrbitMs) * 360;
+  const satRot = -(motion / (diagramSize < 540 ? 38000 : 30000)) * 360;
+  const companyAngle = (base: number) => base + companyOrbit;
+
+  const rot1 = (motion / 60000) * 360;
+  const rot2 = -(motion / 45000) * 360;
+  const rot3 = (motion / 80000) * 360;
+  const pulse = reducedMotion ? 1 : 1 + 0.04 * Math.sin(motion / 1200);
 
   return (
     <div
+      ref={containerRef}
       style={{
         position: "relative",
         width: SIZE,
@@ -208,8 +253,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         </g>
 
         {orbitCompanies.map((c) => {
-          const outer = toXY(CX, CY, R_OUTER, c.angle);
-          const inner = toXY(CX, CY, R_INNER + 10 * sc, c.angle);
+          const angle = companyAngle(c.angle);
+          const outer = toXY(CX, CY, R_OUTER, angle);
+          const inner = toXY(CX, CY, R_INNER + 10 * sc, angle);
           const isHov = hovered === c.id;
           return (
             <line
@@ -226,7 +272,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
         {/* サブブランド衛星の軌道リング */}
         {showLabels && satParentAngles.map((pa) => {
-          const parentPos = toXY(CX, CY, R_OUTER, pa);
+          const parentPos = toXY(CX, CY, R_OUTER, companyAngle(pa));
           return (
             <circle
               key={`sat-orbit-${pa}`}
@@ -243,7 +289,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
         {/* サブブランド衛星ドット（ロゴを持つものはHTML側で画像表示） */}
         {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
-          const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+          const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
           const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
           return (
             <circle
@@ -276,14 +322,10 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
       {/* ── Company logos ── */}
       {orbitCompanies.map((c) => {
-        const pos = toXY(CX, CY, R_OUTER, c.angle);
+        const currentAngle = companyAngle(c.angle);
+        const pos = toXY(CX, CY, R_OUTER, currentAngle);
         const isHov = hovered === c.id;
-        const angleMod = ((c.angle % 360) + 360) % 360;
-        const isTop    = angleMod <= 45 || angleMod >= 315;
-        const isBottom = angleMod > 135 && angleMod < 225;
-        const isRight  = angleMod > 45 && angleMod <= 135;
-        const isLeft   = angleMod >= 225 && angleMod < 315;
-        const labelPos = toXY(CX, CY, R_OUTER + labelOffset, c.angle);
+        const labelPos = toXY(CX, CY, R_OUTER + labelOffset, currentAngle);
 
         return (
           <div key={c.id}>
@@ -296,7 +338,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 position: "absolute",
                 left: `${(pos.x / SIZE) * 100}%`,
                 top: `${(pos.y / SIZE) * 100}%`,
-                transform: "translate(-50%, -50%)",
+                transform: ferrisUpright(currentAngle),
                 width: LOGO_BOX,
                 height: LOGO_BOX,
                 display: "flex",
@@ -360,18 +402,12 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                   position: "absolute",
                   left: `${(labelPos.x / SIZE) * 100}%`,
                   top: `${(labelPos.y / SIZE) * 100}%`,
-                  transform: isTop
-                    ? "translate(-50%, -100%)"
-                    : isBottom
-                    ? "translate(-50%, 0%)"
-                    : isRight
-                    ? "translate(0%, -50%)"
-                    : "translate(-100%, -50%)",
-                  textAlign: isRight ? "left" : isLeft ? "right" : "center",
+                  transform: ferrisUpright(currentAngle),
+                  textAlign: "center",
                   cursor: "pointer",
                   pointerEvents: "none",
-                  minWidth: Math.round((isTop || isBottom ? 180 : 150) * sc),
-                  maxWidth: Math.round((isTop || isBottom ? 260 : 210) * sc),
+                  minWidth: Math.round(180 * sc),
+                  maxWidth: Math.round(260 * sc),
                 }}
               >
                 <div style={{
@@ -403,7 +439,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
       {/* ── サブブランド衛星ロゴ（軌道上を周回） ── */}
       {showLabels && subBrands.filter((b) => b.logo).map((b) => {
-        const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+        const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         const satSize = Math.round(84 * sc);
         const hasStack = Boolean(b.logoMark);
@@ -471,7 +507,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
       {/* ── サブブランド衛星ラベル（ドットに追従） ── */}
       {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
-        const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
+        const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         return (
           <div
@@ -501,7 +537,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
 
       {/* ── Center logo ── */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-        <div style={{ position: "relative", width: centerSize, height: centerSize, animation: "centerFloat 5s ease-in-out infinite" }}>
+        <div style={{ position: "relative", width: centerSize, height: centerSize, animation: reducedMotion ? "none" : "centerFloat 5s ease-in-out infinite" }}>
           <Image
             src="/logos/aile-illust.png"
             alt=""

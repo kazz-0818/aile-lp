@@ -80,7 +80,7 @@ const subBrands: {
     logoMarkScale: 0.54,
     logoScale: 1.30,
     logoWordHeightScale: 0.54,
-    logoStackGap: -6,
+    logoStackGap: -12,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
   { name: "LAXIS", color: "#22d3ee", parentAngle: 68, phase: 210, logo: "/logos/laxis.png", logoScale: 0.82 },

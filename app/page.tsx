@@ -111,8 +111,6 @@ const companies: Company[] = [
       { name: "Shisha Cafe GREEN（アメ村）" },
       { name: "Salon de LILAC（東心斎橋）" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開" },
-      { name: "オリジナルフレーバー開発" },
-      { name: "FC展開・多店舗化" },
     ],
     evolutions: [
       { date: "2024-12-14", title: "Salon de LILAC オープン", desc: "東心斎橋にラウンジ複合型の新業態を出店" },

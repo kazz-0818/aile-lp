@@ -328,7 +328,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                transition: "all 0.25s",
+                transition: "filter 0.25s",
                 filter: isHov ? `drop-shadow(0 0 14px ${c.color}90)` : "none",
                 zIndex: 10,
               }}

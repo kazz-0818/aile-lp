@@ -135,7 +135,7 @@ const companies: Company[] = [
       "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",
     capabilities: [
       { name: "BRANDVOXアプリ", href: "https://ogs8t.app.link/wA31E4w194b" },
-      { name: "日本未上陸ブランドの取扱い" },
+      { name: "BRANDVOX オンラインショップ", href: "https://maison-regalia.com/" },
       { name: "スタイル投稿 × STELLAポイント" },
       { name: "商品タグ付け・紹介報酬" },
       { name: "ログイン・招待など日常アクションでポイント獲得" },

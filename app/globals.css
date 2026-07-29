@@ -350,7 +350,7 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: clamp(200px, 32vw, 360px);
+  height: clamp(320px, 52vw, 560px);
   margin-top: -1px;
   pointer-events: none;
   overflow: hidden;
@@ -359,12 +359,19 @@ body {
     linear-gradient(
       to bottom in oklab,
       #050508 0%,
-      rgba(5, 5, 8, 0.92) 12%,
-      rgba(8, 12, 20, 0.72) 28%,
-      rgba(18, 28, 42, 0.42) 48%,
-      rgba(120, 150, 180, 0.18) 68%,
-      rgba(200, 220, 235, 0.35) 78%,
-      rgba(245, 247, 251, 0.82) 92%,
+      rgba(5, 5, 8, 0.96) 8%,
+      rgba(5, 6, 10, 0.88) 16%,
+      rgba(7, 10, 16, 0.76) 24%,
+      rgba(10, 16, 26, 0.62) 32%,
+      rgba(14, 22, 34, 0.48) 40%,
+      rgba(22, 34, 50, 0.36) 48%,
+      rgba(38, 52, 72, 0.26) 56%,
+      rgba(68, 92, 118, 0.18) 64%,
+      rgba(110, 140, 168, 0.14) 72%,
+      rgba(160, 185, 208, 0.18) 80%,
+      rgba(205, 220, 235, 0.32) 88%,
+      rgba(235, 240, 248, 0.62) 94%,
+      rgba(245, 247, 251, 0.88) 98%,
       #f5f7fb 100%
     );
 }
@@ -377,33 +384,39 @@ body {
     linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(255, 255, 255, 0.02) 28%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(248, 252, 255, 0.2) 72%,
-      rgba(255, 255, 255, 0.42) 90%,
-      rgba(255, 255, 255, 0.55) 100%
+      rgba(255, 255, 255, 0.01) 18%,
+      rgba(255, 255, 255, 0.03) 36%,
+      rgba(255, 255, 255, 0.06) 52%,
+      rgba(248, 252, 255, 0.12) 68%,
+      rgba(255, 255, 255, 0.22) 82%,
+      rgba(255, 255, 255, 0.36) 92%,
+      rgba(255, 255, 255, 0.48) 100%
     ),
     radial-gradient(
-      ellipse 95% 60% at 50% 78%,
-      rgba(210, 232, 245, 0.22),
-      transparent 72%
+      ellipse 110% 72% at 50% 82%,
+      rgba(210, 232, 245, 0.18),
+      transparent 78%
     );
-  backdrop-filter: blur(18px) saturate(1.1);
-  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  backdrop-filter: blur(22px) saturate(1.08);
+  -webkit-backdrop-filter: blur(22px) saturate(1.08);
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 0, 0, 0.15) 25%,
-    rgba(0, 0, 0, 0.55) 55%,
-    rgba(0, 0, 0, 0.85) 80%,
+    rgba(0, 0, 0, 0.08) 18%,
+    rgba(0, 0, 0, 0.28) 38%,
+    rgba(0, 0, 0, 0.52) 58%,
+    rgba(0, 0, 0, 0.72) 76%,
+    rgba(0, 0, 0, 0.9) 92%,
     black 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 0, 0, 0.15) 25%,
-    rgba(0, 0, 0, 0.55) 55%,
-    rgba(0, 0, 0, 0.85) 80%,
+    rgba(0, 0, 0, 0.08) 18%,
+    rgba(0, 0, 0, 0.28) 38%,
+    rgba(0, 0, 0, 0.52) 58%,
+    rgba(0, 0, 0, 0.72) 76%,
+    rgba(0, 0, 0, 0.9) 92%,
     black 100%
   );
 }
@@ -415,8 +428,10 @@ body {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 180, 210, 0.015) 40%,
-    rgba(0, 180, 210, 0.03) 65%,
+    rgba(0, 180, 210, 0.008) 28%,
+    rgba(0, 180, 210, 0.018) 52%,
+    rgba(0, 180, 210, 0.028) 72%,
+    rgba(0, 180, 210, 0.012) 88%,
     transparent 100%
   );
   pointer-events: none;
@@ -429,6 +444,14 @@ body {
   color: var(--lz-text);
   background-color: var(--lz-bg);
   background-image:
+    linear-gradient(
+      to bottom,
+      rgba(245, 247, 251, 0) 0%,
+      rgba(245, 247, 251, 0.35) 12%,
+      rgba(248, 250, 253, 0.72) 28%,
+      rgba(250, 251, 253, 0.95) 44%,
+      #f5f7fb 58%
+    ),
     radial-gradient(ellipse 100% 55% at 50% -5%, rgba(255, 255, 255, 0.95), transparent 58%),
     radial-gradient(ellipse 70% 45% at 18% 22%, rgba(186, 220, 240, 0.22), transparent 62%),
     radial-gradient(ellipse 65% 40% at 88% 18%, rgba(200, 230, 235, 0.18), transparent 58%),
@@ -446,8 +469,8 @@ body {
     linear-gradient(rgba(60, 90, 130, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(60, 90, 130, 0.035) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, rgba(0,0,0,0.35) 22%, rgba(0,0,0,0.22) 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, rgba(0,0,0,0.35) 22%, rgba(0,0,0,0.22) 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 14%, rgba(0,0,0,0.18) 32%, rgba(0,0,0,0.35) 48%, rgba(0,0,0,0.22) 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 14%, rgba(0,0,0,0.18) 32%, rgba(0,0,0,0.35) 48%, rgba(0,0,0,0.22) 70%, transparent 100%);
 }
 
 /* Section anchor */

@@ -626,11 +626,11 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 0,
-            height: "clamp(120px, 18vw, 200px)",
+            height: "clamp(200px, 32vw, 340px)",
             pointerEvents: "none",
             zIndex: 2,
             background:
-              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.15) 35%, rgba(5,5,8,0.55) 70%, rgba(5,5,8,0.92) 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.04) 18%, rgba(5,5,8,0.12) 36%, rgba(5,5,8,0.28) 54%, rgba(5,5,8,0.48) 72%, rgba(5,5,8,0.72) 88%, rgba(5,5,8,0.92) 100%)",
           }}
         />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>

@@ -83,6 +83,7 @@ const subBrands: {
     logoStackGap: -6,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
+  { name: "LAXIS", color: "#22d3ee", parentAngle: 68, phase: 210, logo: "/logos/laxis.png", logoScale: 0.82 },
 ];
 const satParentAngles = [...new Set(subBrands.map((b) => b.parentAngle))];
 

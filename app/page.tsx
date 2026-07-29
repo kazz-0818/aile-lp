@@ -116,12 +116,18 @@ const companies: Company[] = [
     capabilities: [
       {
         name: "Shisha Bar BLUE（梅田）",
-        href: "https://share.google/zTG6OrxeYyQCPWKvV",
+        href: "https://maps.app.goo.gl/V7JTxSMmGPanABUB9?g_st=com.google.maps.preview.copy",
         logo: "/logos/blue.png",
         mapHref: "https://maps.app.goo.gl/V7JTxSMmGPanABUB9?g_st=com.google.maps.preview.copy",
         instagramHref: "https://www.instagram.com/bar_blue1128",
       },
-      { name: "Shisha Cafe GREEN（アメ村）", href: "https://www.instagram.com/cafe_green0128/?hl=en", logo: "/logos/green.png" },
+      {
+        name: "Shisha Cafe GREEN（アメ村）",
+        href: "https://maps.app.goo.gl/wknx1cy7ZADghREB9?g_st=com.google.maps.preview.copy",
+        logo: "/logos/green.png",
+        mapHref: "https://maps.app.goo.gl/wknx1cy7ZADghREB9?g_st=com.google.maps.preview.copy",
+        instagramHref: "https://www.instagram.com/cafe_green0128",
+      },
       { name: "Salon de LILAC（東心斎橋）", href: "https://www.instagram.com/salon_de.lilac/?hl=en", logo: "/logos/lilac.png" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開", href: "https://lin.ee/W4ttdzA" },
     ],

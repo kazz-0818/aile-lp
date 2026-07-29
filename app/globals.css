@@ -571,8 +571,8 @@ body {
     ),
     radial-gradient(
       ellipse 85% 90% at 50% 100%,
-      rgba(0, 210, 239, 0.16) 0%,
-      rgba(34, 211, 238, 0.08) 42%,
+      rgba(125, 211, 252, 0.16) 0%,
+      rgba(103, 232, 249, 0.08) 42%,
       transparent 72%
     );
 }
@@ -597,15 +597,15 @@ body {
     #1a5870 34%,
     #1e6880 40%,
     #228898 46%,
-    #00b8d4 52%,
-    #00d2ef 58%,
-    #22d3ee 64%,
-    #4dd9ef 70%,
-    #72e4f4 76%,
-    #9cecf6 82%,
-    #c4f2fa 88%,
-    #e0f7fc 93%,
-    #eef9fc 97%,
+    #2ea0c4 52%,
+    #38bdf8 58%,
+    #56ccf8 64%,
+    #67e8f9 70%,
+    #7dd3fc 76%,
+    #93ddfc 82%,
+    #a5f3fc 88%,
+    #c8f4fd 93%,
+    #e3f8fe 97%,
     #f5f7fb 100%
   );
 }
@@ -616,11 +616,11 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 95% 60% at 50% 72%, rgba(0, 210, 239, 0.22), transparent 65%),
+    radial-gradient(ellipse 95% 60% at 50% 72%, rgba(125, 211, 252, 0.22), transparent 65%),
     linear-gradient(
       to bottom,
       transparent 30%,
-      rgba(0, 210, 239, 0.06) 50%,
+      rgba(125, 211, 252, 0.06) 50%,
       rgba(180, 235, 250, 0.14) 68%,
       rgba(230, 248, 255, 0.32) 85%,
       rgba(255, 255, 255, 0.42) 100%
@@ -634,7 +634,7 @@ body {
   color: var(--lz-text);
   background-color: var(--lz-bg);
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 210, 239, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(125, 211, 252, 0.08), transparent 55%),
     radial-gradient(ellipse 70% 45% at 18% 22%, rgba(186, 220, 240, 0.24), transparent 62%),
     radial-gradient(ellipse 65% 40% at 88% 18%, rgba(200, 230, 235, 0.2), transparent 58%),
     radial-gradient(ellipse 55% 38% at 72% 62%, rgba(230, 236, 245, 0.4), transparent 65%),

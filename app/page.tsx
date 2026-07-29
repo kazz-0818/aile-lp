@@ -636,7 +636,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero（ダーク維持） ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 24px" : "100px 24px 60px", overflow: "hidden", background: "#050508" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 48px" : "100px 24px clamp(80px, 10vw, 120px)", overflow: "hidden", background: "#050508" }}>
         {/* Background blobs — hero only */}
         {blobs.map((b, i) => (
           <div
@@ -651,21 +651,7 @@ export default function Home() {
             }}
           />
         ))}
-        {/* Hero bottom — dark vignette + cyan glow (does not lighten into bridge) */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: "clamp(140px, 24vw, 240px)",
-            pointerEvents: "none",
-            zIndex: 0,
-            background:
-              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.25) 55%, rgba(5,5,8,0.55) 100%), radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0,210,239,0.10), transparent 70%)",
-          }}
-        />
+        <div className="hero-bottom-veil" aria-hidden="true" />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}

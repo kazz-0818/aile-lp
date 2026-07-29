@@ -345,137 +345,36 @@ body {
   background: linear-gradient(to bottom, rgba(8, 145, 178, 0.28), rgba(18, 36, 56, 0.06));
 }
 
-/* Dark → Light bridge — overlaps hero; lightens from the top of the band */
+/* Dark → Light bridge — short frost band, no hero overlap */
 .theme-bridge {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   width: 100%;
-  height: clamp(400px, 68vw, 720px);
-  margin-top: clamp(-200px, -30vw, -320px);
+  height: clamp(80px, 10vw, 120px);
+  margin-top: 0;
   pointer-events: none;
-  overflow: hidden;
-  /* Base: midtones appear early — no long near-black plateau */
-  background:
-    linear-gradient(
-      to bottom in oklab,
-      rgba(5, 5, 8, 0.92) 0%,
-      rgba(6, 8, 13, 0.86) 4%,
-      rgba(8, 12, 18, 0.78) 9%,
-      rgba(10, 16, 24, 0.68) 14%,
-      rgba(14, 22, 34, 0.58) 20%,
-      rgba(18, 28, 42, 0.48) 26%,
-      rgba(24, 36, 52, 0.40) 32%,
-      rgba(32, 46, 66, 0.32) 38%,
-      rgba(44, 62, 88, 0.26) 44%,
-      rgba(58, 82, 112, 0.22) 50%,
-      rgba(78, 106, 138, 0.20) 56%,
-      rgba(102, 132, 162, 0.20) 62%,
-      rgba(128, 158, 186, 0.22) 68%,
-      rgba(155, 182, 206, 0.28) 74%,
-      rgba(182, 204, 224, 0.38) 80%,
-      rgba(205, 220, 236, 0.52) 86%,
-      rgba(225, 234, 244, 0.70) 92%,
-      rgba(240, 244, 250, 0.88) 97%,
-      #f5f7fb 100%
-    );
-}
-/* Soft luminous frost — gives the “透き通る” glass feel */
-.theme-bridge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.008) 0%,
-      rgba(255, 255, 255, 0.014) 8%,
-      rgba(255, 255, 255, 0.022) 16%,
-      rgba(255, 255, 255, 0.032) 26%,
-      rgba(255, 255, 255, 0.045) 36%,
-      rgba(248, 252, 255, 0.062) 46%,
-      rgba(255, 255, 255, 0.085) 56%,
-      rgba(255, 255, 255, 0.12) 66%,
-      rgba(255, 255, 255, 0.18) 76%,
-      rgba(255, 255, 255, 0.26) 86%,
-      rgba(255, 255, 255, 0.36) 94%,
-      rgba(255, 255, 255, 0.44) 100%
-    ),
-    radial-gradient(
-      ellipse 120% 80% at 50% 72%,
-      rgba(210, 232, 245, 0.20),
-      transparent 78%
-    );
-  backdrop-filter: blur(24px) saturate(1.1);
-  -webkit-backdrop-filter: blur(24px) saturate(1.1);
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.06) 0%,
-    rgba(0, 0, 0, 0.12) 8%,
-    rgba(0, 0, 0, 0.22) 18%,
-    rgba(0, 0, 0, 0.36) 30%,
-    rgba(0, 0, 0, 0.50) 42%,
-    rgba(0, 0, 0, 0.64) 54%,
-    rgba(0, 0, 0, 0.76) 66%,
-    rgba(0, 0, 0, 0.88) 78%,
-    rgba(0, 0, 0, 0.96) 90%,
-    black 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.06) 0%,
-    rgba(0, 0, 0, 0.12) 8%,
-    rgba(0, 0, 0, 0.22) 18%,
-    rgba(0, 0, 0, 0.36) 30%,
-    rgba(0, 0, 0, 0.50) 42%,
-    rgba(0, 0, 0, 0.64) 54%,
-    rgba(0, 0, 0, 0.76) 66%,
-    rgba(0, 0, 0, 0.88) 78%,
-    rgba(0, 0, 0, 0.96) 90%,
-    black 100%
-  );
-}
-/* Fine mist veil — barely-there cyan air */
-.theme-bridge::after {
-  content: "";
-  position: absolute;
-  inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 180, 210, 0.003) 0%,
-    rgba(0, 180, 210, 0.008) 10%,
-    rgba(0, 180, 210, 0.014) 24%,
-    rgba(0, 180, 210, 0.020) 40%,
-    rgba(0, 180, 210, 0.024) 56%,
-    rgba(0, 180, 210, 0.020) 72%,
-    rgba(0, 180, 210, 0.010) 88%,
-    transparent 100%
+    #050508 0%,
+    #0a0e14 18%,
+    #1a2434 42%,
+    #8a9eb8 72%,
+    #e8edf4 92%,
+    #f5f7fb 100%
   );
-  pointer-events: none;
 }
 
-/* Light zone shell — pearl / ice atmosphere */
+/* Light zone shell — solid pearl / ice atmosphere */
 .light-zone {
   position: relative;
   z-index: 1;
   color: var(--lz-text);
   background-color: var(--lz-bg);
   background-image:
-    linear-gradient(
-      to bottom,
-      rgba(245, 247, 251, 0) 0%,
-      rgba(245, 247, 251, 0.12) 4%,
-      rgba(246, 248, 252, 0.28) 10%,
-      rgba(247, 249, 252, 0.48) 18%,
-      rgba(248, 250, 253, 0.68) 28%,
-      rgba(249, 251, 253, 0.84) 38%,
-      rgba(250, 251, 253, 0.94) 46%,
-      #f5f7fb 52%
-    ),
-    radial-gradient(ellipse 100% 55% at 50% -5%, rgba(255, 255, 255, 0.95), transparent 58%),
-    radial-gradient(ellipse 70% 45% at 18% 22%, rgba(186, 220, 240, 0.22), transparent 62%),
-    radial-gradient(ellipse 65% 40% at 88% 18%, rgba(200, 230, 235, 0.18), transparent 58%),
-    radial-gradient(ellipse 55% 38% at 72% 62%, rgba(230, 236, 245, 0.5), transparent 65%),
-    radial-gradient(ellipse 50% 35% at 12% 70%, rgba(214, 228, 240, 0.28), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 18% 22%, rgba(186, 220, 240, 0.18), transparent 62%),
+    radial-gradient(ellipse 65% 40% at 88% 18%, rgba(200, 230, 235, 0.14), transparent 58%),
+    radial-gradient(ellipse 55% 38% at 72% 62%, rgba(230, 236, 245, 0.35), transparent 65%),
+    radial-gradient(ellipse 50% 35% at 12% 70%, rgba(214, 228, 240, 0.22), transparent 60%),
     linear-gradient(180deg, #f5f7fb 0%, #f8fafc 38%, #fafbfd 72%, #f6f8fb 100%);
 }
 .light-zone::before {
@@ -491,25 +390,19 @@ body {
   mask-image: linear-gradient(to bottom, transparent 0%, transparent 10%, rgba(0,0,0,0.12) 24%, rgba(0,0,0,0.28) 40%, rgba(0,0,0,0.32) 52%, rgba(0,0,0,0.20) 68%, rgba(0,0,0,0.08) 82%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 10%, rgba(0,0,0,0.12) 24%, rgba(0,0,0,0.28) 40%, rgba(0,0,0,0.32) 52%, rgba(0,0,0,0.20) 68%, rgba(0,0,0,0.08) 82%, transparent 100%);
 }
-/* Bottom fade — soft descent into footer zone */
+/* Bottom fade — short descent into footer zone */
 .light-zone::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: clamp(180px, 28vw, 320px);
+  height: clamp(80px, 12vw, 140px);
   pointer-events: none;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(240, 244, 249, 0.06) 6%,
-    rgba(238, 242, 247, 0.14) 16%,
-    rgba(236, 240, 246, 0.28) 30%,
-    rgba(232, 238, 245, 0.46) 46%,
-    rgba(228, 234, 242, 0.64) 62%,
-    rgba(224, 230, 240, 0.82) 78%,
-    rgba(232, 238, 245, 0.92) 90%,
+    rgba(238, 242, 247, 0.5) 55%,
     #e8eef5 100%
   );
 }

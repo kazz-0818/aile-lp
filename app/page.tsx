@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import OrbitalDiagram from "./OrbitalDiagram";
 
 type Company = {
@@ -173,6 +173,23 @@ function Badge({ status }: { status: string }) {
       {status === "new" && <span className="w-1.5 h-1.5 rounded-full bg-current" />}
       {s.label}
     </span>
+  );
+}
+
+function EvolutionTitle({ title }: { title: string }) {
+  const parts = title.split(/(\d[\d,]*(?:\.\d+)?(?:億|万)?(?:円)?)/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        /\d/.test(part) ? (
+          <span key={i} className="evolution-log__metric">
+            {part}
+          </span>
+        ) : (
+          part
+        ),
+      )}
+    </>
   );
 }
 
@@ -405,33 +422,49 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
 
         {/* Right: Evolution */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div className="glass-card" style={{ padding: evoPadding }}>
-            <h3 style={{ fontSize: 10, color: "#98a2b3", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
-              Evolution Log
-            </h3>
-            <div style={{ position: "relative", paddingLeft: 18 }}>
-              <div className="timeline-line" />
-              {company.evolutions.map((ev, i) => (
-                <div key={i} style={{ position: "relative", marginBottom: i < company.evolutions.length - 1 ? (isMobile ? 20 : 28) : 0 }}>
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: -18,
-                      top: 4,
-                      width: 7,
-                      height: 7,
-                      borderRadius: "50%",
-                      backgroundColor: i === 0 ? company.color : "rgba(18,36,56,0.22)",
-                      border: `2px solid ${i === 0 ? company.color : "rgba(18,36,56,0.12)"}`,
-                    }}
-                  />
-                  <div style={{ fontSize: 10, color: "#98a2b3", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
-                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#0c1220", marginBottom: ev.desc ? 4 : 0 }}>{ev.title}</div>
-                  {ev.desc ? (
-                    <div style={{ fontSize: isMobile ? 11 : 12, color: "#667085", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
-                  ) : null}
-                </div>
-              ))}
+          <div
+            className="glass-card glass-card--static evolution-log"
+            style={{
+              padding: evoPadding,
+              ["--evo-accent" as string]: company.color,
+            }}
+          >
+            <h3 className="evolution-log__heading">Evolution Log</h3>
+            <div className="evolution-log__track">
+              <div className="evolution-log__rail" aria-hidden="true" />
+              {company.evolutions.map((ev, i) => {
+                const year = ev.date.slice(0, 4);
+                const prevYear = i > 0 ? company.evolutions[i - 1].date.slice(0, 4) : null;
+                const showYear = year !== prevYear;
+
+                return (
+                  <Fragment key={i}>
+                    {showYear ? (
+                      <div className="evolution-log__year" aria-hidden="true">
+                        {year}
+                      </div>
+                    ) : null}
+                    <article
+                      className={`evolution-log__item${i === 0 ? " evolution-log__item--latest" : ""}`}
+                      style={{ ["--evo-delay" as string]: `${Math.min(i, 12) * 45}ms` }}
+                    >
+                      <div className="evolution-log__node" aria-hidden="true">
+                        <span className="evolution-log__node-halo" />
+                        <span className="evolution-log__node-core" />
+                      </div>
+                      <div className="evolution-log__content">
+                        <time className="evolution-log__date" dateTime={ev.date}>
+                          {ev.date}
+                        </time>
+                        <h4 className="evolution-log__title">
+                          <EvolutionTitle title={ev.title} />
+                        </h4>
+                        {ev.desc ? <p className="evolution-log__desc">{ev.desc}</p> : null}
+                      </div>
+                    </article>
+                  </Fragment>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -618,6 +651,21 @@ export default function Home() {
             }}
           />
         ))}
+        {/* Hero bottom — dark vignette + cyan glow (does not lighten into bridge) */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "clamp(140px, 24vw, 240px)",
+            pointerEvents: "none",
+            zIndex: 0,
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.25) 55%, rgba(5,5,8,0.55) 100%), radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0,210,239,0.10), transparent 70%)",
+          }}
+        />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}
@@ -682,7 +730,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* ─── Dark → Light（ショート・フロスト） ─── */}
+      {/* ─── Dark → Light（ロング・ビビッド・シアン→パール） ─── */}
       <div className="theme-bridge" aria-hidden="true" />
 
       {/* ─── Light zone: ヒーローより下 ─── */}

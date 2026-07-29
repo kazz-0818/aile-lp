@@ -136,10 +136,10 @@ const companies: Company[] = [
     longDesc:
       "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",
     capabilities: [
-      { name: "「BRANDVOX」アプリ展開", href: "https://ogs8t.app.link/wA31E4w194b" },
-      { name: "「BRANDVOX」オンラインショップ展開", href: "https://maison-regalia.com/" },
+      { name: "「BRANDVOX」アプリ運営", href: "https://ogs8t.app.link/wA31E4w194b" },
+      { name: "「BRANDVOX」オンラインショップ運営", href: "https://maison-regalia.com/" },
       { name: "ファッションメディア「BRAVO」運営", href: "https://bravo-online.com/" },
-      { name: "無料古着仕入れサービス「TADAFURU」展開", href: "http://tadafuru.com/" },
+      { name: "無料古着仕入れサービス「TADAFURU」運営", href: "http://tadafuru.com/" },
     ],
     evolutions: [
       { date: "2026-05", title: "株式会社BRAVOに社名変更", desc: "有限会社ジーアイティーから株式会社BRAVOへ社名変更" },

@@ -130,6 +130,7 @@ const companies: Company[] = [
     roleLogoSlotWidth: 112,
     logo: "/logos/bravo-logo.png",
     color: "#facc15",
+    siteUrl: "https://brand-vox.com/",
     desc: "BRAVOです。アパレルブランド事業を軸に、ファッション×ポイ活アプリ「BRANDVOX」を展開しています。",
     longDesc:
       "アパレルブランド事業としてファッション領域に取り組み、その中でソーシャルショッピングアプリ「BRANDVOX」を立ち上げ。着て・見せて・貯めて・買える、新しいファッション体験を提供します。",

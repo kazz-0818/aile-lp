@@ -64,7 +64,7 @@ const companies: Company[] = [
     longDesc:
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
     capabilities: [
-      { name: "FiNEDGE 金融教育コース" },
+      { name: "金融教育オンラインスクール「FiNEDGE」運営", href: "https://finedge.jp/" },
     ],
     evolutions: [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },

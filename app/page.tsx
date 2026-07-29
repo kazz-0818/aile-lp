@@ -127,7 +127,7 @@ const companies: Company[] = [
     role: "アパレルブランド事業",
     roleLogo: "/logos/brandvox-logo.png",
     roleLogoAlt: "BRANDVOX",
-    roleLogoScale: 3.1,
+    roleLogoScale: 2.7,
     roleLogoSlotWidth: 112,
     logo: "/logos/bravo-logo.png",
     color: "#facc15",

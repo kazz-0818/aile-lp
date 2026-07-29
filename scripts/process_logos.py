@@ -17,6 +17,7 @@ SOURCES = {
     "green.png": ASSETS / "IMG_9796-a2fc2f0c-9ebf-4b13-a8f9-8d3884a16cb8.png",
     "lilac.png": ASSETS / "LILAC-___-575cc110-ba23-431d-8782-24870199768a.png",
     "blue.png": ASSETS / "IMG_0624-7225f216-d13b-41c5-b755-bf85644fec41.png",
+    "brandvox-logo.png": ASSETS / "Brandvox_Logo_Gold-5ef5c045-efe5-4e63-a153-19672200b445.png",
 }
 
 
@@ -89,6 +90,40 @@ def remove_navy_bg(
     return rgba
 
 
+def remove_black_bg(
+    img: Image.Image,
+    bg: tuple[int, int, int] = (0, 0, 0),
+    threshold: float = 38.0,
+    softness: float = 22.0,
+    min_brightness: int = 22,
+) -> Image.Image:
+    """Remove solid black background while preserving gold / gray logo pixels."""
+    rgba = img.convert("RGBA")
+    px = rgba.load()
+    w, h = rgba.size
+
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a == 0:
+                continue
+            brightness = max(r, g, b)
+            d = dist_rgb((r, g, b), bg)
+
+            if brightness >= min_brightness:
+                continue
+
+            if d <= threshold - softness:
+                px[x, y] = (r, g, b, 0)
+            elif d < threshold:
+                t = (d - (threshold - softness)) / softness
+                px[x, y] = (r, g, b, clamp(255 * t))
+            elif brightness <= 15 and d < threshold + 25:
+                t = (d - threshold) / 25.0
+                px[x, y] = (r, g, b, clamp(255 * max(t, 0) * 0.5))
+    return rgba
+
+
 def trim_transparent(img: Image.Image, pad: int = 8) -> Image.Image:
     bbox = img.getbbox()
     if not bbox:
@@ -129,6 +164,7 @@ def main() -> None:
         "green.png": lambda im: remove_white_bg(im, threshold=30, softness=20),
         "lilac.png": lambda im: remove_white_bg(im, threshold=30, softness=20),
         "blue.png": lambda im: remove_navy_bg(im, threshold=45, softness=24, min_brightness=16),
+        "brandvox-logo.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
     }
 
     for name, src in SOURCES.items():

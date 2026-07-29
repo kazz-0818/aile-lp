@@ -60,7 +60,7 @@ const subBrands: { name: string; color: string; parentAngle: number; phase: numb
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
   { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240, logo: "/logos/lilac.png",  logoScale: 0.62 },
   { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90, logo: "/logos/finedge-logo.png" },
-  { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png" },
+  { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
 ];
 const satParentAngles = [...new Set(subBrands.map((b) => b.parentAngle))];
 

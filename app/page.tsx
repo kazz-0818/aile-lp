@@ -199,7 +199,10 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
         const headerInner = (
           <>
             {/* カラーバー */}
-            <div style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: isMobile ? 44 : 64 }} />
+            <div
+              className={company.siteUrl ? "company-header-bar" : undefined}
+              style={{ width: 3, borderRadius: 2, alignSelf: "stretch", flexShrink: 0, background: company.color, minHeight: isMobile ? 44 : 64 }}
+            />
             {/* ロゴ */}
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
               <Image
@@ -207,7 +210,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                 alt={company.name}
                 width={logoSize}
                 height={logoSize}
-                className="object-contain"
+                className={`object-contain${company.siteUrl ? " company-header-logo" : ""}`}
                 style={{ maxHeight: logoSize, width: "auto", opacity: 0.95 }}
               />
               {company.subLogo && (
@@ -216,7 +219,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                   alt="sub"
                   width={isMobile ? 44 : 70}
                   height={isMobile ? 44 : 70}
-                  className="object-contain"
+                  className={`object-contain${company.siteUrl ? " company-header-logo" : ""}`}
                   style={{ maxHeight: isMobile ? 44 : 70, width: "auto", opacity: 0.8 }}
                 />
               )}
@@ -224,7 +227,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
             {/* テキスト */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <h2
-                className="font-orbitron"
+                className={`font-orbitron${company.siteUrl ? " company-header-name" : ""}`}
                 style={{ fontSize: nameFontSize, fontWeight: 800, letterSpacing: "0.05em", color: company.color, marginBottom: 4, lineHeight: 1.2 }}
               >
                 {company.nameJP}
@@ -300,7 +303,11 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
             href={company.siteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            style={headerStyle}
+            className="company-header-link"
+            style={{
+              ...headerStyle,
+              ["--header-color" as string]: company.color,
+            }}
           >
             {headerInner}
           </a>

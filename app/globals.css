@@ -161,6 +161,38 @@ body {
   }
 }
 
+/* 会社ヘッダー（siteUrl付き）: Business Contents と同トーンの光演出（PCホバーのみ） */
+.company-header-link {
+  --header-color: #ffffff;
+}
+.company-header-name {
+  transition: text-shadow 0.28s ease, filter 0.28s ease;
+}
+.company-header-logo {
+  transition: filter 0.28s ease, opacity 0.28s ease;
+}
+.company-header-bar {
+  transition: box-shadow 0.28s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .company-header-link:hover .company-header-name,
+  .company-header-link:focus-visible .company-header-name {
+    filter: brightness(1.12);
+    text-shadow:
+      0 0 10px color-mix(in srgb, var(--header-color) 50%, transparent),
+      0 0 22px color-mix(in srgb, var(--header-color) 22%, transparent);
+  }
+  .company-header-link:hover .company-header-logo,
+  .company-header-link:focus-visible .company-header-logo {
+    filter: brightness(1.15);
+    opacity: 1;
+  }
+  .company-header-link:hover .company-header-bar,
+  .company-header-link:focus-visible .company-header-bar {
+    box-shadow: 0 0 10px color-mix(in srgb, var(--header-color) 70%, transparent);
+  }
+}
+
 /* Chat bubble */
 .chat-bubble {
   background: rgba(255,255,255,0.05);

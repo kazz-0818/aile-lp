@@ -56,9 +56,9 @@ const orbitCompanies = [
 
 /* 会社ノードの周りを衛星のように回るサブブランド（parentAngle = 親ノードの角度, phase = 初期位相） */
 const subBrands: { name: string; color: string; parentAngle: number; phase: number; logo?: string; logoScale?: number }[] = [
-  { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.84 },
-  { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.80 },
-  { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240, logo: "/logos/lilac.png",  logoScale: 0.80 },
+  { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.67 },
+  { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
+  { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240, logo: "/logos/lilac.png",  logoScale: 0.62 },
   { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90, logo: "/logos/finedge-logo.png" },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png" },
 ];

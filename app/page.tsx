@@ -641,13 +641,13 @@ export default function Home() {
               src="/logos/aile-illust.png"
               alt=""
               aria-hidden="true"
-              width={72}
-              height={72}
+              width={110}
+              height={110}
               priority
               style={{
                 display: "block",
-                margin: "0 auto clamp(10px, 1.8vw, 18px)",
-                height: "clamp(44px, 7vw, 72px)",
+                margin: "0 auto clamp(12px, 2.2vw, 22px)",
+                height: "clamp(64px, 10vw, 110px)",
                 width: "auto",
                 objectFit: "contain",
                 filter: "drop-shadow(0 0 20px rgba(0,210,239,0.5))",

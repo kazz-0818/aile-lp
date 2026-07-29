@@ -65,11 +65,6 @@ const companies: Company[] = [
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
     capabilities: [
       { name: "FiNEDGE 金融教育コース" },
-      { name: "投資入門カリキュラム" },
-      { name: "資産形成シミュレーター" },
-      { name: "メンター制度" },
-      { name: "FiNEDGE アプリ版" },
-      { name: "法人向け金融研修" },
     ],
     evolutions: [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },

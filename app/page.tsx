@@ -60,7 +60,7 @@ const companies: Company[] = [
     roleLogoScale: 2.9,
     roleLogoSlotWidth: 96,
     logo: "/logos/titan-logo.png",
-    color: "#b0b8c8",
+    color: "#6b7588",
     desc: "TiTANです。お金の知識を、すべての人へ。FiNEDGEで未来を変える。",
     longDesc:
       "誰もが資産形成の知識を持てる社会を目指し、投資・金融リテラシーを高めるオンライン教育プラットフォーム「FiNEDGE」を運営します。",
@@ -192,7 +192,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
           gap: isMobile ? 12 : 24,
           marginBottom: isMobile ? 24 : 40,
           paddingBottom: isMobile ? 20 : 32,
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          borderBottom: "1px solid rgba(26,29,38,0.08)",
           textDecoration: "none",
           color: "inherit",
           ...(company.siteUrl ? { cursor: "pointer" } : {}),
@@ -235,13 +235,13 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
               </h2>
               {/* role行: モバイルはテキストのみ */}
               {isMobile ? (
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
+                <p style={{ color: "#7a8499", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
                   {company.role}{company.roleLogoAlt ? ` / ${company.roleLogoAlt}` : ""}
                 </p>
               ) : (
                 <p
                   style={{
-                    color: "rgba(255,255,255,0.4)",
+                    color: "#7a8499",
                     fontSize: 13,
                     fontWeight: 300,
                     letterSpacing: "0.05em",
@@ -259,7 +259,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                   {company.roleLogo ? (
                     <>
                       <span style={{ lineHeight: "20px" }}>{company.role}</span>
-                      <span style={{ opacity: 0.35, fontSize: 12, lineHeight: "20px" }}>/</span>
+                      <span style={{ opacity: 0.45, fontSize: 12, lineHeight: "20px" }}>/</span>
                       <span
                         style={{
                           position: "relative",
@@ -284,7 +284,6 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                             height: 40,
                             objectFit: "contain",
                             opacity: 0.95,
-                            mixBlendMode: "lighten",
                             transform: `translateY(-50%) scale(${company.roleLogoScale ?? 2.6})`,
                             transformOrigin: "left center",
                           }}
@@ -320,7 +319,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
       <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
         {/* Business Contents */}
         <div className="glass-card glass-card--static" style={{ padding: cardPadding }}>
-          <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
+          <h3 style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
             Business Contents
           </h3>
           <div>
@@ -330,7 +329,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                 alignItems: "center",
                 gap: 8,
                 padding: isMobile ? "10px 0" : "14px 0",
-                borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(26,29,38,0.07)" : "none",
                 textDecoration: "none",
                 color: "inherit",
               };
@@ -350,7 +349,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                     className={cap.href ? "capability-link-text" : undefined}
                     style={{
                       fontSize: isMobile ? 12 : 14,
-                      color: "rgba(255,255,255,0.72)",
+                      color: "#3d4555",
                       fontWeight: 300,
                       wordBreak: "break-all",
                       lineHeight: 1.5,
@@ -387,7 +386,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
         {/* Right: Evolution */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div className="glass-card" style={{ padding: evoPadding }}>
-            <h3 style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
+            <h3 style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
               Evolution Log
             </h3>
             <div style={{ position: "relative", paddingLeft: 18 }}>
@@ -402,13 +401,13 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                       width: 7,
                       height: 7,
                       borderRadius: "50%",
-                      backgroundColor: i === 0 ? company.color : "rgba(255,255,255,0.15)",
-                      border: `2px solid ${i === 0 ? company.color : "rgba(255,255,255,0.1)"}`,
+                      backgroundColor: i === 0 ? company.color : "rgba(26,29,38,0.2)",
+                      border: `2px solid ${i === 0 ? company.color : "rgba(26,29,38,0.12)"}`,
                     }}
                   />
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
-                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "rgba(255,255,255,0.78)", marginBottom: 4 }}>{ev.title}</div>
-                  <div style={{ fontSize: isMobile ? 11 : 12, color: "rgba(255,255,255,0.33)", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
+                  <div style={{ fontSize: 10, color: "#9aa3b5", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#1a1d26", marginBottom: 4 }}>{ev.title}</div>
+                  <div style={{ fontSize: isMobile ? 11 : 12, color: "#7a8499", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
                 </div>
               ))}
             </div>
@@ -478,22 +477,7 @@ export default function Home() {
 
   return (
     <div style={{ background: "#050508", minHeight: "100vh", position: "relative" }}>
-      {/* Background blobs */}
-      {blobs.map((b, i) => (
-        <div
-          key={i}
-          className="blob"
-          style={{
-            left: b.left,
-            top: b.top,
-            width: b.size,
-            height: b.size,
-            background: b.color,
-          }}
-        />
-      ))}
-
-      {/* ─── Header ─── */}
+      {/* ─── Header（全ページ共通ダーク） ─── */}
       <header
         ref={headerRef}
         style={{
@@ -596,9 +580,23 @@ export default function Home() {
         )}
       </header>
 
-      {/* ─── Hero ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 8px" : "100px 24px 60px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
+      {/* ─── Hero（ダーク維持） ─── */}
+      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 8px" : "100px 24px 60px", overflow: "hidden", background: "#050508" }}>
+        {/* Background blobs — hero only */}
+        {blobs.map((b, i) => (
+          <div
+            key={i}
+            className="blob"
+            style={{
+              left: b.left,
+              top: b.top,
+              width: b.size,
+              height: b.size,
+              background: b.color,
+            }}
+          />
+        ))}
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
 
           {/* Text */}
           <div style={{ textAlign: "center", width: "100%" }}>
@@ -646,6 +644,8 @@ export default function Home() {
         )}
       </section>
 
+      {/* ─── Light zone: ヒーローより下 ─── */}
+      <div className="light-zone">
       {/* ─── Main Content ─── */}
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 12px" : "0 24px", display: "flex", gap: 32, alignItems: "flex-start" }}>
 
@@ -655,7 +655,7 @@ export default function Home() {
           style={{ width: 200, flexShrink: 0, position: "sticky", top: 80, paddingBottom: 40 }}
         >
           <div style={{ marginBottom: 12, padding: "0 14px" }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+            <span style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.2em", textTransform: "uppercase" }}>
               Group
             </span>
           </div>
@@ -670,9 +670,9 @@ export default function Home() {
                 gap: 10,
                 width: "100%",
                 marginBottom: 4,
-                background: active === c.id ? `${c.color}12` : "transparent",
-                borderColor: active === c.id ? `${c.color}30` : "transparent",
-                color: active === c.id ? c.color : "rgba(255,255,255,0.4)",
+                background: active === c.id ? `${c.color}18` : "transparent",
+                borderColor: active === c.id ? `${c.color}40` : "transparent",
+                color: active === c.id ? c.color : "#7a8499",
                 textAlign: "left",
                 fontFamily: "inherit",
                 cursor: "pointer",
@@ -680,13 +680,13 @@ export default function Home() {
             >
               <div
                 className="nav-dot"
-                style={{ background: c.color, opacity: active === c.id ? 1 : 0.3 }}
+                style={{ background: c.color, opacity: active === c.id ? 1 : 0.4 }}
               />
               <div>
                 <div className="font-orbitron" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>
                   {c.name}
                 </div>
-                <div style={{ fontSize: 9, opacity: 0.5, marginTop: 1, lineHeight: 1.3 }}>{c.role.split("・")[0]}</div>
+                <div style={{ fontSize: 9, opacity: 0.65, marginTop: 1, lineHeight: 1.3 }}>{c.role.split("・")[0]}</div>
               </div>
             </button>
           ))}
@@ -707,7 +707,7 @@ export default function Home() {
                 Group Roadmap
               </h2>
               {!isMobile && (
-                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginLeft: 4 }}>
+                <span style={{ fontSize: 12, color: "#7a8499", marginLeft: 4 }}>
                   AiLE GROUPの拡張フェーズ
                 </span>
               )}
@@ -731,28 +731,28 @@ export default function Home() {
                       padding: "16px",
                       borderRadius: 14,
                       border: "1px solid",
-                      borderColor: p.done ? "rgba(34,197,94,0.2)" : "rgba(255,255,255,0.06)",
-                      background: p.done ? "rgba(34,197,94,0.05)" : "rgba(255,255,255,0.02)",
+                      borderColor: p.done ? "rgba(22,163,74,0.28)" : "rgba(26,29,38,0.08)",
+                      background: p.done ? "rgba(22,163,74,0.06)" : "rgba(26,29,38,0.02)",
                     }}
                   >
                     <div
                       className="phase-dot font-orbitron"
                       style={{
-                        background: p.done ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.05)",
-                        color: p.done ? "#4ade80" : "rgba(255,255,255,0.3)",
-                        border: `1px solid ${p.done ? "rgba(34,197,94,0.3)" : "rgba(255,255,255,0.08)"}`,
+                        background: p.done ? "rgba(22,163,74,0.12)" : "rgba(26,29,38,0.05)",
+                        color: p.done ? "#15803d" : "#9aa3b5",
+                        border: `1px solid ${p.done ? "rgba(22,163,74,0.3)" : "rgba(26,29,38,0.1)"}`,
                       }}
                     >
                       {p.n}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: p.done ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.45)" }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: p.done ? "#1a1d26" : "#7a8499" }}>
                           {p.title}
                         </span>
                         {p.done && <Badge status="active" />}
                       </div>
-                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.6, fontWeight: 300 }}>
+                      <p style={{ fontSize: 11, color: "#7a8499", lineHeight: 1.6, fontWeight: 300 }}>
                         {p.desc}
                       </p>
                     </div>
@@ -763,11 +763,11 @@ export default function Home() {
           </div>
 
           {/* ─── Contact ─── */}
-          <div style={{ marginTop: isMobile ? 32 : 60, padding: isMobile ? "28px 20px" : "48px 40px", borderRadius: isMobile ? 16 : 24, border: "1px solid rgba(0,210,239,0.2)", background: "rgba(0,210,239,0.04)", textAlign: "center", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(0,210,239,0.5), transparent)" }} />
-            <p className="font-orbitron" style={{ fontSize: 11, color: "#00d2ef", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
-            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#e2e8f0" }}>
-              ともに、<span style={{ color: "#00d2ef" }}>飛躍しよう。</span>
+          <div style={{ marginTop: isMobile ? 32 : 60, padding: isMobile ? "28px 20px" : "48px 40px", borderRadius: isMobile ? 16 : 24, border: "1px solid rgba(8,145,178,0.28)", background: "rgba(8,145,178,0.05)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(8,145,178,0.45), transparent)" }} />
+            <p className="font-orbitron" style={{ fontSize: 11, color: "#0e7490", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
+            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#1a1d26" }}>
+              ともに、<span style={{ color: "#0e7490" }}>飛躍しよう。</span>
             </h2>
           </div>
         </main>
@@ -778,20 +778,21 @@ export default function Home() {
         style={{
           position: "relative",
           zIndex: 1,
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderTop: "1px solid rgba(26,29,38,0.08)",
           marginTop: 80,
           padding: "32px 24px",
+          background: "#eef0f3",
         }}
       >
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <Image src="/logos/aile-illust.png" alt="AiLE" width={24} height={24} style={{ objectFit: "contain", opacity: 0.5 }} />
-            <span className="font-orbitron" style={{ fontSize: 12, color: "rgba(0,210,239,0.4)", letterSpacing: "0.15em" }}>
+            <Image src="/logos/aile-illust.png" alt="AiLE" width={24} height={24} style={{ objectFit: "contain", opacity: 0.7 }} />
+            <span className="font-orbitron" style={{ fontSize: 12, color: "#0e7490", letterSpacing: "0.15em" }}>
               AiLE GROUP
             </span>
           </div>
           {/* Group logos */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, justifyContent: "center", opacity: 0.25 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, justifyContent: "center", opacity: 0.55 }}>
             {[
               { src: "/logos/iwill-logo.png", alt: "IWiLL" },
               { src: "/logos/titan-logo.png", alt: "TiTAN" },
@@ -803,11 +804,12 @@ export default function Home() {
               <Image key={i} src={l.src} alt={l.alt} width={50} height={24} style={{ objectFit: "contain", maxHeight: 24, width: "auto" }} />
             ))}
           </div>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em" }}>
+          <p style={{ fontSize: 11, color: "#9aa3b5", letterSpacing: "0.1em" }}>
             © 2025 AiLE GROUP. All rights reserved.
           </p>
         </div>
       </footer>
+      </div>
 
       <style>{`
         @keyframes pulse {

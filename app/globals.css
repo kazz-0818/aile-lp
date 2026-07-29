@@ -9,6 +9,16 @@
   --border: rgba(255,255,255,0.08);
   --text: #e2e8f0;
   --text-muted: rgba(255,255,255,0.45);
+  /* Light zone tokens */
+  --lz-bg: #f2f3f6;
+  --lz-bg-elevated: #ffffff;
+  --lz-text: #1a1d26;
+  --lz-text-secondary: #4a5568;
+  --lz-text-muted: #7a8499;
+  --lz-text-faint: #9aa3b5;
+  --lz-border: rgba(26, 29, 38, 0.08);
+  --lz-border-strong: rgba(26, 29, 38, 0.12);
+  --lz-shadow: 0 1px 2px rgba(26, 29, 38, 0.04), 0 8px 24px rgba(26, 29, 38, 0.06);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,9 +40,9 @@ body {
 ::-webkit-scrollbar-thumb { background: rgba(0,210,239,0.25); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,210,239,0.5); }
 
-/* Glow blob */
+/* Glow blob — hero only (positioned absolute by parent) */
 .blob {
-  position: fixed;
+  position: absolute;
   border-radius: 50%;
   filter: blur(100px);
   pointer-events: none;
@@ -73,6 +83,22 @@ body {
   border: 1px solid rgba(148,163,184,0.2);
 }
 
+.light-zone .badge-new {
+  background: rgba(8, 145, 178, 0.1);
+  color: #0e7490;
+  border: 1px solid rgba(8, 145, 178, 0.25);
+}
+.light-zone .badge-active {
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
+  border: 1px solid rgba(22, 163, 74, 0.28);
+}
+.light-zone .badge-planned {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
 /* Nav item */
 .nav-item {
   display: flex;
@@ -95,6 +121,13 @@ body {
   border-color: rgba(0,210,239,0.25);
   color: #00d2ef;
 }
+.light-zone .nav-item {
+  color: var(--lz-text-muted);
+}
+.light-zone .nav-item:hover {
+  background: rgba(26, 29, 38, 0.04);
+  color: var(--lz-text-secondary);
+}
 .nav-dot {
   width: 8px;
   height: 8px;
@@ -102,13 +135,13 @@ body {
   flex-shrink: 0;
 }
 
-/* Card */
+/* Card — dark (hero context / default) */
 .glass-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  transition: border-color 0.3s, background 0.3s;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
 }
 .glass-card:hover {
   border-color: rgba(255,255,255,0.14);
@@ -118,6 +151,24 @@ body {
 .glass-card.glass-card--static:hover {
   border-color: rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.04);
+}
+
+/* Card — light zone */
+.light-zone .glass-card {
+  background: var(--lz-bg-elevated);
+  border: 1px solid var(--lz-border);
+  backdrop-filter: none;
+  box-shadow: var(--lz-shadow);
+}
+.light-zone .glass-card:hover {
+  border-color: var(--lz-border-strong);
+  background: var(--lz-bg-elevated);
+  box-shadow: 0 2px 4px rgba(26, 29, 38, 0.05), 0 12px 28px rgba(26, 29, 38, 0.08);
+}
+.light-zone .glass-card.glass-card--static:hover {
+  border-color: var(--lz-border);
+  background: var(--lz-bg-elevated);
+  box-shadow: var(--lz-shadow);
 }
 
 /* Capability row */
@@ -159,6 +210,18 @@ body {
       0 0 10px color-mix(in srgb, var(--cap-color) 50%, transparent),
       0 0 22px color-mix(in srgb, var(--cap-color) 22%, transparent);
   }
+
+  /* Light zone: stronger glow so accent remains visible on pale bg */
+  .light-zone .capability-link:hover .capability-link-text,
+  .light-zone .capability-link:focus-visible .capability-link-text {
+    filter: brightness(1.05);
+    text-shadow:
+      0 0 12px color-mix(in srgb, var(--cap-color) 55%, transparent),
+      0 0 28px color-mix(in srgb, var(--cap-color) 28%, transparent);
+  }
+  .light-zone .capability-link:hover .capability-link-dot {
+    box-shadow: 0 0 10px color-mix(in srgb, var(--cap-color) 75%, transparent);
+  }
 }
 
 /* 会社ヘッダー（siteUrl付き）: Business Contents と同トーンの光演出（PCホバーのみ） */
@@ -190,6 +253,18 @@ body {
   .company-header-link:hover .company-header-bar,
   .company-header-link:focus-visible .company-header-bar {
     box-shadow: 0 0 10px color-mix(in srgb, var(--header-color) 70%, transparent);
+  }
+
+  .light-zone .company-header-link:hover .company-header-name,
+  .light-zone .company-header-link:focus-visible .company-header-name {
+    filter: brightness(1.05);
+    text-shadow:
+      0 0 12px color-mix(in srgb, var(--header-color) 55%, transparent),
+      0 0 28px color-mix(in srgb, var(--header-color) 28%, transparent);
+  }
+  .light-zone .company-header-link:hover .company-header-bar,
+  .light-zone .company-header-link:focus-visible .company-header-bar {
+    box-shadow: 0 0 12px color-mix(in srgb, var(--header-color) 75%, transparent);
   }
 }
 
@@ -223,6 +298,17 @@ body {
   bottom: 0;
   width: 1px;
   background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+}
+.light-zone .timeline-line {
+  background: linear-gradient(to bottom, rgba(26, 29, 38, 0.18), transparent);
+}
+
+/* Light zone shell */
+.light-zone {
+  background: var(--lz-bg);
+  color: var(--lz-text);
+  position: relative;
+  z-index: 1;
 }
 
 /* Section anchor */

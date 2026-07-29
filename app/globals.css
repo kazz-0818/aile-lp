@@ -322,20 +322,80 @@ body {
   background: linear-gradient(to bottom, rgba(8, 145, 178, 0.28), rgba(18, 36, 56, 0.06));
 }
 
-/* Dark → Light bridge — short, quiet fade (oklab = no muddy mid-band) */
+/* Dark → Light bridge — long translucent veil (glass-like haze) */
 .theme-bridge {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: clamp(32px, 4.5vw, 48px);
+  height: clamp(200px, 32vw, 360px);
   margin-top: -1px;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom in oklab,
-    #050508 0%,
-    #050508 22%,
-    #e9edf3 100%
+  overflow: hidden;
+  /* Base: dark dissolves through translucent midtones into light */
+  background:
+    linear-gradient(
+      to bottom in oklab,
+      #050508 0%,
+      rgba(5, 5, 8, 0.92) 12%,
+      rgba(8, 12, 20, 0.72) 28%,
+      rgba(18, 28, 42, 0.42) 48%,
+      rgba(120, 150, 180, 0.18) 68%,
+      rgba(220, 230, 240, 0.55) 84%,
+      #e9edf3 100%
+    );
+}
+/* Soft luminous frost — gives the “透き通る” glass feel */
+.theme-bridge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.02) 30%,
+      rgba(255, 255, 255, 0.06) 52%,
+      rgba(240, 248, 255, 0.14) 72%,
+      rgba(255, 255, 255, 0.28) 90%,
+      rgba(255, 255, 255, 0.4) 100%
+    ),
+    radial-gradient(
+      ellipse 90% 55% at 50% 70%,
+      rgba(180, 220, 240, 0.12),
+      transparent 70%
+    );
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.15) 25%,
+    rgba(0, 0, 0, 0.55) 55%,
+    rgba(0, 0, 0, 0.85) 80%,
+    black 100%
   );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.15) 25%,
+    rgba(0, 0, 0, 0.55) 55%,
+    rgba(0, 0, 0, 0.85) 80%,
+    black 100%
+  );
+}
+/* Fine mist veil — barely-there cyan air */
+.theme-bridge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 180, 210, 0.015) 40%,
+    rgba(0, 180, 210, 0.03) 65%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 /* Light zone shell */
@@ -344,11 +404,12 @@ body {
   z-index: 1;
   color: var(--lz-text);
   background-color: var(--lz-bg);
-  /* Tech glow sits below the seam so the bridge stays quiet */
+  /* Glow starts soft below the long bridge so the veil stays clear */
   background-image:
-    radial-gradient(ellipse 85% 48% at 50% 8%, rgba(0, 180, 210, 0.045), transparent 55%),
-    radial-gradient(ellipse 50% 35% at 95% 22%, rgba(14, 116, 144, 0.04), transparent 55%),
-    radial-gradient(ellipse 45% 30% at 5% 42%, rgba(100, 140, 180, 0.035), transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 255, 255, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 42% at 50% 18%, rgba(0, 180, 210, 0.035), transparent 60%),
+    radial-gradient(ellipse 50% 35% at 95% 28%, rgba(14, 116, 144, 0.035), transparent 55%),
+    radial-gradient(ellipse 45% 30% at 5% 48%, rgba(100, 140, 180, 0.03), transparent 50%),
     linear-gradient(180deg, #e9edf3 0%, #eef2f7 45%, #f1f4f8 100%);
 }
 .light-zone::before {
@@ -356,13 +417,13 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.28;
   background-image:
     linear-gradient(rgba(18, 40, 60, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(18, 40, 60, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 8%, rgba(0,0,0,0.35) 60%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 8%, rgba(0,0,0,0.35) 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, rgba(0,0,0,0.4) 18%, rgba(0,0,0,0.3) 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, rgba(0,0,0,0.4) 18%, rgba(0,0,0,0.3) 65%, transparent 100%);
 }
 
 /* Section anchor */

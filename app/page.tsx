@@ -596,7 +596,7 @@ export default function Home() {
             }}
           />
         ))}
-        {/* Soft bottom veil — keeps hero dark while easing into the bridge */}
+        {/* Soft bottom veil — long translucent ease into the bridge */}
         <div
           aria-hidden="true"
           style={{
@@ -604,10 +604,11 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 0,
-            height: 48,
+            height: "clamp(120px, 18vw, 200px)",
             pointerEvents: "none",
             zIndex: 2,
-            background: "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.55) 55%, #050508 100%)",
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.15) 35%, rgba(5,5,8,0.55) 70%, rgba(5,5,8,0.92) 100%)",
           }}
         />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
@@ -658,7 +659,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* ─── Dark → Light（短く控えめな輝度フェード） ─── */}
+      {/* ─── Dark → Light（ロング・透き通るフェード） ─── */}
       <div className="theme-bridge" aria-hidden="true" />
 
       {/* ─── Light zone: ヒーローより下 ─── */}

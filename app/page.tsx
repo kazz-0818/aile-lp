@@ -38,10 +38,6 @@ const companies: Company[] = [
     capabilities: [
       { name: "営業代行" },
       { name: "人材教育" },
-      { name: "組織コンサルティング" },
-      { name: "採用支援サービス" },
-      { name: "オンライン研修プラットフォーム" },
-      { name: "グローバル人材育成" },
     ],
     evolutions: [
       { date: "2025-09", title: "オンライン研修開始", desc: "動画・テスト形式での研修コンテンツを本格展開" },

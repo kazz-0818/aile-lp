@@ -161,7 +161,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const LOGO_IMG = Math.round(116 * sc);
   const NODE_R = 69 * sc;
   const SAT_ORBIT_R = 98 * sc;
-  const labelOffset = 84 * sc;
+  const labelGap = Math.round(8 * sc);
 
   const centerSize = Math.round(176 * sc);
   const aileLogoSize = Math.round(148 * sc);
@@ -309,7 +309,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const currentAngle = companyAngle(c.angle);
         const pos = toXY(CX, CY, R_OUTER, currentAngle);
         const isHov = hovered === c.id;
-        const labelPos = toXY(CX, CY, R_OUTER + labelOffset, currentAngle);
 
         return (
           <div key={c.id}>
@@ -384,9 +383,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
                 onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                 style={{
                   position: "absolute",
-                  left: `${(labelPos.x / SIZE) * 100}%`,
-                  top: `${(labelPos.y / SIZE) * 100}%`,
-                  transform: "translate(-50%, -50%)",
+                  left: `${(pos.x / SIZE) * 100}%`,
+                  top: `${((pos.y - LOGO_BOX / 2) / SIZE) * 100}%`,
+                  transform: `translate(-50%, calc(-100% - ${labelGap}px))`,
                   textAlign: "center",
                   cursor: "pointer",
                   pointerEvents: "none",

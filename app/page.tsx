@@ -626,11 +626,11 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 0,
-            height: "clamp(200px, 32vw, 340px)",
+            height: "clamp(260px, 42vw, 460px)",
             pointerEvents: "none",
             zIndex: 2,
             background:
-              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.04) 18%, rgba(5,5,8,0.12) 36%, rgba(5,5,8,0.28) 54%, rgba(5,5,8,0.48) 72%, rgba(5,5,8,0.72) 88%, rgba(5,5,8,0.92) 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.02) 10%, rgba(5,5,8,0.06) 22%, rgba(5,5,8,0.14) 36%, rgba(5,5,8,0.26) 50%, rgba(5,5,8,0.40) 64%, rgba(5,5,8,0.58) 76%, rgba(5,5,8,0.76) 88%, rgba(5,5,8,0.90) 96%, rgba(5,5,8,0.96) 100%)",
           }}
         />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 16 : 88 }}>
@@ -837,7 +837,7 @@ export default function Home() {
           borderTop: "1px solid rgba(18,36,56,0.09)",
           marginTop: 80,
           padding: "32px 24px",
-          background: "linear-gradient(180deg, #eef2f7 0%, #e8eef5 100%)",
+          background: "linear-gradient(180deg, rgba(245,247,251,0) 0%, #eef2f7 28%, #e8eef5 72%, #e2e8f0 100%)",
         }}
       >
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>

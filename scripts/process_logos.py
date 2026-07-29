@@ -138,6 +138,52 @@ def trim_transparent(img: Image.Image, pad: int = 8) -> Image.Image:
     return img.crop((left, top, right, bottom))
 
 
+def make_brandvox_horizontal(vertical: Image.Image, target_height: int = 80) -> Image.Image:
+    """Compose horizontal lockup: box icon left, BRAND/VOX wordmark right."""
+    w, h = vertical.size
+    data = list(vertical.getdata())
+
+    def alpha_at(x: int, y: int) -> int:
+        return data[y * w + x][3]
+
+    row_sums = [sum(1 for x in range(w) if alpha_at(x, y) > 30) for y in range(h)]
+    bands: list[tuple[int, int]] = []
+    start: int | None = None
+    for y in range(h):
+        if row_sums[y] > 5:
+            if start is None:
+                start = y
+        elif start is not None:
+            bands.append((start, y))
+            start = None
+    if start is not None:
+        bands.append((start, h))
+
+    icon = vertical.crop((70, bands[0][0], 212, bands[0][1]))
+    brand = vertical.crop((12, bands[1][0], 269, bands[1][1]))
+    vox = vertical.crop((67, bands[2][0], 212, bands[2][1]))
+
+    gap = 4
+    text_w = max(brand.width, vox.width)
+    text_h = brand.height + gap + vox.height
+    text = Image.new("RGBA", (text_w, text_h), (0, 0, 0, 0))
+    text.paste(brand, ((text_w - brand.width) // 2, 0), brand)
+    text.paste(vox, ((text_w - vox.width) // 2, brand.height + gap), vox)
+
+    icon = trim_transparent(icon, pad=4)
+    text = trim_transparent(text, pad=2)
+
+    h_gap = 8
+    target_h = max(icon.height, text.height)
+    out_w = icon.width + h_gap + text.width
+    out = Image.new("RGBA", (out_w, target_h), (0, 0, 0, 0))
+    out.paste(icon, (0, (target_h - icon.height) // 2), icon)
+    out.paste(text, (icon.width + h_gap, (target_h - text.height) // 2), text)
+
+    scale = target_height / out.height
+    return out.resize((round(out.width * scale), target_height), Image.Resampling.LANCZOS)
+
+
 def resize_max(img: Image.Image, max_side: int = 512) -> Image.Image:
     w, h = img.size
     if max(w, h) <= max_side:
@@ -186,6 +232,14 @@ def main() -> None:
             f"  alpha: transparent={stats['transparent']} partial={stats['partial']} "
             f"opaque={stats['opaque']} ({100*stats['transparent']/stats['total']:.1f}% transparent)"
         )
+
+    brandvox_path = OUT_DIR / "brandvox-logo.png"
+    if brandvox_path.exists():
+        vertical = Image.open(brandvox_path)
+        horizontal = make_brandvox_horizontal(vertical)
+        horizontal_path = OUT_DIR / "brandvox-logo-horizontal.png"
+        horizontal.save(horizontal_path, "PNG", optimize=True)
+        print(f"brandvox-logo-horizontal.png: {horizontal.size} -> {horizontal_path}")
 
 
 if __name__ == "__main__":

@@ -108,7 +108,7 @@ const companies: Company[] = [
       "大阪を中心に、シーシャバー・シーシャカフェ・ラウンジを展開。都市の中に心安らぐ特別な空間を創り続けます。",
     capabilities: [
       { name: "Shisha Bar BLUE（梅田）", href: "https://share.google/zTG6OrxeYyQCPWKvV" },
-      { name: "Shisha Cafe GREEN（アメ村）" },
+      { name: "Shisha Cafe GREEN（アメ村）", href: "https://www.instagram.com/cafe_green0128/?hl=en" },
       { name: "Salon de LILAC（東心斎橋）" },
       { name: "サブスク型シーシャサービス『シーシャ倶楽部』展開" },
     ],

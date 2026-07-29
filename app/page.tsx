@@ -71,7 +71,7 @@ const companies: Company[] = [
       { date: "2025-10", title: "FiNEDGE アプリ版リリース", desc: "スマホでいつでも学べる金融教育アプリを展開" },
       { date: "2025-09", title: "FiNEDGE サービス開始", desc: "オンライン金融スクールサービスを開始" },
       { date: "2025-06", title: "株式会社TiTANへ社名変更", desc: "社名を株式会社TiTANへ変更" },
-      { date: "2020-07", title: "ライバーマネジメント事業運営", desc: "現役FPによる1on1メンタリングプランを追加" },
+      { date: "2020-07", title: "ライバーマネジメント事業運営", desc: "" },
       { date: "2020-06-20", title: "会社設立", desc: "事業の運営会社を設立" },
     ],
   },
@@ -406,8 +406,10 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                     }}
                   />
                   <div style={{ fontSize: 10, color: "#98a2b3", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
-                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#0c1220", marginBottom: 4 }}>{ev.title}</div>
-                  <div style={{ fontSize: isMobile ? 11 : 12, color: "#667085", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#0c1220", marginBottom: ev.desc ? 4 : 0 }}>{ev.title}</div>
+                  {ev.desc ? (
+                    <div style={{ fontSize: isMobile ? 11 : 12, color: "#667085", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
+                  ) : null}
                 </div>
               ))}
             </div>

@@ -55,10 +55,10 @@ const orbitCompanies = [
 ];
 
 /* 会社ノードの周りを衛星のように回るサブブランド（parentAngle = 親ノードの角度, phase = 初期位相） */
-const subBrands: { name: string; color: string; parentAngle: number; phase: number; logo?: string }[] = [
-  { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0 },
-  { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120 },
-  { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240 },
+const subBrands: { name: string; color: string; parentAngle: number; phase: number; logo?: string; logoScale?: number }[] = [
+  { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 1.05 },
+  { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 1.0 },
+  { name: "LILAC",    color: "#c084fc", parentAngle: 224, phase: 240, logo: "/logos/lilac.png",  logoScale: 1.0 },
   { name: "FiNEDGE",  color: "#cbd5e1", parentAngle: 292, phase: 90, logo: "/logos/finedge-logo.png" },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png" },
 ];
@@ -383,6 +383,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         const parentPos = toXY(CX, CY, R_OUTER, b.parentAngle);
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         const satSize = Math.round(84 * sc);
+        const imgSize = Math.round(satSize * (b.logoScale ?? 1));
         return (
           <div
             key={b.name}
@@ -395,16 +396,19 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               transform: "translate(-50%, -50%)",
               pointerEvents: "none",
               zIndex: 11,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Image
               src={b.logo!}
               alt={b.name}
-              width={satSize}
-              height={satSize}
+              width={imgSize}
+              height={imgSize}
               style={{
-                width: satSize,
-                height: satSize,
+                width: imgSize,
+                height: imgSize,
                 objectFit: "contain",
                 filter: `drop-shadow(0 0 8px ${b.color}60)`,
               }}

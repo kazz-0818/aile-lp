@@ -98,7 +98,7 @@ function toXY(cx: number, cy: number, r: number, angleDeg: number) {
 export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) => void }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [, setFrame] = useState(0);
-  const [diagramSize, setDiagramSize] = useState(520);
+  const [diagramSize, setDiagramSize] = useState(580);
   const [showLabels, setShowLabels] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -139,8 +139,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
     const update = () => {
       const w = window.innerWidth;
       if (w < 540) setDiagramSize(Math.max(w - 40, 300));
-      else if (w < 1024) setDiagramSize(Math.min(w - 80, 580));
-      else setDiagramSize(520);
+      else if (w < 1024) setDiagramSize(Math.min(w - 80, 640));
+      else setDiagramSize(580);
       setShowLabels(w >= 640);
     };
     update();

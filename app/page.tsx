@@ -618,6 +618,22 @@ export default function Home() {
 
           {/* Text */}
           <div style={{ textAlign: "center", width: "100%" }}>
+            <Image
+              src="/logos/aile-illust.png"
+              alt=""
+              aria-hidden="true"
+              width={72}
+              height={72}
+              priority
+              style={{
+                display: "block",
+                margin: "0 auto clamp(10px, 1.8vw, 18px)",
+                height: "clamp(44px, 7vw, 72px)",
+                width: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 0 20px rgba(0,210,239,0.5))",
+              }}
+            />
             <h1
               aria-label="AiLE GROUP"
               style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(12px, 2vw, 22px)", marginBottom: 6 }}

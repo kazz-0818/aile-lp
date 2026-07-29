@@ -192,7 +192,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
           gap: isMobile ? 12 : 24,
           marginBottom: isMobile ? 24 : 40,
           paddingBottom: isMobile ? 20 : 32,
-          borderBottom: "1px solid rgba(26,29,38,0.08)",
+          borderBottom: "1px solid rgba(18,36,56,0.09)",
           textDecoration: "none",
           color: "inherit",
           ...(company.siteUrl ? { cursor: "pointer" } : {}),
@@ -235,13 +235,13 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
               </h2>
               {/* role行: モバイルはテキストのみ */}
               {isMobile ? (
-                <p style={{ color: "#7a8499", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
+                <p style={{ color: "#5c677a", fontSize: 11, fontWeight: 300, letterSpacing: "0.05em" }}>
                   {company.role}{company.roleLogoAlt ? ` / ${company.roleLogoAlt}` : ""}
                 </p>
               ) : (
                 <p
                   style={{
-                    color: "#7a8499",
+                    color: "#5c677a",
                     fontSize: 13,
                     fontWeight: 300,
                     letterSpacing: "0.05em",
@@ -319,7 +319,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
       <div className="grid lg:grid-cols-2" style={{ gap: isMobile ? 12 : 24 }}>
         {/* Business Contents */}
         <div className="glass-card glass-card--static" style={{ padding: cardPadding }}>
-          <h3 style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
+          <h3 style={{ fontSize: 10, color: "#8490a3", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 16 }}>
             Business Contents
           </h3>
           <div>
@@ -329,7 +329,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                 alignItems: "center",
                 gap: 8,
                 padding: isMobile ? "10px 0" : "14px 0",
-                borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(26,29,38,0.07)" : "none",
+                borderBottom: i < company.capabilities.length - 1 ? "1px solid rgba(18,36,56,0.08)" : "none",
                 textDecoration: "none",
                 color: "inherit",
               };
@@ -349,7 +349,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                     className={cap.href ? "capability-link-text" : undefined}
                     style={{
                       fontSize: isMobile ? 12 : 14,
-                      color: "#3d4555",
+                      color: "#3a4252",
                       fontWeight: 300,
                       wordBreak: "break-all",
                       lineHeight: 1.5,
@@ -386,7 +386,7 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
         {/* Right: Evolution */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div className="glass-card" style={{ padding: evoPadding }}>
-            <h3 style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
+            <h3 style={{ fontSize: 10, color: "#8490a3", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: isMobile ? 16 : 28 }}>
               Evolution Log
             </h3>
             <div style={{ position: "relative", paddingLeft: 18 }}>
@@ -401,13 +401,13 @@ function CompanySection({ company, isMobile }: { company: Company; isMobile: boo
                       width: 7,
                       height: 7,
                       borderRadius: "50%",
-                      backgroundColor: i === 0 ? company.color : "rgba(26,29,38,0.2)",
-                      border: `2px solid ${i === 0 ? company.color : "rgba(26,29,38,0.12)"}`,
+                      backgroundColor: i === 0 ? company.color : "rgba(18,36,56,0.22)",
+                      border: `2px solid ${i === 0 ? company.color : "rgba(18,36,56,0.12)"}`,
                     }}
                   />
-                  <div style={{ fontSize: 10, color: "#9aa3b5", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
-                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#1a1d26", marginBottom: 4 }}>{ev.title}</div>
-                  <div style={{ fontSize: isMobile ? 11 : 12, color: "#7a8499", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
+                  <div style={{ fontSize: 10, color: "#8490a3", marginBottom: 3, fontFamily: "monospace" }}>{ev.date}</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 500, color: "#11151d", marginBottom: 4 }}>{ev.title}</div>
+                  <div style={{ fontSize: isMobile ? 11 : 12, color: "#5c677a", fontWeight: 300, lineHeight: 1.6 }}>{ev.desc}</div>
                 </div>
               ))}
             </div>
@@ -644,6 +644,9 @@ export default function Home() {
         )}
       </section>
 
+      {/* ─── Dark → Light グラデーション境界 ─── */}
+      <div className="theme-bridge" aria-hidden="true" />
+
       {/* ─── Light zone: ヒーローより下 ─── */}
       <div className="light-zone">
       {/* ─── Main Content ─── */}
@@ -655,7 +658,7 @@ export default function Home() {
           style={{ width: 200, flexShrink: 0, position: "sticky", top: 80, paddingBottom: 40 }}
         >
           <div style={{ marginBottom: 12, padding: "0 14px" }}>
-            <span style={{ fontSize: 10, color: "#9aa3b5", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+            <span style={{ fontSize: 10, color: "#8490a3", letterSpacing: "0.2em", textTransform: "uppercase" }}>
               Group
             </span>
           </div>
@@ -672,7 +675,7 @@ export default function Home() {
                 marginBottom: 4,
                 background: active === c.id ? `${c.color}18` : "transparent",
                 borderColor: active === c.id ? `${c.color}40` : "transparent",
-                color: active === c.id ? c.color : "#7a8499",
+                color: active === c.id ? c.color : "#5c677a",
                 textAlign: "left",
                 fontFamily: "inherit",
                 cursor: "pointer",
@@ -707,7 +710,7 @@ export default function Home() {
                 Group Roadmap
               </h2>
               {!isMobile && (
-                <span style={{ fontSize: 12, color: "#7a8499", marginLeft: 4 }}>
+                <span style={{ fontSize: 12, color: "#5c677a", marginLeft: 4 }}>
                   AiLE GROUPの拡張フェーズ
                 </span>
               )}
@@ -731,28 +734,28 @@ export default function Home() {
                       padding: "16px",
                       borderRadius: 14,
                       border: "1px solid",
-                      borderColor: p.done ? "rgba(22,163,74,0.28)" : "rgba(26,29,38,0.08)",
-                      background: p.done ? "rgba(22,163,74,0.06)" : "rgba(26,29,38,0.02)",
+                      borderColor: p.done ? "rgba(22,163,74,0.28)" : "rgba(18,36,56,0.09)",
+                      background: p.done ? "rgba(22,163,74,0.06)" : "rgba(255,255,255,0.45)",
                     }}
                   >
                     <div
                       className="phase-dot font-orbitron"
                       style={{
-                        background: p.done ? "rgba(22,163,74,0.12)" : "rgba(26,29,38,0.05)",
-                        color: p.done ? "#15803d" : "#9aa3b5",
-                        border: `1px solid ${p.done ? "rgba(22,163,74,0.3)" : "rgba(26,29,38,0.1)"}`,
+                        background: p.done ? "rgba(22,163,74,0.12)" : "rgba(18,36,56,0.05)",
+                        color: p.done ? "#15803d" : "#8490a3",
+                        border: `1px solid ${p.done ? "rgba(22,163,74,0.3)" : "rgba(18,36,56,0.1)"}`,
                       }}
                     >
                       {p.n}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: p.done ? "#1a1d26" : "#7a8499" }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: p.done ? "#11151d" : "#5c677a" }}>
                           {p.title}
                         </span>
                         {p.done && <Badge status="active" />}
                       </div>
-                      <p style={{ fontSize: 11, color: "#7a8499", lineHeight: 1.6, fontWeight: 300 }}>
+                      <p style={{ fontSize: 11, color: "#5c677a", lineHeight: 1.6, fontWeight: 300 }}>
                         {p.desc}
                       </p>
                     </div>
@@ -763,10 +766,10 @@ export default function Home() {
           </div>
 
           {/* ─── Contact ─── */}
-          <div style={{ marginTop: isMobile ? 32 : 60, padding: isMobile ? "28px 20px" : "48px 40px", borderRadius: isMobile ? 16 : 24, border: "1px solid rgba(8,145,178,0.28)", background: "rgba(8,145,178,0.05)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+          <div style={{ marginTop: isMobile ? 32 : 60, padding: isMobile ? "28px 20px" : "48px 40px", borderRadius: isMobile ? 16 : 24, border: "1px solid rgba(0,180,210,0.28)", background: "linear-gradient(160deg, rgba(0,180,210,0.07) 0%, rgba(255,255,255,0.65) 55%, rgba(14,116,144,0.05) 100%)", boxShadow: "0 1px 0 rgba(255,255,255,0.8) inset, 0 12px 36px rgba(15,35,55,0.06)", textAlign: "center", position: "relative", overflow: "hidden", backdropFilter: "blur(12px)" }}>
             <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1, height: 40, background: "linear-gradient(to bottom, rgba(8,145,178,0.45), transparent)" }} />
             <p className="font-orbitron" style={{ fontSize: 11, color: "#0e7490", letterSpacing: "0.3em", marginBottom: 20 }}>CONTACT</p>
-            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#1a1d26" }}>
+            <h2 style={{ fontSize: "clamp(24px, 4vw, 40px)", fontWeight: 700, marginBottom: 0, color: "#11151d" }}>
               ともに、<span style={{ color: "#0e7490" }}>飛躍しよう。</span>
             </h2>
           </div>
@@ -778,10 +781,10 @@ export default function Home() {
         style={{
           position: "relative",
           zIndex: 1,
-          borderTop: "1px solid rgba(26,29,38,0.08)",
+          borderTop: "1px solid rgba(18,36,56,0.09)",
           marginTop: 80,
           padding: "32px 24px",
-          background: "#eef0f3",
+          background: "linear-gradient(180deg, #e4e9f0 0%, #dde3eb 100%)",
         }}
       >
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
@@ -804,7 +807,7 @@ export default function Home() {
               <Image key={i} src={l.src} alt={l.alt} width={50} height={24} style={{ objectFit: "contain", maxHeight: 24, width: "auto" }} />
             ))}
           </div>
-          <p style={{ fontSize: 11, color: "#9aa3b5", letterSpacing: "0.1em" }}>
+          <p style={{ fontSize: 11, color: "#8490a3", letterSpacing: "0.1em" }}>
             © 2025 AiLE GROUP. All rights reserved.
           </p>
         </div>

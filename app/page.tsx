@@ -139,7 +139,7 @@ const companies: Company[] = [
       { name: "スタイル投稿 × STELLAポイント" },
       { name: "商品タグ付け・紹介報酬" },
       { name: "ログイン・招待など日常アクションでポイント獲得" },
-      { name: "ファッションメディア「BRAVO」記事配信" },
+      { name: "ファッションメディア「BRAVO」記事配信", href: "https://bravo-online.com/" },
     ],
     evolutions: [
       { date: "2026-05", title: "株式会社BRAVOに社名変更", desc: "有限会社ジーアイティーから株式会社BRAVOへ社名変更" },

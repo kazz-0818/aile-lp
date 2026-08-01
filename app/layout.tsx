@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   title: "AiLE GROUP | すべてを、翼にして。",
   description:
     "AiLE GROUPは、金融教育・営業代行・人材育成・システム開発・飲食・アプリ事業など多角的な事業を展開するグループ企業です。",
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export default function RootLayout({

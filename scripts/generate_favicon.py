@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
-"""Generate favicon assets from public/logos/aile-illust.png."""
+"""Generate favicon assets from public/logos/aile-illust.png.
+
+Renders the wing on a solid brand tile with a bright cyan ramp so the icon
+stays visible on both light and dark browser tab backgrounds at 16–32px.
+"""
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "public" / "logos" / "aile-illust.png"
 APP_DIR = ROOT / "app"
 
-# Deep vivid cyan-teal ramp — darker/saturated vs pale brand accent (#00d2ef)
-SHADOW = (0, 92, 115)
-MID = (0, 128, 152)
-HIGH = (0, 158, 178)
-LUM_FLOOR = 52
-LUM_CEIL = 118
+# Brand palette
+BG = (5, 5, 8)  # site body background (#050508)
+PLATE = (0, 45, 58)  # deep teal plate behind wing
+WING_SHADOW = (0, 170, 195)
+WING_MID = (0, 210, 239)  # brand accent #00d2ef
+WING_HIGH = (180, 245, 255)
+LUM_FLOOR = 140
+LUM_CEIL = 245
 
 
 def _lum(r: float, g: float, b: float) -> float:
@@ -34,11 +40,20 @@ def _lerp(a: tuple[int, int, int], b: tuple[int, int, int], t: float) -> tuple[i
 def _ramp_color(t: float) -> tuple[int, int, int]:
     t = max(0.0, min(1.0, t))
     if t < 0.5:
-        return _lerp(SHADOW, MID, t / 0.5)
-    return _lerp(MID, HIGH, (t - 0.5) / 0.5)
+        return _lerp(WING_SHADOW, WING_MID, t / 0.5)
+    return _lerp(WING_MID, WING_HIGH, (t - 0.5) / 0.5)
 
 
-def prepare_wing(size: int, padding: float = 0.12) -> Image.Image:
+def _is_wing_pixel(r: int, g: int, b: int, a: int) -> bool:
+    if a < 32:
+        return False
+    if r < 24 and g < 40 and b < 50:
+        return False
+    return True
+
+
+def _extract_wing_mask() -> tuple[Image.Image, list[float]]:
+    """Return an RGBA wing-only image and per-pixel luminance values."""
     img = Image.open(SOURCE).convert("RGBA")
     px = img.load()
     w, h = img.size
@@ -48,9 +63,8 @@ def prepare_wing(size: int, padding: float = 0.12) -> Image.Image:
     for y in range(h):
         for x in range(w):
             r, g, b, a = px[x, y]
-            if a == 0:
-                continue
-            if r < 24 and g < 40 and b < 50:
+            if not _is_wing_pixel(r, g, b, a):
+                px[x, y] = (0, 0, 0, 0)
                 continue
             wing_coords.append((x, y))
             wing_lums.append(_lum(r, g, b))
@@ -63,30 +77,34 @@ def prepare_wing(size: int, padding: float = 0.12) -> Image.Image:
     span = max(src_max - src_min, 1.0)
 
     for (x, y), src_lum in zip(wing_coords, wing_lums):
-        _, _, _, a = px[x, y]
         t = (src_lum - src_min) / span
         nr, ng, nb = _ramp_color(t)
-        out_lum = _lum(nr, ng, nb)
-        if out_lum < LUM_FLOOR:
-            lift = (LUM_FLOOR - out_lum) / LUM_FLOOR
-            nr, ng, nb = _lerp((nr, ng, nb), MID, lift * 0.7)
-        elif out_lum > LUM_CEIL:
-            nr, ng, nb = _lerp(MID, (nr, ng, nb), (out_lum - LUM_CEIL) / (255 - LUM_CEIL))
-        px[x, y] = (nr, ng, nb, a)
+        px[x, y] = (nr, ng, nb, 255)
 
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            if a == 0:
-                continue
-            if r < 24 and g < 40 and b < 50:
-                px[x, y] = (0, 0, 0, 0)
+    return img, wing_lums
 
-    bbox = img.getbbox()
+
+def _draw_tile(size: int, radius_ratio: float = 0.22) -> Image.Image:
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(canvas)
+    margin = max(0, int(size * 0.04))
+    radius = max(1, int(size * radius_ratio))
+    draw.rounded_rectangle(
+        (margin, margin, size - margin - 1, size - margin - 1),
+        radius=radius,
+        fill=(*PLATE, 255),
+    )
+    return canvas
+
+
+def prepare_icon(size: int, wing_src: Image.Image, padding: float = 0.16) -> Image.Image:
+    wing_only = wing_src.copy()
+    bbox = wing_only.getbbox()
     if not bbox:
-        raise RuntimeError("No visible pixels in source wing image")
-    cropped = img.crop(bbox)
+        raise RuntimeError("No visible pixels in wing mask")
+    cropped = wing_only.crop(bbox)
 
+    canvas = _draw_tile(size)
     pad_px = max(1, int(size * padding))
     inner = size - pad_px * 2
     scale = min(inner / cropped.width, inner / cropped.height)
@@ -94,38 +112,57 @@ def prepare_wing(size: int, padding: float = 0.12) -> Image.Image:
     new_h = max(1, int(cropped.height * scale))
     resized = cropped.resize((new_w, new_h), Image.Resampling.LANCZOS)
 
-    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    ox = (size - new_w) // 2
-    oy = (size - new_h) // 2
-    canvas.paste(resized, (ox, oy), resized)
-    return _sharpen_tab_colors(canvas, size)
-
-
-def _sharpen_tab_colors(img: Image.Image, size: int) -> Image.Image:
-    """After downscale, wing pixels darken — lift small icons for light tab backgrounds."""
-    if size > 64:
-        return img
-    px = img.load()
-    w, h = img.size
-    for y in range(h):
-        for x in range(w):
+    # Force full opacity after downscale — semi-transparent anti-aliasing
+    # makes small tab icons disappear on dark tab strips.
+    px = resized.load()
+    for y in range(new_h):
+        for x in range(new_w):
             r, g, b, a = px[x, y]
-            if a < 20:
+            if a < 48:
                 px[x, y] = (0, 0, 0, 0)
                 continue
             lum = _lum(r, g, b)
             if lum < LUM_FLOOR:
                 lift = min(1.0, (LUM_FLOOR - lum) / LUM_FLOOR)
-                nr, ng, nb = _lerp((r, g, b), MID, lift * 0.9)
-                px[x, y] = (nr, ng, nb, a)
-    return img
+                r, g, b = _lerp((r, g, b), WING_MID, lift)
+            elif lum > LUM_CEIL:
+                r, g, b = _lerp(WING_MID, (r, g, b), min(1.0, (lum - LUM_CEIL) / (255 - LUM_CEIL)))
+            px[x, y] = (r, g, b, 255)
+
+    ox = (size - new_w) // 2
+    oy = (size - new_h) // 2
+    canvas.paste(resized, (ox, oy), resized)
+    return canvas.convert("RGBA")
+
+
+def _analyze(img: Image.Image, label: str) -> None:
+    px = img.load()
+    w, h = img.size
+    opaque = semi = transparent = 0
+    rs: list[int] = []
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a == 0:
+                transparent += 1
+            elif a == 255:
+                opaque += 1
+                rs.append(r)
+            else:
+                semi += 1
+    total = w * h
+    print(
+        f"  {label} {w}x{h}: opaque={opaque} ({100 * opaque / total:.1f}%), "
+        f"semi={semi}, transparent={transparent}"
+    )
 
 
 def main() -> None:
     APP_DIR.mkdir(parents=True, exist_ok=True)
+    wing_src, _ = _extract_wing_mask()
 
     sizes = [16, 32, 48]
-    frames = [prepare_wing(s) for s in sizes]
+    frames = [prepare_icon(s, wing_src) for s in sizes]
 
     ico_path = APP_DIR / "favicon.ico"
     frames[0].save(
@@ -135,12 +172,17 @@ def main() -> None:
         append_images=frames[1:],
     )
 
-    prepare_wing(32).save(APP_DIR / "icon.png", format="PNG")
-    prepare_wing(180).save(APP_DIR / "apple-icon.png", format="PNG")
+    prepare_icon(32, wing_src).save(APP_DIR / "icon.png", format="PNG")
+    prepare_icon(180, wing_src, padding=0.14).save(APP_DIR / "apple-icon.png", format="PNG")
 
-    print(f"Wrote {ico_path}")
-    print(f"Wrote {APP_DIR / 'icon.png'}")
-    print(f"Wrote {APP_DIR / 'apple-icon.png'}")
+    print(f"Wrote {ico_path} ({ico_path.stat().st_size} bytes)")
+    print(f"Wrote {APP_DIR / 'icon.png'} ({(APP_DIR / 'icon.png').stat().st_size} bytes)")
+    print(f"Wrote {APP_DIR / 'apple-icon.png'} ({(APP_DIR / 'apple-icon.png').stat().st_size} bytes)")
+    print("Asset stats:")
+    for size, frame in zip(sizes, frames):
+        _analyze(frame, f"ico-{size}")
+    _analyze(Image.open(APP_DIR / "icon.png"), "icon.png")
+    _analyze(Image.open(APP_DIR / "apple-icon.png"), "apple-icon.png")
 
 
 if __name__ == "__main__":

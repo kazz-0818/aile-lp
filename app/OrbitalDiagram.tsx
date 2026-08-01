@@ -265,8 +265,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               r={SAT_ORBIT_R}
               fill="none"
               stroke="rgba(255,255,255,0.28)"
-              strokeWidth="1.25"
-              strokeDasharray="4 5"
+              strokeWidth="0.85"
             />
           );
         })}

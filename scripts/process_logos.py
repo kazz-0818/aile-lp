@@ -21,6 +21,7 @@ SOURCES = {
     "brandvox-logo-horizontal.png": ASSETS / "Brandvox_Wide_icon_Gold-783c0416-782d-4389-8026-72e0956c015e.png",
     "finedge-mark.png": ASSETS / "FiNEDGE_logo-6cbbceb2-9e51-4452-b67a-20e0a50156d4.png",
     "laxis.png": ASSETS / "LAXIS____-2200731d-ccaf-43b2-b3b4-4da56426b2b6.png",
+    "tadafuru.png": ASSETS / "logo-8ea979cc-47ed-4471-a2f4-54a08e3dfdd7.png",
 }
 
 
@@ -217,6 +218,7 @@ def main() -> None:
         "brandvox-logo-horizontal.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
         "finedge-mark.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
         "laxis.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
+        "tadafuru.png": lambda im: remove_black_bg(im, threshold=38, softness=22, min_brightness=22),
     }
 
     for name, src in SOURCES.items():

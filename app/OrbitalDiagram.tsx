@@ -66,6 +66,7 @@ const subBrands: {
   logoMarkScale?: number;
   logoWordHeightScale?: number;
   logoStackGap?: number;
+  radiusOffset?: number;
 }[] = [
   { name: "BLUE",     color: "#60a5fa", parentAngle: 224, phase: 0,   logo: "/logos/blue.png",   logoScale: 0.67 },
   { name: "GREEN",    color: "#4ade80", parentAngle: 224, phase: 120, logo: "/logos/green.png",  logoScale: 0.62 },
@@ -81,6 +82,7 @@ const subBrands: {
     logoScale: 1.30,
     logoWordHeightScale: 0.54,
     logoStackGap: -12,
+    radiusOffset: -38,
   },
   { name: "BRANDVOX", color: "#facc15", parentAngle: 136, phase: 270, logo: "/logos/brandvox-logo.png", logoScale: 0.64 },
   { name: "LAXIS", color: "#22d3ee", parentAngle: 68, phase: 210, logo: "/logos/laxis.png", logoScale: 0.70 },
@@ -171,6 +173,8 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const companyOrbit = (motion / companyOrbitMs) * 360;
   const satRot = -(motion / (diagramSize < 540 ? 38000 : 30000)) * 360;
   const companyAngle = (base: number) => base + companyOrbit;
+  const satRadius = (b: { radiusOffset?: number }) =>
+    SAT_ORBIT_R + (b.radiusOffset ?? 0) * sc;
 
   const rot1 = (motion / 60000) * 360;
   const rot2 = -(motion / 45000) * 360;
@@ -257,12 +261,14 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         {/* サブブランド衛星の軌道リング */}
         {showLabels && satParentAngles.map((pa) => {
           const parentPos = toXY(CX, CY, R_OUTER, companyAngle(pa));
+          const brandsAtParent = subBrands.filter((b) => b.parentAngle === pa);
+          const orbitR = Math.min(...brandsAtParent.map((b) => satRadius(b)));
           return (
             <circle
               key={`sat-orbit-${pa}`}
               cx={parentPos.x}
               cy={parentPos.y}
-              r={SAT_ORBIT_R}
+              r={orbitR}
               fill="none"
               stroke="rgba(255,255,255,0.28)"
               strokeWidth="1.25"
@@ -274,7 +280,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         {/* サブブランド衛星ドット（ロゴを持つものはHTML側で画像表示） */}
         {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
           const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
-          const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+          const dot = toXY(parentPos.x, parentPos.y, satRadius(b), b.phase + satRot);
           return (
             <circle
               key={`sat-${b.name}`}
@@ -423,7 +429,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       {/* ── サブブランド衛星ロゴ（軌道上を周回） ── */}
       {showLabels && subBrands.filter((b) => b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
-        const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+        const dot = toXY(parentPos.x, parentPos.y, satRadius(b), b.phase + satRot);
         const satSize = Math.round(84 * sc);
         const hasStack = Boolean(b.logoMark);
         const markSize = Math.round(satSize * (b.logoMarkScale ?? 0.42));
@@ -491,7 +497,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       {/* ── サブブランド衛星ラベル（ドットに追従） ── */}
       {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
-        const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
+        const dot = toXY(parentPos.x, parentPos.y, satRadius(b), b.phase + satRot);
         return (
           <div
             key={b.name}

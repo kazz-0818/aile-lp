@@ -769,7 +769,7 @@ export default function Home() {
       </header>
 
       {/* ─── Hero（ダーク維持） ─── */}
-      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 48px" : "100px 24px clamp(80px, 10vw, 120px)", overflow: "hidden", background: "#050508" }}>
+      <section style={{ position: "relative", zIndex: 1, minHeight: isMobile ? "auto" : "100vh", display: "flex", alignItems: isMobile ? "flex-start" : "center", padding: isMobile ? "80px 16px 48px" : "100px 24px clamp(80px, 10vw, 120px)", overflow: isMobile ? "visible" : "hidden", overflowX: "hidden", background: "#050508" }}>
         {/* Background blobs — hero only */}
         {blobs.map((b, i) => (
           <div

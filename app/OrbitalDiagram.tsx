@@ -99,7 +99,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const [hovered, setHovered] = useState<string | null>(null);
   const [, setFrame] = useState(0);
   const [diagramSize, setDiagramSize] = useState(580);
-  const [showLabels, setShowLabels] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const epochRef = useRef(performance.now());
@@ -141,7 +140,6 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       if (w < 540) setDiagramSize(Math.max(w - 40, 300));
       else if (w < 1024) setDiagramSize(Math.min(w - 80, 640));
       else setDiagramSize(580);
-      setShowLabels(w >= 640);
     };
     update();
     window.addEventListener("resize", update);
@@ -151,8 +149,11 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const BASE = 560;
   const SIZE = diagramSize;
   const sc = SIZE / BASE;
+  const isCompact = SIZE < 540;
+  const labelReserve = isCompact ? Math.round(22 * sc) : 0;
   const CX = SIZE / 2;
   const CY = SIZE / 2;
+  const CONTAINER_H = SIZE + labelReserve;
 
   const R_OUTER = 220 * sc;
   const R_MID   = 160 * sc;
@@ -161,7 +162,12 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
   const LOGO_IMG = Math.round(116 * sc);
   const NODE_R = 69 * sc;
   const SAT_ORBIT_R = 98 * sc;
-  const labelGap = Math.round(8 * sc);
+  const labelGap = Math.round((isCompact ? 4 : 8) * sc);
+  const nameFontSize = Math.max(Math.round((isCompact ? 14 : 16) * sc), isCompact ? 10 : 12);
+  const subFontSize = Math.max(Math.round((isCompact ? 10 : 12) * sc), isCompact ? 8 : 10);
+  const labelMinWidth = Math.round((isCompact ? 140 : 180) * sc);
+  const labelMaxWidth = Math.round((isCompact ? 200 : 260) * sc);
+  const satLabelFontSize = Math.max(Math.round((isCompact ? 11 : 13) * sc), isCompact ? 9 : 11);
 
   const centerSize = Math.round(176 * sc);
   const aileLogoSize = Math.round(148 * sc);
@@ -183,12 +189,22 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       style={{
         position: "relative",
         width: SIZE,
-        height: SIZE,
+        height: CONTAINER_H,
         maxWidth: "100%",
         margin: "0 auto",
         userSelect: "none",
+        overflow: "visible",
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: labelReserve,
+          left: 0,
+          width: SIZE,
+          height: SIZE,
+        }}
+      >
       <svg
         width={SIZE}
         height={SIZE}
@@ -255,7 +271,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         })}
 
         {/* サブブランド衛星の軌道リング */}
-        {showLabels && satParentAngles.map((pa) => {
+        {satParentAngles.map((pa) => {
           const parentPos = toXY(CX, CY, R_OUTER, companyAngle(pa));
           return (
             <circle
@@ -271,7 +287,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         })}
 
         {/* サブブランド衛星ドット（ロゴを持つものはHTML側で画像表示） */}
-        {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
+        {subBrands.filter((b) => !b.logo).map((b) => {
           const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
           const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
           return (
@@ -374,53 +390,51 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               />
             </div>
 
-            {/* Label — only on larger screens */}
-            {showLabels && (
-              <div
-                onMouseEnter={() => setHovered(c.id)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-                style={{
-                  position: "absolute",
-                  left: `${(pos.x / SIZE) * 100}%`,
-                  top: `${((pos.y - LOGO_BOX / 2) / SIZE) * 100}%`,
-                  transform: `translate(-50%, calc(-100% - ${labelGap}px))`,
-                  textAlign: "center",
-                  cursor: "pointer",
-                  pointerEvents: "none",
-                  minWidth: Math.round(180 * sc),
-                  maxWidth: Math.round(260 * sc),
-                }}
-              >
-                <div style={{
-                  fontSize: Math.max(Math.round(16 * sc), 12),
-                  fontFamily: '"Noto Sans JP", sans-serif',
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  color: isHov ? c.color : "rgba(255,255,255,0.72)",
-                  marginBottom: 5,
-                  transition: "color 0.2s",
-                  whiteSpace: "nowrap",
-                }}>
-                  {c.nameJP}
-                </div>
-                <div style={{
-                  fontSize: Math.max(Math.round(12 * sc), 10),
-                  color: "rgba(255,255,255,0.38)",
-                  lineHeight: 1.5,
-                  whiteSpace: "nowrap",
-                  wordBreak: "keep-all",
-                }}>
-                  {c.sub}
-                </div>
+            {/* Label — above logo, upright */}
+            <div
+              onMouseEnter={() => setHovered(c.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => { onSelect?.(c.id); document.getElementById(c.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+              style={{
+                position: "absolute",
+                left: `${(pos.x / SIZE) * 100}%`,
+                top: `${((pos.y - LOGO_BOX / 2) / SIZE) * 100}%`,
+                transform: `translate(-50%, calc(-100% - ${labelGap}px))`,
+                textAlign: "center",
+                cursor: "pointer",
+                pointerEvents: "none",
+                minWidth: labelMinWidth,
+                maxWidth: labelMaxWidth,
+              }}
+            >
+              <div style={{
+                fontSize: nameFontSize,
+                fontFamily: '"Noto Sans JP", sans-serif',
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                color: isHov ? c.color : "rgba(255,255,255,0.72)",
+                marginBottom: isCompact ? 3 : 5,
+                transition: "color 0.2s",
+                whiteSpace: "nowrap",
+              }}>
+                {c.nameJP}
               </div>
-            )}
+              <div style={{
+                fontSize: subFontSize,
+                color: "rgba(255,255,255,0.38)",
+                lineHeight: 1.5,
+                whiteSpace: "nowrap",
+                wordBreak: "keep-all",
+              }}>
+                {c.sub}
+              </div>
+            </div>
           </div>
         );
       })}
 
       {/* ── サブブランド衛星ロゴ（軌道上を周回） ── */}
-      {showLabels && subBrands.filter((b) => b.logo).map((b) => {
+      {subBrands.filter((b) => b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         const satSize = Math.round(84 * sc);
@@ -519,7 +533,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
       })}
 
       {/* ── サブブランド衛星ラベル（ドットに追従） ── */}
-      {showLabels && subBrands.filter((b) => !b.logo).map((b) => {
+      {subBrands.filter((b) => !b.logo).map((b) => {
         const parentPos = toXY(CX, CY, R_OUTER, companyAngle(b.parentAngle));
         const dot = toXY(parentPos.x, parentPos.y, SAT_ORBIT_R, b.phase + satRot);
         return (
@@ -536,7 +550,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           >
             <span style={{
               fontFamily: "Orbitron, monospace",
-              fontSize: Math.max(Math.round(13 * sc), 11),
+              fontSize: satLabelFontSize,
               fontWeight: 700,
               letterSpacing: "0.12em",
               color: b.color,
@@ -574,6 +588,7 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
           50%       { transform: translateY(-8px); }
         }
       `}</style>
+      </div>
     </div>
   );
 }

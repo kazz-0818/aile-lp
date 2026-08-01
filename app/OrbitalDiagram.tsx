@@ -223,17 +223,17 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
         <circle cx={CX} cy={CY} r={R_OUTER + 30 * sc} fill="url(#ring-glow)" />
 
         <g transform={`rotate(${rot1}, ${CX}, ${CY})`}>
-          <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.2)" strokeWidth="1" strokeDasharray="4 12" />
+          <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.34)" strokeWidth="1.25" strokeDasharray="5 9" />
         </g>
-        <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.12)" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="rgba(0,210,239,0.22)" strokeWidth="1.25" />
 
         <g transform={`rotate(${rot2}, ${CX}, ${CY})`}>
-          <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.1)" strokeWidth="1" strokeDasharray="2 8" />
+          <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.28)" strokeWidth="1.25" strokeDasharray="4 7" />
         </g>
-        <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.07)" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r={R_MID} fill="none" stroke="rgba(0,210,239,0.18)" strokeWidth="1.25" />
 
         <g transform={`rotate(${rot3}, ${CX}, ${CY})`}>
-          <circle cx={CX} cy={CY} r={R_INNER} fill="none" stroke="rgba(0,210,239,0.15)" strokeWidth="1" strokeDasharray="3 10" />
+          <circle cx={CX} cy={CY} r={R_INNER} fill="none" stroke="rgba(0,210,239,0.30)" strokeWidth="1.25" strokeDasharray="4 8" />
         </g>
 
         {orbitCompanies.map((c) => {
@@ -264,9 +264,9 @@ export default function OrbitalDiagram({ onSelect }: { onSelect?: (id: string) =
               cy={parentPos.y}
               r={SAT_ORBIT_R}
               fill="none"
-              stroke="rgba(255,255,255,0.14)"
-              strokeWidth="1"
-              strokeDasharray="2 6"
+              stroke="rgba(255,255,255,0.28)"
+              strokeWidth="1.25"
+              strokeDasharray="4 5"
             />
           );
         })}
